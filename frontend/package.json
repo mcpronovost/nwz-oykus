@@ -1,0 +1,26 @@
+{
+  "name": "kp-oykus-frontend",
+  "description": "KP Oykus Frontend",
+  "version": "0.1.0",
+  "author": "mcpronovost",
+  "license": "BSD-3-Clause",
+  "main": "main.jsx",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^7.0.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
