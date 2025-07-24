@@ -6,49 +6,38 @@ import React, {
   useEffect,
 } from "react";
 import { ROUTES } from "./routes";
-
-const getLocaleFromPath = (pathname) => {
-  const match = pathname.match(/^\/(fr|en)(\/|$)/);
-  return match ? match[1] : "en";
-};
-
-const findRoute = (pathname, locale) => {
-  const path = pathname.replace(/^\/(fr|en)/, "").replace(/^\//, "");
-  return ROUTES.find((route) => route.paths[locale] === path) || null;
-};
+import { getLangFromPath, findRoute } from "./utils";
 
 const RouterContext = createContext();
 
 export function RouterProvider({ children }) {
   const [history, setHistory] = useState([window.location.pathname]);
-  const [locale, setLocale] = useState(
-    getLocaleFromPath(window.location.pathname)
-  );
+  const [lang, setLang] = useState(getLangFromPath(window.location.pathname));
   const [route, setRoute] = useState(() =>
     findRoute(
       window.location.pathname,
-      getLocaleFromPath(window.location.pathname)
+      getLangFromPath(window.location.pathname)
     )
   );
 
   const navigate = useCallback(
-    (name, lang = locale) => {
+    (name, language = lang) => {
       const route = ROUTES.find((r) => r.name === name);
       if (!route) return;
-      const newPath = `/${lang}/${route.paths[lang]}`;
+      const newPath = `/${language}/${route.paths[language]}`;
       window.history.pushState({}, "", newPath);
       setHistory((h) => [...h, newPath]);
-      setLocale(lang);
+      setLang(language);
       setRoute(route);
     },
-    [locale]
+    [lang]
   );
 
   useEffect(() => {
     const onPopState = () => {
-      const newLocale = getLocaleFromPath(window.location.pathname);
-      setLocale(newLocale);
-      setRoute(findRoute(window.location.pathname, newLocale));
+      const newLang = getLangFromPath(window.location.pathname);
+      setLang(newLang);
+      setRoute(findRoute(window.location.pathname, newLang));
       setHistory((h) => [...h, window.location.pathname]);
     };
     window.addEventListener("popstate", onPopState);
@@ -57,7 +46,7 @@ export function RouterProvider({ children }) {
 
   const value = {
     route,
-    locale,
+    lang,
     history,
     navigate,
   };
