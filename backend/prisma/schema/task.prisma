@@ -1,0 +1,91 @@
+// Task management schema for NWZ Oykus
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TaskHistoryChangeType {
+  STATUS
+  TITLE
+  CONTENT
+  ASSIGNEES
+  TAGS
+  PRIORITY
+}
+
+model Task {
+  id      String @id @default(uuid())
+  title   String
+  content String
+
+  // Relations
+  worldId   Int
+  world     World         @relation(fields: [worldId], references: [id])
+  authorId  String
+  author    User          @relation(fields: [authorId], references: [id])
+  assignees User[]        @relation("TaskAssignees")
+  statusId  String
+  status    TaskStatus    @relation(fields: [statusId], references: [id])
+  priority  TaskPriority
+  tags      TaskTag[]     @relation("TaskTags")
+  history   TaskHistory[]
+  comments  TaskComment[]
+
+  // Important Dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TaskStatus {
+  id        String   @id @default(uuid())
+  name      String
+  worldId   Int
+  world     World    @relation(fields: [worldId], references: [id])
+  tasks     Task[]
+
+  // Important Dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TaskTag {
+  id        String   @id @default(uuid())
+  name      String
+  worldId   Int
+  world     World    @relation(fields: [worldId], references: [id])
+  tasks     Task[]   @relation("TaskTags")
+
+  // Important Dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TaskHistory {
+  id         String                @id @default(uuid())
+  taskId     String
+  task       Task                  @relation(fields: [taskId], references: [id])
+  changedBy  String
+  changer    User                  @relation(fields: [changedBy], references: [id])
+  changeType TaskHistoryChangeType
+  oldValue   String?
+  newValue   String?
+
+  // Important Dates
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @updatedAt
+}
+
+model TaskComment {
+  id        String   @id @default(uuid())
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id])
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  content   String
+
+  // Important Dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

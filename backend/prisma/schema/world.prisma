@@ -9,6 +9,9 @@ model World {
 
   // Relations
   themes      WorldTheme[]
+  tasks       Task[]
+  taskStatuses TaskStatus[]
+  taskTags TaskTag[]
 
   // Important Dates
   createdAt DateTime @default(now())

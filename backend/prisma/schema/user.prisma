@@ -18,6 +18,12 @@ model User {
   isActive    Boolean  @default(true)
   isAdmin     Boolean  @default(false)
 
+  // Relations
+  tasks       Task[]
+  taskAssigned Task[] @relation("TaskAssignees")
+  taskComments TaskComment[]
+  taskHistories TaskHistory[]
+
   // Important Dates
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
