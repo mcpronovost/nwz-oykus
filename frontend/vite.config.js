@@ -8,4 +8,11 @@ export default defineConfig({
     // watch: { usePolling: true },
   },
   plugins: [react()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: "@import \"src/styles/variables.scss\"; @import \"src/styles/mixins.scss\";"
+      }
+    }
+  },
 });
