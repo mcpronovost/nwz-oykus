@@ -11,7 +11,7 @@ router.get("/world/:worldId/tasks", async (req, res) => {
     where: { worldId: Number(worldId) },
     include: {
       author: true,
-      assignedTo: true,
+      assignees: true,
       status: true,
       tags: true,
       comments: true,
@@ -31,7 +31,7 @@ router.get("/world/:worldId/kanban", async (req, res) => {
       tasks: {
         include: {
           author: true,
-          assignedTo: true,
+          assignees: true,
           tags: true,
           comments: true,
           history: true,
@@ -46,21 +46,21 @@ router.get("/world/:worldId/kanban", async (req, res) => {
 
 // Create a new task
 router.post("/tasks", async (req, res) => {
-  const { title, content, worldId, authorId, assignedToIds, statusId, priority, tagIds } = req.body;
+  const { title, content, worldId, authorId, assigneeIds, statusId, priority, tagIds } = req.body;
   const task = await prisma.task.create({
     data: {
       title,
       content,
       world: { connect: { id: Number(worldId) } },
       author: { connect: { id: authorId } },
-      assignedTo: { connect: assignedToIds?.map(id => ({ id })) },
+      assignees: { connect: assigneeIds?.map(id => ({ id })) },
       status: { connect: { id: statusId } },
       priority,
       tags: { connect: tagIds?.map(id => ({ id })) },
     },
     include: {
       author: true,
-      assignedTo: true,
+      assignees: true,
       status: true,
       tags: true,
       comments: true,
@@ -73,20 +73,20 @@ router.post("/tasks", async (req, res) => {
 // Update a task
 router.put("/tasks/:taskId", async (req, res) => {
   const { taskId } = req.params;
-  const { title, content, assignedToIds, statusId, priority, tagIds } = req.body;
+  const { title, content, assigneeIds, statusId, priority, tagIds } = req.body;
   const task = await prisma.task.update({
-    where: { id: taskId },
+    where: { id: Number(taskId) },
     data: {
       title,
       content,
-      assignedTo: assignedToIds ? { set: assignedToIds.map(id => ({ id })) } : undefined,
+      assignees: assigneeIds ? { set: assigneeIds.map(id => ({ id })) } : undefined,
       status: statusId ? { connect: { id: statusId } } : undefined,
       priority,
       tags: tagIds ? { set: tagIds.map(id => ({ id })) } : undefined,
     },
     include: {
       author: true,
-      assignedTo: true,
+      assignees: true,
       status: true,
       tags: true,
       comments: true,
@@ -99,7 +99,7 @@ router.put("/tasks/:taskId", async (req, res) => {
 // Delete a task
 router.delete("/tasks/:taskId", async (req, res) => {
   const { taskId } = req.params;
-  await prisma.task.delete({ where: { id: taskId } });
+  await prisma.task.delete({ where: { id: Number(taskId) } });
   res.status(204).end();
 });
 
@@ -121,7 +121,7 @@ router.post("/statuses", async (req, res) => {
     data: {
       name,
       world: { connect: { id: Number(worldId) } },
-      creator: { connect: { id: createdBy } },
+      // creator: { connect: { id: createdBy } },
     },
   });
   res.status(201).json(status);
@@ -132,7 +132,7 @@ router.put("/statuses/:statusId", async (req, res) => {
   const { statusId } = req.params;
   const { name } = req.body;
   const status = await prisma.taskStatus.update({
-    where: { id: statusId },
+    where: { id: Number(statusId) },
     data: { name },
   });
   res.json(status);
@@ -141,7 +141,7 @@ router.put("/statuses/:statusId", async (req, res) => {
 // Delete a status
 router.delete("/statuses/:statusId", async (req, res) => {
   const { statusId } = req.params;
-  await prisma.taskStatus.delete({ where: { id: statusId } });
+  await prisma.taskStatus.delete({ where: { id: Number(statusId) } });
   res.status(204).end();
 });
 
@@ -163,7 +163,7 @@ router.post("/tags", async (req, res) => {
     data: {
       name,
       world: { connect: { id: Number(worldId) } },
-      creator: { connect: { id: createdBy } },
+      // creator: { connect: { id: createdBy } },
     },
   });
   res.status(201).json(tag);
@@ -174,7 +174,7 @@ router.put("/tags/:tagId", async (req, res) => {
   const { tagId } = req.params;
   const { name } = req.body;
   const tag = await prisma.taskTag.update({
-    where: { id: tagId },
+    where: { id: Number(tagId) },
     data: { name },
   });
   res.json(tag);
@@ -183,7 +183,7 @@ router.put("/tags/:tagId", async (req, res) => {
 // Delete a tag
 router.delete("/tags/:tagId", async (req, res) => {
   const { tagId } = req.params;
-  await prisma.taskTag.delete({ where: { id: tagId } });
+  await prisma.taskTag.delete({ where: { id: Number(tagId) } });
   res.status(204).end();
 });
 
@@ -192,7 +192,7 @@ router.delete("/tags/:tagId", async (req, res) => {
 router.get("/tasks/:taskId/comments", async (req, res) => {
   const { taskId } = req.params;
   const comments = await prisma.taskComment.findMany({
-    where: { taskId },
+    where: { taskId: Number(taskId) },
     orderBy: { createdAt: "asc" },
   });
   res.json(comments);
@@ -204,7 +204,7 @@ router.post("/tasks/:taskId/comments", async (req, res) => {
   const { authorId, content } = req.body;
   const comment = await prisma.taskComment.create({
     data: {
-      task: { connect: { id: taskId } },
+      task: { connect: { id: Number(taskId) } },
       author: { connect: { id: authorId } },
       content,
     },
@@ -217,7 +217,7 @@ router.post("/tasks/:taskId/comments", async (req, res) => {
 router.get("/tasks/:taskId/history", async (req, res) => {
   const { taskId } = req.params;
   const history = await prisma.taskHistory.findMany({
-    where: { taskId },
+    where: { taskId: Number(taskId) },
     orderBy: { createdAt: "asc" },
   });
   res.json(history);

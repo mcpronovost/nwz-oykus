@@ -53,13 +53,6 @@ export function RouterProvider({ children }) {
 
   return (
     <RouterContext.Provider value={value}>
-      {route && route.component ? (
-        <React.Suspense fallback={<div>Loading…</div>}>
-          {React.createElement(route.component)}
-        </React.Suspense>
-      ) : (
-        <div>404</div>
-      )}
       {children}
     </RouterContext.Provider>
   );

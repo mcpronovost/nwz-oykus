@@ -17,4 +17,20 @@ export const ROUTES = [
       en: "about",
     },
   },
+  {
+    name: "tasks",
+    component: React.lazy(() => import("../../../pages/Tasks")),
+    paths: {
+      fr: "taches",
+      en: "tasks",
+    },
+  },
+  {
+    name: "kanban",
+    component: React.lazy(() => import("../../../pages/Kanban")),
+    paths: {
+      fr: "kanban",
+      en: "kanban",
+    },
+  },
 ];
