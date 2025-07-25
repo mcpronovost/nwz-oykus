@@ -1,17 +1,17 @@
 model World {
-  id    Int    @id @default(autoincrement())
-  name        String   @db.VarChar(64)
-  description String   @db.VarChar(255)
+  id          Int    @id @default(autoincrement())
+  name        String @db.VarChar(64)
+  description String @db.VarChar(255)
 
   // Status
-  isActive    Boolean  @default(true)
-  isPublic    Boolean  @default(false)
+  isActive Boolean @default(true)
+  isPublic Boolean @default(false)
 
   // Relations
-  themes      WorldTheme[]
-  tasks       Task[]
+  themes       WorldTheme[]
+  tasks        Task[]
   taskStatuses TaskStatus[]
-  taskTags TaskTag[]
+  taskTags     TaskTag[]
 
   // Important Dates
   createdAt DateTime @default(now())
@@ -19,15 +19,15 @@ model World {
 }
 
 model WorldTheme {
-  id    Int    @id @default(autoincrement())
-  worldId     Int
-  world       World    @relation(fields: [worldId], references: [id])
+  id      Int   @id @default(autoincrement())
+  worldId Int
+  world   World @relation(fields: [worldId], references: [id])
 
   // Theme Identity
-  name        String   @db.VarChar(64)
+  name String @db.VarChar(64)
 
   // Status
-  isActive    Boolean  @default(false)
+  isActive Boolean @default(false)
 
   // Important Dates
   createdAt DateTime @default(now())
