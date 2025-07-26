@@ -41,6 +41,7 @@ services:
     environment:
       TZ: ${TZ}
       VITE_API_URL: ${VITE_API_URL}
+      VITE_WATCH_USE_POLLING: ${VITE_WATCH_USE_POLLING}
 
   nginx:
     image: nginx:alpine
