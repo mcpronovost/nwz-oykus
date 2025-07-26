@@ -8,6 +8,7 @@ async function main() {
     where: { email: "mc@nwz.ca" },
     update: {},
     create: {
+      id: "bf50764f-c2e1-427d-9e30-eb199942851b",
       email: "mc@nwz.ca",
       username: "mc",
       password: "123",
@@ -38,4 +39,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-  }); 
+  });
