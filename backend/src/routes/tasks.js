@@ -3,6 +3,22 @@ import prisma from "../../prisma/client.js";
 
 const router = express.Router();
 
+// --- USERS ---
+// Get all users (for assignee selection)
+router.get("/users", async (req, res) => {
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      playerName: true,
+    },
+    where: { isActive: true },
+    orderBy: { username: "asc" },
+  });
+  res.json(users);
+});
+
 // --- TASKS ---
 // Get all tasks for a world (list view, ordered by createdAt desc)
 router.get("/world/:worldId/tasks", async (req, res) => {

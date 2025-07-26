@@ -18,7 +18,7 @@ async function main() {
 
   // Create world
   const world = await prisma.world.upsert({
-    where: { name: "Qalatlán" },
+    where: { id: 1, name: "Qalatlán" },
     update: {},
     create: {
       name: "Qalatlán",
