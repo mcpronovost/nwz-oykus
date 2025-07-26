@@ -51,14 +51,17 @@ function TaskFormModal({ onClose, onTaskCreated }) {
     setLoading(true);
     
     try {
+      const data = {
+        ...formData,
+        statusId: parseInt(formData.statusId),
+        worldId: 1,
+        authorId: "bf50764f-c2e1-427d-9e30-eb199942851b" // Hardcoded for now
+      };
+      console.log(data);
       const response = await fetch("/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          worldId: 1,
-          authorId: "3d51c6e8-ca3c-4ff3-a712-22449feba1c9" // Hardcoded for now
-        })
+        body: JSON.stringify(data)
       });
       
       if (response.ok) {
