@@ -1,0 +1,36 @@
+.nwz-app-loading {
+  display: block;
+  height: 2px;
+  width: 100%;
+  overflow: hidden;
+
+  &-bar {
+    background-color: var(--nwz-primary);
+    height: 100%;
+    width: 100%;
+    transition: width 0.2s ease-in-out;
+    animation: nwz-app-loading-bar-animation 1s linear infinite,
+               nwz-app-loading-opacity-animation 1.5s ease-in-out infinite;
+
+    @keyframes nwz-app-loading-bar-animation {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    @keyframes nwz-app-loading-opacity-animation {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.4;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}

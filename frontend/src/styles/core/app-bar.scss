@@ -1,0 +1,99 @@
+.nwz-app-bar {
+  background-color: var(--nwz-app-bar-bg);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 32px;
+  height: var(--nwz-app-bar-height);
+  padding: 0 8px;
+
+  &-toggle {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-menu {
+    font-size: 0.7rem;
+    line-height: 1;
+    flex: 1 1 auto;
+
+    &-nav {
+      flex: 1;
+
+      &-list {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+      }
+
+      &-item {
+        display: flex;
+
+        &-link {
+          opacity: 0.5;
+          transition: opacity 0.2s;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  &-notifications {
+    flex: 0 0 auto;
+    height: var(--nwz-app-bar-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 0 32px;
+
+    &-button {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      height: var(--nwz-app-bar-height);
+      width: var(--nwz-app-bar-height);
+    }
+  }
+
+  &-user {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+
+    &-button {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      flex-direction: row;
+      justify-content: center;
+
+      &-name {
+        font-size: 0.9rem;
+        line-height: 1;
+        flex: 1;
+        padding-right: 12px;
+      }
+
+      &-avatar {
+        background-color: var(--nwz-primary);
+        border-radius: 50%;
+        display: flex;
+        flex: 0 0 32px;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        width: 32px;
+      }
+    }
+  }
+}

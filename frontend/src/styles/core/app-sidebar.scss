@@ -1,0 +1,110 @@
+.nwz-app-sidebar {
+  background-color: var(--nwz-app-sidebar-bg);
+  overflow: hidden;
+  flex: 0 1 var(--nwz-app-sidebar-width);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &.open {
+    flex: 0 1 var(--nwz-app-sidebar-width-open);
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    height: var(--nwz-app-bar-height);
+    padding: 8px;
+
+    &-button {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      flex-direction: row;
+      justify-content: flex-start;
+      height: 100%;
+      width: 100%;
+
+      &-logo {
+        background-color: var(--nwz-primary);
+        border-radius: 4px;
+        display: flex;
+        flex: 0 0 32px;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        width: 32px;
+      }
+
+      &-brand {
+        font-size: 0.9rem;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 1;
+        padding-left: 12px;
+      }
+    }
+  }
+
+  &-menu {
+    flex: 1;
+    padding: 16px 0;
+  }
+
+  &-footer {
+    flex: 0;
+    padding: 8px 0;
+  }
+
+  &-nav {
+    &-list + &-list {
+      border-top: 1px solid var(--nwz-app-sidebar-bg-subtle);
+      margin-top: 16px;
+      padding-top: 16px;
+    }
+
+    &-item {
+      padding: 8px 8px;
+
+      &-link {
+        background-color: transparent;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        height: 100%;
+        width: 100%;
+        padding: 6px 0;
+
+        &:hover {
+          background-color: var(--nwz-app-sidebar-bg-subtle);
+        }
+
+        &-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 0 0 32px;
+          height: 18px;
+          width: 18px;
+        }
+
+        &-text {
+          font-size: 0.9rem;
+          line-height: 1;
+          flex: 1;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+}
