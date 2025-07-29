@@ -1,13 +1,13 @@
-.nwz-app-sidebar {
-  background-color: var(--nwz-app-sidebar-bg);
+.oyk-app-sidebar {
+  background-color: var(--oyk-app-sidebar-bg);
   overflow: hidden;
-  flex: 0 1 var(--nwz-app-sidebar-width);
+  flex: 0 1 var(--oyk-app-sidebar-width);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   &.open {
-    flex: 0 1 var(--nwz-app-sidebar-width-open);
+    flex: 0 1 var(--oyk-app-sidebar-width-open);
   }
 
   &-header {
@@ -15,7 +15,7 @@
     align-items: center;
     flex-direction: row;
     justify-content: center;
-    height: var(--nwz-app-bar-height);
+    height: var(--oyk-app-bar-height);
     padding: 8px;
 
     &-button {
@@ -28,7 +28,7 @@
       width: 100%;
 
       &-logo {
-        background-color: var(--nwz-primary);
+        background-color: var(--oyk-primary);
         border-radius: 4px;
         display: flex;
         flex: 0 0 32px;
@@ -62,7 +62,7 @@
 
   &-nav {
     &-list + &-list {
-      border-top: 1px solid var(--nwz-app-sidebar-bg-subtle);
+      border-top: 1px solid var(--oyk-app-sidebar-bg-subtle);
       margin-top: 16px;
       padding-top: 16px;
     }
@@ -82,7 +82,7 @@
         padding: 6px 0;
 
         &:hover {
-          background-color: var(--nwz-app-sidebar-bg-subtle);
+          background-color: var(--oyk-app-sidebar-bg-subtle);
         }
 
         &-icon {

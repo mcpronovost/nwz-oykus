@@ -1,11 +1,11 @@
-.nwz-app-bar {
-  background-color: var(--nwz-app-bar-bg);
+.oyk-app-bar {
+  background-color: var(--oyk-app-bar-bg);
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
   gap: 32px;
-  height: var(--nwz-app-bar-height);
+  height: var(--oyk-app-bar-height);
   padding: 0 8px;
 
   &-toggle {
@@ -46,7 +46,7 @@
 
   &-notifications {
     flex: 0 0 auto;
-    height: var(--nwz-app-bar-height);
+    height: var(--oyk-app-bar-height);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,8 +58,8 @@
       flex: 0 0 auto;
       align-items: center;
       justify-content: center;
-      height: var(--nwz-app-bar-height);
-      width: var(--nwz-app-bar-height);
+      height: var(--oyk-app-bar-height);
+      width: var(--oyk-app-bar-height);
     }
   }
 
@@ -85,7 +85,7 @@
       }
 
       &-avatar {
-        background-color: var(--nwz-primary);
+        background-color: var(--oyk-primary);
         border-radius: 50%;
         display: flex;
         flex: 0 0 32px;

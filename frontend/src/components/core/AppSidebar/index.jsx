@@ -9,39 +9,39 @@ import {
   SquircleDashed,
   Users,
 } from "lucide-react";
-import NwzNavItem from "./NavItem";
+import OykNavItem from "./NavItem";
 
 export default function AppSidebar() {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <aside className={`nwz-app-sidebar ${isOpen ? "open" : ""}`}>
-      <header className="nwz-app-sidebar-header">
-        <button className="nwz-app-sidebar-header-button">
-          <span className="nwz-app-sidebar-header-button-logo">
+    <aside className={`oyk-app-sidebar ${isOpen ? "open" : ""}`}>
+      <header className="oyk-app-sidebar-header">
+        <button className="oyk-app-sidebar-header-button">
+          <span className="oyk-app-sidebar-header-button-logo">
             <SquircleDashed size={18} />
           </span>
-          <span className="nwz-app-sidebar-header-button-brand">Oykus</span>
+          <span className="oyk-app-sidebar-header-button-brand">Oykus</span>
         </button>
       </header>
-      <section className="nwz-app-sidebar-menu">
-        <nav className="nwz-app-sidebar-nav">
-          <ul className="nwz-app-sidebar-nav-list">
-            <NwzNavItem icon={LayoutDashboard} text="Dashboard" href="home" />
-            <NwzNavItem icon={ListTodo} text="Tasks" href="tasks" />
+      <section className="oyk-app-sidebar-menu">
+        <nav className="oyk-app-sidebar-nav">
+          <ul className="oyk-app-sidebar-nav-list">
+            <OykNavItem icon={LayoutDashboard} text="Dashboard" href="home" />
+            <OykNavItem icon={ListTodo} text="Tasks" href="tasks" />
           </ul>
-          <ul className="nwz-app-sidebar-nav-list">
-            <NwzNavItem icon={ShieldAlert} text="Rulebook" href="rulebook" />
-            <NwzNavItem icon={LibraryBig} text="Lore" href="lore" />
-            <NwzNavItem icon={MessagesSquare} text="Forum" href="forum" />
-            <NwzNavItem icon={Users} text="Community" href="community" />
+          <ul className="oyk-app-sidebar-nav-list">
+            <OykNavItem icon={ShieldAlert} text="Rulebook" href="rulebook" />
+            <OykNavItem icon={LibraryBig} text="Lore" href="lore" />
+            <OykNavItem icon={MessagesSquare} text="Forum" href="forum" />
+            <OykNavItem icon={Users} text="Community" href="community" />
           </ul>
         </nav>
       </section>
-      <footer className="nwz-app-sidebar-footer">
-        <nav className="nwz-app-sidebar-nav">
-          <ul className="nwz-app-sidebar-nav-list">
-            <NwzNavItem icon={Settings} text="Settings" href="/404" />
+      <footer className="oyk-app-sidebar-footer">
+        <nav className="oyk-app-sidebar-nav">
+          <ul className="oyk-app-sidebar-nav-list">
+            <OykNavItem icon={Settings} text="Settings" href="/404" />
           </ul>
         </nav>
       </footer>

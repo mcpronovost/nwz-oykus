@@ -217,11 +217,11 @@ function Layout() {
   const [showSettings, setShowSettings] = useState(false);
   
   return (
-    <div className="nwz-app">
+    <div className="oyk-app">
       <AppSidebar />
-      <div className="nwz-app-core">
+      <div className="oyk-app-core">
         <AppBar />
-        <main className="nwz-app-main">
+        <main className="oyk-app-main">
           {(route && route.component) ? (
             <React.Suspense fallback={<AppLoading />}>
               {React.createElement(route.component)}

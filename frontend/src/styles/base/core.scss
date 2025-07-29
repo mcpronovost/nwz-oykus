@@ -8,8 +8,8 @@ html {
 }
 
 body {
-  background-color: var(--nwz-core-bg);
-  color: var(--nwz-core-fg);
+  background-color: var(--oyk-core-bg);
+  color: var(--oyk-core-fg);
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
@@ -26,7 +26,7 @@ a {
 
 a:link,
 a:visited {
-  color: var(--nwz-core-fg);
+  color: var(--oyk-core-fg);
 }
 
 button {
@@ -45,26 +45,26 @@ li {
   padding: 0;
 }
 
-#nwz {
+#oykus {
   overflow: hidden;
   height: 100vh;
   width: 100vw;
 }
 
-.nwz-app {
+.oyk-app {
   display: flex;
   flex-direction: row;
   height: 100vh;
 }
 
-.nwz-app-core {
+.oyk-app-core {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.nwz-app-main {
+.oyk-app-main {
   overflow-y: auto;
   display: block;
-  height: calc(100vh - var(--nwz-app-bar-height));
+  height: calc(100vh - var(--oyk-app-bar-height));
 }
