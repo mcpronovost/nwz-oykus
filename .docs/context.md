@@ -5,7 +5,7 @@
 This project is under construction.
 
 - **Name**: Oykus
-- **Repo Name**: nwz-oykus
+- **Repo Name**: oykus
 
 ## Tech Stack
 

@@ -1,2 +1,2 @@
-# nwz-oykus
+# Oykus
 Project under construction.

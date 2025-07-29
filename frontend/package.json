@@ -1,7 +1,7 @@
 {
-  "name": "nwz-oykus-frontend",
+  "name": "oykus-frontend",
   "description": "Oykus Frontend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "mcpronovost",
   "license": "BSD-3-Clause",
   "main": "main.jsx",
