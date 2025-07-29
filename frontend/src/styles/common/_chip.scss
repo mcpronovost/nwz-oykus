@@ -1,0 +1,9 @@
+.oyk-chip {
+  background-color: color-mix(in srgb, var(--oyk-core-fg) 10%, transparent);
+  border-radius: 4px;
+  color: var(--oyk-core-fg);
+  font-size: 0.7rem;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 2px 4px;
+}

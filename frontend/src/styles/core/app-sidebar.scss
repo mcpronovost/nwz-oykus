@@ -78,6 +78,7 @@
         justify-content: flex-start;
         gap: 8px;
         height: 100%;
+        min-height: 32px;
         width: 100%;
         padding: 6px 0;
 
@@ -92,6 +93,22 @@
           flex: 0 0 32px;
           height: 18px;
           width: 18px;
+        }
+
+        &-side-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 0 0 32px;
+          height: 16px;
+          width: 16px;
+        }
+
+        &-side-chip {
+          line-height: 1;
+          align-items: center;
+          justify-content: center;
+          margin: 0 4px;
         }
 
         &-text {

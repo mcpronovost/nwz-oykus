@@ -5,3 +5,5 @@
 @use "./core/app-loading" as core-app-loading;
 @use "./core/app-bar" as core-app-bar;
 @use "./core/app-sidebar" as core-app-sidebar;
+
+@use "./common/chip" as common-chip;

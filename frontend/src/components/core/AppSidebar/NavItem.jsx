@@ -1,6 +1,18 @@
 import Link from "@/components/common/Link";
+import Chip from "@/components/common/Chip";
 
-export default function NavItem({ icon: IconComponent, text, href }) {
+export default function NavItem({
+  icon: IconComponent,
+  text,
+  href,
+  sideIcon: SideIconComponent,
+  sideIconColor = "currentColor",
+  sideChip,
+}) {
+  if (sideIconColor !== "currentColor") {
+    sideIconColor = `var(--oyk-color-${sideIconColor})`;
+  }
+
   return (
     <li className="oyk-app-sidebar-nav-item">
       <Link routeName={href} className="oyk-app-sidebar-nav-item-link">
@@ -8,6 +20,16 @@ export default function NavItem({ icon: IconComponent, text, href }) {
           <IconComponent size={18} />
         </span>
         <span className="oyk-app-sidebar-nav-item-link-text">{text}</span>
+        {SideIconComponent && (
+          <span className="oyk-app-sidebar-nav-item-link-side-icon">
+            <SideIconComponent size={16} color={sideIconColor} />
+          </span>
+        )}
+        {sideChip && (
+          <span className="oyk-app-sidebar-nav-item-link-side-chip">
+            <Chip>{sideChip}</Chip>
+          </span>
+        )}
       </Link>
     </li>
   );

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {
+  CircleAlert,
   LayoutDashboard,
   LibraryBig,
   ListTodo,
-  MessagesSquare,
   Settings,
   ShieldAlert,
   SquircleDashed,
@@ -31,10 +31,9 @@ export default function AppSidebar() {
             <OykNavItem icon={ListTodo} text="Tasks" href="tasks" />
           </ul>
           <ul className="oyk-app-sidebar-nav-list">
-            <OykNavItem icon={ShieldAlert} text="Rulebook" href="rulebook" />
-            <OykNavItem icon={LibraryBig} text="Lore" href="lore" />
-            <OykNavItem icon={MessagesSquare} text="Forum" href="forum" />
-            <OykNavItem icon={Users} text="Community" href="community" />
+            <OykNavItem icon={ShieldAlert} text="Rulebook" href="rulebook" sideIcon={CircleAlert} sideIconColor="danger" />
+            <OykNavItem icon={LibraryBig} text="Lore" href="lore" sideChip="new" />
+            <OykNavItem icon={Users} text="Community" href="community" sideChip="2" />
           </ul>
         </nav>
       </section>
