@@ -1,0 +1,17 @@
+{
+  "watch": [
+    "src/**/*.js",
+    "prisma/**/*.js",
+    "prisma/**/*.prisma"
+  ],
+  "ext": "js,json,prisma",
+  "ignore": [
+    "node_modules/**/*",
+    "*.test.js",
+    "*.spec.js"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "delay": "1000"
+} 
