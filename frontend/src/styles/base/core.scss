@@ -1,4 +1,7 @@
 @use "./variables.scss" as *;
+@use "../core/app-loading.scss" as core-app-loading;
+@use "../core/app-bar.scss" as core-app-bar;
+@use "../core/app-sidebar.scss" as core-app-sidebar;
 
 html {
   font-size: 16px;
@@ -21,7 +24,8 @@ a {
   text-decoration: none;
 }
 
-a:link, a:visited {
+a:link,
+a:visited {
   color: var(--nwz-core-fg);
 }
 
@@ -34,13 +38,15 @@ button {
   margin: 0;
 }
 
-ul, li {
+ul,
+li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 #nwz {
+  overflow: hidden;
   height: 100vh;
   width: 100vw;
 }
@@ -58,6 +64,7 @@ ul, li {
 }
 
 .nwz-app-main {
+  overflow-y: auto;
   display: block;
   height: calc(100vh - var(--nwz-app-bar-height));
 }

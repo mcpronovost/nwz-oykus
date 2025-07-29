@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { RouterProvider, useRouter } from "./services/router";
 import "@/styles/main.scss";
+import React, { useState } from "react";
+import { useRouter } from "@/services/router";
 
-import AppSidebar from "./components/core/AppSidebar";
-import AppBar from "./components/core/AppBar";
-import AppLoading from "./components/core/AppLoading";
+import Providers from "@/components/Providers";
+import AppSidebar from "@/components/core/AppSidebar";
+import AppBar from "@/components/core/AppBar";
+import AppLoading from "@/components/core/AppLoading";
+import AppNotFound from "@/components/core/AppNotFound";
 
 function SettingsModal({ onClose }) {
   const [activeTab, setActiveTab] = useState("statuses");
@@ -225,7 +227,7 @@ function Layout() {
               {React.createElement(route.component)}
             </React.Suspense>
           ) : (
-            <div>404</div>
+            <AppNotFound />
           )}
         </main>
       </div>
@@ -236,9 +238,9 @@ function Layout() {
 
 function App() {
   return (
-    <RouterProvider>
+    <Providers>
       <Layout />
-    </RouterProvider>
+    </Providers>
   );
 }
 

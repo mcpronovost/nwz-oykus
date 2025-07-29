@@ -1,4 +1,3 @@
-import "@/styles/core/app-sidebar.scss";
 import { useState } from "react";
 import {
   LayoutDashboard,
@@ -28,14 +27,14 @@ export default function AppSidebar() {
       <section className="nwz-app-sidebar-menu">
         <nav className="nwz-app-sidebar-nav">
           <ul className="nwz-app-sidebar-nav-list">
-            <NwzNavItem icon={LayoutDashboard} text="Dashboard" href="/" />
-            <NwzNavItem icon={ListTodo} text="Tasks" href="/tasks" />
+            <NwzNavItem icon={LayoutDashboard} text="Dashboard" href="home" />
+            <NwzNavItem icon={ListTodo} text="Tasks" href="tasks" />
           </ul>
           <ul className="nwz-app-sidebar-nav-list">
-            <NwzNavItem icon={ShieldAlert} text="Rulebook" href="/404" />
-            <NwzNavItem icon={LibraryBig} text="Lore" href="/404" />
-            <NwzNavItem icon={MessagesSquare} text="Forum" href="/404" />
-            <NwzNavItem icon={Users} text="Community" href="/404" />
+            <NwzNavItem icon={ShieldAlert} text="Rulebook" href="rulebook" />
+            <NwzNavItem icon={LibraryBig} text="Lore" href="lore" />
+            <NwzNavItem icon={MessagesSquare} text="Forum" href="forum" />
+            <NwzNavItem icon={Users} text="Community" href="community" />
           </ul>
         </nav>
       </section>

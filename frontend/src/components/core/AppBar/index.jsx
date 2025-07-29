@@ -1,4 +1,3 @@
-import "@/styles/core/app-bar.scss";
 import { ArrowLeftFromLine,User } from "lucide-react";
 import AppBarMenu from "./Menu";
 import AppBarNotifications from "./Notifications";
