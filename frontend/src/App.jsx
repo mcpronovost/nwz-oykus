@@ -217,11 +217,11 @@ function Layout() {
   const [showSettings, setShowSettings] = useState(false);
   
   return (
-    <div className="oyk-app">
+    <div id="oyk-app">
       <AppSidebar />
-      <div className="oyk-app-core">
+      <div id="oyk-app-core">
         <AppBar />
-        <main className="oyk-app-main">
+        <main id="oyk-app-main">
           {(route && route.component) ? (
             <React.Suspense fallback={<AppLoading />}>
               {React.createElement(route.component)}

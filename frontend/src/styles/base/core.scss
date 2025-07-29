@@ -1,8 +1,3 @@
-@use "./variables.scss" as *;
-@use "../core/app-loading.scss" as core-app-loading;
-@use "../core/app-bar.scss" as core-app-bar;
-@use "../core/app-sidebar.scss" as core-app-sidebar;
-
 html {
   font-size: 16px;
 }
@@ -16,54 +11,25 @@ body {
   margin: 0;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-a {
-  text-decoration: none;
-}
-
-a:link,
-a:visited {
-  color: var(--oyk-core-fg);
-}
-
-button {
-  background: transparent;
-  border: none;
-  color: inherit;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-}
-
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
 #oykus {
   overflow: hidden;
   height: 100vh;
   width: 100vw;
 }
 
-.oyk-app {
+#oyk-app {
   display: flex;
   flex-direction: row;
   height: 100vh;
 }
 
-.oyk-app-core {
+#oyk-app-core {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.oyk-app-main {
+#oyk-app-main {
   overflow-y: auto;
   display: block;
   height: calc(100vh - var(--oyk-app-bar-height));
