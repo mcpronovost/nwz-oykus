@@ -33,4 +33,12 @@ export const ROUTES = [
       en: "kanban",
     },
   },
+  {
+    name: "404",
+    component: React.lazy(() => import("../../../pages/Error404")),
+    paths: {
+      fr: "404",
+      en: "404",
+    },
+  },
 ];

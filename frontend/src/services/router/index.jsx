@@ -22,7 +22,9 @@ export function RouterProvider({ children }) {
 
   const navigate = useCallback(
     (name, language = lang) => {
-      const route = ROUTES.find((r) => r.name === name);
+      const route =
+        ROUTES.find((r) => r.name === name) ||
+        ROUTES.find((r) => r.name === "404");
       if (!route) return;
       const newPath = `/${language}/${route.paths[language]}`;
       window.history.pushState({}, "", newPath);
@@ -48,7 +50,7 @@ export function RouterProvider({ children }) {
     route,
     lang,
     history,
-    navigate,
+    n: (name, language = lang) => navigate(name, language),
   };
 
   return (
