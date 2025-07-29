@@ -43,6 +43,7 @@ model Task {
 model TaskStatus {
   id   Int    @id @default(autoincrement())
   name String
+  sortOrder Int?
 
   // to-1-Relations
   worldId Int

@@ -14,6 +14,8 @@ app.use("/api", router);
 
 app.listen(port, () => {
   logger.info(`Server is running on port ${port}`);
+  logger.info(`Environment: ${process.env.NODE_ENV || "development"}`);
+  logger.info(`Server started at: ${new Date().toISOString()}`);
 });
 
 // Graceful shutdown

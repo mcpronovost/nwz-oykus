@@ -7,6 +7,7 @@ function SettingsModal({ onClose }) {
   const [statuses, setStatuses] = useState([]);
   const [tags, setTags] = useState([]);
   const [newStatus, setNewStatus] = useState("");
+  const [newStatusSortOrder, setNewStatusSortOrder] = useState("");
   const [newTag, setNewTag] = useState("");
 
   React.useEffect(() => {
@@ -26,7 +27,7 @@ function SettingsModal({ onClose }) {
       const response = await fetch("/api/statuses", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: newStatus, worldId: 1 })
+        body: JSON.stringify({ name: newStatus, worldId: 1, sortOrder: parseInt(newStatusSortOrder) })
       });
       
       if (response.ok) {
@@ -111,6 +112,13 @@ function SettingsModal({ onClose }) {
                   placeholder="Enter status name"
                   style={{ flex: 1 }}
                 />
+                <input
+                  type="number"
+                  value={newStatusSortOrder}
+                  onChange={(e) => setNewStatusSortOrder(e.target.value)}
+                  placeholder="Enter sort order"
+                  style={{ flex: 1 }}
+                />
                 <button onClick={handleCreateStatus} className="btn-primary">
                   Add
                 </button>
@@ -130,6 +138,7 @@ function SettingsModal({ onClose }) {
                   marginBottom: "8px"
                 }}>
                   <span>{status.name}</span>
+                  <span>{status.sortOrder}</span>
                   <button 
                     onClick={() => handleDeleteStatus(status.id)}
                     className="btn-danger"

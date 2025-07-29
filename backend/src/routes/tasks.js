@@ -125,19 +125,19 @@ router.get("/world/:worldId/statuses", async (req, res) => {
   const { worldId } = req.params;
   const statuses = await prisma.taskStatus.findMany({
     where: { worldId: Number(worldId) },
-    orderBy: { name: "asc" },
+    orderBy: { sortOrder: "asc" },
   });
   res.json(statuses);
 });
 
 // Create a new status
 router.post("/statuses", async (req, res) => {
-  const { name, worldId, createdBy } = req.body;
+  const { name, worldId, sortOrder } = req.body;
   const status = await prisma.taskStatus.create({
     data: {
       name,
+      sortOrder,
       world: { connect: { id: Number(worldId) } },
-      // creator: { connect: { id: createdBy } },
     },
   });
   res.status(201).json(status);
@@ -146,10 +146,10 @@ router.post("/statuses", async (req, res) => {
 // Update a status
 router.put("/statuses/:statusId", async (req, res) => {
   const { statusId } = req.params;
-  const { name } = req.body;
+  const { name, sortOrder } = req.body;
   const status = await prisma.taskStatus.update({
     where: { id: Number(statusId) },
-    data: { name },
+    data: { name, sortOrder },
   });
   res.json(status);
 });
