@@ -1,0 +1,63 @@
+@use "./variables.scss" as *;
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--nwz-core-bg);
+  color: var(--nwz-core-fg);
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:link, a:visited {
+  color: var(--nwz-core-fg);
+}
+
+button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nwz {
+  height: 100vh;
+  width: 100vw;
+}
+
+.nwz-app {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.nwz-app-core {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.nwz-app-main {
+  display: block;
+  height: calc(100vh - var(--nwz-app-bar-height));
+}

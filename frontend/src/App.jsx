@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { RouterProvider, useRouter } from "./services/router";
-import "./styles/core/base.scss";
+import "@/styles/main.scss";
+
+import AppSidebar from "./components/core/AppSidebar";
+import AppBar from "./components/core/AppBar";
+import AppLoading from "./components/core/AppLoading";
 
 function SettingsModal({ onClose }) {
   const [activeTab, setActiveTab] = useState("statuses");
@@ -206,43 +210,18 @@ function SettingsModal({ onClose }) {
   );
 }
 
-function Sidebar() {
-  const { navigate, lang } = useRouter();
-  return (
-    <div className="sidebar">
-      <button onClick={() => navigate("home", lang)}>🏠</button>
-      <button onClick={() => navigate("tasks", lang)}>📋</button>
-      <button onClick={() => navigate("kanban", lang)}>📊</button>
-    </div>
-  );
-}
-
-function Header({ onOpenSettings }) {
-  return (
-    <div className="header">
-      <div>
-        <h1 style={{ margin: 0, fontSize: "18px" }}>Tasks</h1>
-      </div>
-      <div className="nav-bar">
-        <button>🔍 Search</button>
-        <button onClick={onOpenSettings}>⚙️ Settings</button>
-      </div>
-    </div>
-  );
-}
-
 function Layout() {
   const { route } = useRouter();
   const [showSettings, setShowSettings] = useState(false);
   
   return (
-    <div className="app-layout">
-      <Sidebar />
-      <div className="main-content">
-        <Header onOpenSettings={() => setShowSettings(true)} />
-        <main>
+    <div className="nwz-app">
+      <AppSidebar />
+      <div className="nwz-app-core">
+        <AppBar />
+        <main className="nwz-app-main">
           {(route && route.component) ? (
-            <React.Suspense fallback={<div>Loading…</div>}>
+            <React.Suspense fallback={<AppLoading />}>
               {React.createElement(route.component)}
             </React.Suspense>
           ) : (

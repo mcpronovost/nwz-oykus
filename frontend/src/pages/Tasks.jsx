@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../styles/core/base.scss";
 
 function TaskModal({ task, onClose }) {
   if (!task) return null;
