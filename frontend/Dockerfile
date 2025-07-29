@@ -1,11 +1,14 @@
 FROM node:24
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json ./
+RUN rm -f package-lock.json
+RUN rm -rf node_modules
+RUN npm cache clean --force
 RUN npm install
 
 COPY . .
-RUN npm run build
+# RUN npm run build
 
 EXPOSE 5173
 CMD ["npm", "run", "dev"] 
