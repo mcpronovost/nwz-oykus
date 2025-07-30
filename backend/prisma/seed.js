@@ -71,6 +71,13 @@ async function main() {
     },
   });
 
+  // Delete all tasks
+  await prisma.task.deleteMany({
+    where: {
+      worldId: 1,
+    },
+  });
+
   // Create task
   await prisma.task.upsert({
     where: { id: 1 },
@@ -81,6 +88,7 @@ async function main() {
       content: "Créer la gestion du lore",
       priority: "HIGH",
       statusId: 1,
+      dueAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       authorId: user.id,
       assignees: {
         connect: {
@@ -111,7 +119,7 @@ async function main() {
     update: {},
     create: {
       worldId: 1,
-      title: "Créer la gestion des commentaires",
+      title: "Gestion des commentaires",
       content: "Créer le frontend et le backend pour la gestion des commentaires",
       priority: "LOW",
       statusId: 1,
@@ -128,9 +136,26 @@ async function main() {
     update: {},
     create: {
       worldId: 1,
-      title: "Créer la gestion des tags",
+      title: "Gestion des tags",
       content: "Créer le frontend et le backend pour la gestion des tags",
       priority: "MEDIUM",
+      statusId: 1,
+      authorId: user.id,
+      assignees: {
+        connect: {
+          id: user.id,
+        },
+      },
+    },
+  });
+  await prisma.task.upsert({
+    where: { id: 5 },
+    update: {},
+    create: {
+      worldId: 1,
+      title: "Commencer à écrire le lore",
+      content: "Commencer à écrire le lore",
+      dueAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       statusId: 1,
       authorId: user.id,
       assignees: {

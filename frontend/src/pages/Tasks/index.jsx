@@ -4,6 +4,7 @@ import { Timer, MessagesSquare, Plus, EllipsisVertical } from "lucide-react";
 
 import { useTranslation } from "@/services/translation";
 import { Avatar, Chip, Heading } from "@/components/common";
+import TaskCard from "./TaskCard";
 
 function Tasks() {
   const { t } = useTranslation();
@@ -37,7 +38,10 @@ function Tasks() {
                 />
               </div>
               <h2 className="oyk-tasks-status-item-header-title">
-                {status.name} <span className="oyk-tasks-status-item-header-title-count">({status.tasks.length})</span>
+                {status.name}{" "}
+                <span className="oyk-tasks-status-item-header-title-count">
+                  ({status.tasks.length})
+                </span>
               </h2>
               <div className="oyk-tasks-status-item-header-actions">
                 <button className="oyk-tasks-status-item-header-actions-btn">
@@ -50,66 +54,8 @@ function Tasks() {
             </header>
             <section className="oyk-tasks-status-item-content">
               {status.tasks.map((task) => (
-                  <article key={task.id} className="oyk-tasks-card">
-                    <header className="oyk-tasks-card-header">
-                      <h3 className="oyk-tasks-card-header-title">
-                        {task.title}
-                      </h3>
-                      {(task.priority || task.dueDate) && (
-                        <div className="oyk-tasks-card-header-infos">
-                          {task.priority && (
-                            <div className="oyk-tasks-card-header-infos-priority">
-                              {task.priority === "HIGH" && (
-                                <Chip color="danger">{t("PriorityHigh")}</Chip>
-                              )}
-                              {task.priority === "MEDIUM" && (
-                                <Chip color="warning">{t("PriorityMedium")}</Chip>
-                              )}
-                              {task.priority === "LOW" && (
-                                <Chip color="success">{t("PriorityLow")}</Chip>
-                              )}
-                            </div>
-                          )}
-                          {task.dueDate && (
-                            <div className="oyk-tasks-card-header-infos-datedue">
-                              <span className="oyk-tasks-card-header-infos-datedue-label">
-                                {task.dueDate}
-                              </span>
-                              <Timer
-                                size={14}
-                                className="oyk-tasks-card-header-infos-datedue-icon"
-                              />
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </header>
-                    <footer className="oyk-tasks-card-footer">
-                      <div className="oyk-tasks-card-footer-infos">
-                        {task.comments > 0 && (
-                          <div className="oyk-tasks-card-footer-infos-comments">
-                            <MessagesSquare size={14} />
-                            <span className="oyk-tasks-card-footer-infos-comments-count">
-                              {task.comments}
-                            </span>
-                          </div>
-                        )}
-                        <div className="oyk-tasks-card-footer-infos-assignees">
-                          <ul>
-                            {task.assignees.map((assignee) => (
-                              <li key={assignee.id}>
-                                <Avatar
-                                  name={assignee.name}
-                                  abbr={assignee.abbr}
-                                />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </footer>
-                  </article>
-                ))}
+                <TaskCard key={task.id} task={task} />
+              ))}
             </section>
           </article>
         ))}

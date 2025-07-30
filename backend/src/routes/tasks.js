@@ -34,7 +34,10 @@ router.get("/world/:worldId/tasks", async (req, res) => {
           comments: true,
           history: true,
         },
-        orderBy: { priority: "desc" },
+        orderBy: [
+          { priority: { sort: "desc", nulls: "last" } },
+          { dueAt: "asc" }
+        ],
       },
     },
     orderBy: { sortOrder: "asc" },
