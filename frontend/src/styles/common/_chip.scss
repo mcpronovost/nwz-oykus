@@ -1,7 +1,7 @@
 .oyk-chip {
   background-color: color-mix(in srgb, var(--oyk-core-fg) 10%, transparent);
   border-radius: 4px;
-  font-size: 0.7rem;
+  font-size: 11px;
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
@@ -10,6 +10,15 @@
   justify-content: center;
   max-width: 100%;
   padding: 3px 6px;
+
+  &-outline {
+    background-color: transparent !important;
+    border: 1px solid color-mix(in srgb, var(--oyk-core-fg) 10%, transparent);
+
+    .oyk-chip-content {
+      filter: brightness(1);
+    }
+  }
 
   &-content {
     color: var(--oyk-core-fg);
@@ -21,7 +30,8 @@
   }
 
   &.oyk-chip-default {
-    background-color: color-mix(in srgb, var(--oyk-core-fg) 20%, transparent);
+    background-color: color-mix(in srgb, var(--oyk-core-fg) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-core-fg) 30%, transparent);
 
     .oyk-chip-content {
       color: var(--oyk-core-fg);
@@ -30,6 +40,7 @@
 
   &.oyk-chip-primary {
     background-color: color-mix(in srgb, var(--oyk-primary) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-primary) 50%, transparent);
 
     .oyk-chip-content {
       color: var(--oyk-primary);
@@ -38,6 +49,7 @@
 
   &.oyk-chip-danger {
     background-color: color-mix(in srgb, var(--oyk-c-danger) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-c-danger) 50%, transparent);
 
     .oyk-chip-content {
       color: var(--oyk-c-danger);
@@ -46,6 +58,7 @@
 
   &.oyk-chip-warning {
     background-color: color-mix(in srgb, var(--oyk-c-warning) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-c-warning) 50%, transparent);
 
     .oyk-chip-content {
       color: var(--oyk-c-warning);
@@ -54,6 +67,7 @@
 
   &.oyk-chip-success {
     background-color: color-mix(in srgb, var(--oyk-c-success) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-c-success) 50%, transparent);
 
     .oyk-chip-content {
       color: var(--oyk-c-success);
