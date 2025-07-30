@@ -1,5 +1,10 @@
 import { RouterProvider } from "@/services/router";
+import { StoreProvider } from "@/services/store";
 
 export default function Providers({ children }) {
-  return <RouterProvider>{children}</RouterProvider>;
+  return (
+    <StoreProvider>
+      <RouterProvider>{children}</RouterProvider>
+    </StoreProvider>
+  );
 }
