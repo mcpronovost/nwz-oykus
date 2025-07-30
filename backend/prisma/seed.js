@@ -106,6 +106,40 @@ async function main() {
       },
     },
   });
+  await prisma.task.upsert({
+    where: { id: 3 },
+    update: {},
+    create: {
+      worldId: 1,
+      title: "Créer la gestion des commentaires",
+      content: "Créer le frontend et le backend pour la gestion des commentaires",
+      priority: "LOW",
+      statusId: 1,
+      authorId: user.id,
+      assignees: {
+        connect: {
+          id: user.id,
+        },
+      },
+    },
+  });
+  await prisma.task.upsert({
+    where: { id: 4 },
+    update: {},
+    create: {
+      worldId: 1,
+      title: "Créer la gestion des tags",
+      content: "Créer le frontend et le backend pour la gestion des tags",
+      priority: "MEDIUM",
+      statusId: 1,
+      authorId: user.id,
+      assignees: {
+        connect: {
+          id: user.id,
+        },
+      },
+    },
+  });
 
   console.log({ user, world });
 }
