@@ -1,0 +1,26 @@
+.oyk-heading {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  padding: 32px;
+  margin: 0 auto;
+
+  &-content {
+    &::after {
+      content: "";
+      background-color: var(--oyk-primary);
+      display: block;
+      width: 32px;
+      height: 2px;
+    }
+  }
+
+  &-title {
+    font-family: "Quicksand", sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    padding: 0;
+    margin: 0 0 8px;
+  }
+}

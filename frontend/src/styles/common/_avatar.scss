@@ -1,0 +1,16 @@
+.oyk-avatar {
+  background-color: var(--oyk-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+
+  &-abbr {
+    color: var(--oyk-card-fg);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+  }
+}

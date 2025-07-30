@@ -6,4 +6,6 @@
 @use "./core/app-bar" as core-app-bar;
 @use "./core/app-sidebar" as core-app-sidebar;
 
+@use "./common/avatar" as common-avatar;
 @use "./common/chip" as common-chip;
+@use "./common/heading" as common-heading;
