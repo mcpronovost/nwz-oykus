@@ -10,15 +10,16 @@ import { getLangFromPath, findRoute } from "./utils";
 
 const RouterContext = createContext();
 
+const INITIAL_STATE = {
+  history: [window.location.pathname],
+  lang: getLangFromPath(window.location.pathname),
+  route: findRoute(window.location.pathname, getLangFromPath(window.location.pathname)),
+};
+
 export function RouterProvider({ children }) {
-  const [history, setHistory] = useState([window.location.pathname]);
-  const [lang, setLang] = useState(getLangFromPath(window.location.pathname));
-  const [route, setRoute] = useState(() =>
-    findRoute(
-      window.location.pathname,
-      getLangFromPath(window.location.pathname)
-    )
-  );
+  const [history, setHistory] = useState(INITIAL_STATE.history);
+  const [lang, setLang] = useState(INITIAL_STATE.lang);
+  const [route, setRoute] = useState(INITIAL_STATE.route);
 
   const navigate = useCallback(
     (name, language = lang) => {
@@ -61,5 +62,9 @@ export function RouterProvider({ children }) {
 }
 
 export function useRouter() {
-  return useContext(RouterContext);
+  const context = useContext(RouterContext);
+  if (!context) {
+    return INITIAL_STATE;
+  }
+  return context;
 }

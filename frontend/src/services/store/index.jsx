@@ -3,7 +3,6 @@ import React, {
   useContext,
   useState,
   useCallback,
-  useEffect,
 } from "react";
 import { storeGetItem, storeSetItem } from "./utils";
 

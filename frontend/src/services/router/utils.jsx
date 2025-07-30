@@ -1,6 +1,5 @@
 import { ROUTES } from "./routes";
-
-export const DEFAULT_LANG = "fr";
+import { DEFAULT_LANG } from "../translation/utils";
 
 export const getLangFromPath = (pathname) => {
   const match = pathname.match(/^\/(fr|en)(\/|$)/);
