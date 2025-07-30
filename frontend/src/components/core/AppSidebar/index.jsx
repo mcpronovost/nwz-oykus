@@ -21,7 +21,7 @@ export default function AppSidebar() {
       <header className="oyk-app-sidebar-header">
         <button className="oyk-app-sidebar-header-button">
           <span className="oyk-app-sidebar-header-button-logo">
-            <SquircleDashed size={18} />
+            <SquircleDashed size={18} color="var(--oyk-primary-fg)" />
           </span>
           <span className="oyk-app-sidebar-header-button-brand">Oykus</span>
         </button>

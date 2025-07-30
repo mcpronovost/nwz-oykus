@@ -23,7 +23,7 @@ export default function AppBar() {
         <button className="oyk-app-bar-user-button">
           <span className="oyk-app-bar-user-button-name">John Jones</span>
           <span className="oyk-app-bar-user-button-avatar">
-            <User size={18} />
+            <User size={18} color="var(--oyk-primary-fg)" />
           </span>
         </button>
       </section>
