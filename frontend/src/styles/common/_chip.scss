@@ -43,4 +43,20 @@
       color: var(--oyk-c-danger);
     }
   }
+
+  &.oyk-chip-warning {
+    background-color: color-mix(in srgb, var(--oyk-c-warning) 30%, transparent);
+
+    .oyk-chip-content {
+      color: var(--oyk-c-warning);
+    }
+  }
+
+  &.oyk-chip-success {
+    background-color: color-mix(in srgb, var(--oyk-c-success) 30%, transparent);
+
+    .oyk-chip-content {
+      color: var(--oyk-c-success);
+    }
+  }
 }
