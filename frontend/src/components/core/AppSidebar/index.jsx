@@ -9,13 +9,14 @@ import {
   SquircleDashed,
   Users,
 } from "lucide-react";
+import { useStore } from "@/services/store";
 import OykNavItem from "./NavItem";
 
 export default function AppSidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+  const { storeAppSidebarOpen } = useStore();
 
   return (
-    <aside className={`oyk-app-sidebar ${isOpen ? "open" : ""}`}>
+    <aside className={`oyk-app-sidebar ${storeAppSidebarOpen ? "open" : ""}`}>
       <header className="oyk-app-sidebar-header">
         <button className="oyk-app-sidebar-header-button">
           <span className="oyk-app-sidebar-header-button-logo">
