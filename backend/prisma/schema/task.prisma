@@ -16,18 +16,18 @@ enum TaskHistoryChangeType {
 }
 
 model Task {
-  id      Int    @id @default(autoincrement())
-  title   String @db.VarChar(120)
-  content String
+  id       Int          @id @default(autoincrement())
+  title    String       @db.VarChar(120)
+  content  String
   priority TaskPriority
 
   // to-1-Relations
   worldId  Int
-  world    World        @relation(fields: [worldId], references: [id])
+  world    World      @relation(fields: [worldId], references: [id])
   authorId String?
-  author   User?        @relation(fields: [authorId], references: [id])
+  author   User?      @relation(fields: [authorId], references: [id])
   statusId Int
-  status   TaskStatus   @relation(fields: [statusId], references: [id])
+  status   TaskStatus @relation(fields: [statusId], references: [id])
 
   // to-many-Relations
   assignees User[]        @relation("TaskAssignees")
@@ -41,8 +41,9 @@ model Task {
 }
 
 model TaskStatus {
-  id   Int    @id @default(autoincrement())
-  name String
+  id        Int     @id @default(autoincrement())
+  name      String
+  color    String?
   sortOrder Int?
 
   // to-1-Relations
@@ -89,16 +90,16 @@ model TaskComment {
 }
 
 model TaskHistory {
-  id       Int     @id @default(autoincrement())
-  oldValue String?
-  newValue String?
-  changeType  TaskHistoryChangeType
+  id         Int                   @id @default(autoincrement())
+  oldValue   String?
+  newValue   String?
+  changeType TaskHistoryChangeType
 
   // to-1-Relations
   taskId      Int
-  task        Task                  @relation(fields: [taskId], references: [id])
+  task        Task   @relation(fields: [taskId], references: [id])
   changedById String
-  changedBy   User?                 @relation(fields: [changedById], references: [id])
+  changedBy   User?  @relation(fields: [changedById], references: [id])
 
   // Important Dates
   createdAt DateTime @default(now())

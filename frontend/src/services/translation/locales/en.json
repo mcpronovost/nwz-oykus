@@ -1,3 +1,14 @@
 {
-  "Home": "Home"
+  "Home": "Home",
+  "About": "About",
+  "Privacy Policy": "Privacy Policy",
+  "Dashboard": "Dashboard",
+  "Tasks": "Tasks",
+  "Rulebook": "Rulebook",
+  "Lore": "Lore",
+  "Community": "Community",
+  "Settings": "Settings",
+  "PriorityHigh": "High",
+  "PriorityMedium": "Medium",
+  "PriorityLow": "Low"
 }

@@ -38,6 +38,16 @@ router.get("/world/:worldId/tasks", async (req, res) => {
   res.json(tasks);
 });
 
+// Get all task statuses for a world
+router.get("/world/:worldId/task-status", async (req, res) => {
+  const { worldId } = req.params;
+  const taskStatus = await prisma.taskStatus.findMany({
+    where: { worldId: Number(worldId) },
+    orderBy: { sortOrder: "asc" },
+  });
+  res.json(taskStatus);
+});
+
 // Get tasks for Kanban view (grouped by status, ordered by priority)
 router.get("/world/:worldId/kanban", async (req, res) => {
   const { worldId } = req.params;
