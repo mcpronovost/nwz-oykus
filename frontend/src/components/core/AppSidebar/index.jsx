@@ -33,8 +33,8 @@ export default function AppSidebar() {
           </ul>
           <ul className="oyk-app-sidebar-nav-list">
             <OykNavItem icon={ShieldAlert} text="Rulebook" href="rulebook" sideIcon={CircleAlert} sideIconColor="danger" />
-            <OykNavItem icon={LibraryBig} text="Lore" href="lore" sideChip="new" />
-            <OykNavItem icon={Users} text="Community" href="community" sideChip="2" />
+            <OykNavItem icon={LibraryBig} text="Lore" href="lore" sideChip="new" sideChipColor="primary" />
+            <OykNavItem icon={Users} text="Community" href="community" sideChip="2" sideChipColor="primary" />
           </ul>
         </nav>
       </section>

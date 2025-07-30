@@ -7,9 +7,10 @@ export default function NavItem({
   sideIcon: SideIconComponent,
   sideIconColor = "currentColor",
   sideChip,
+  sideChipColor = "default",
 }) {
   if (sideIconColor !== "currentColor") {
-    sideIconColor = `var(--oyk-color-${sideIconColor})`;
+    sideIconColor = `var(--oyk-c-${sideIconColor})`;
   }
 
   return (
@@ -26,7 +27,7 @@ export default function NavItem({
         )}
         {sideChip && (
           <span className="oyk-app-sidebar-nav-item-link-side-chip">
-            <Chip>{sideChip}</Chip>
+            <Chip color={sideChipColor}>{sideChip}</Chip>
           </span>
         )}
       </Link>
