@@ -8,21 +8,7 @@ import { Avatar, Chip, Heading } from "@/components/common";
 function Tasks() {
   const { t } = useTranslation();
 
-  const [taskStatus, setTaskStatus] = useState([]);
   const [tasks, setTasks] = useState([]);
-
-  const getTaskStatus = async () => {
-    const worldId = 1;
-    try {
-      const res = await fetch(`/api/world/${worldId}/task-status`);
-      const data = await res.json();
-      setTaskStatus(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      getTasks();
-    }
-  };
 
   const getTasks = async () => {
     const worldId = 1;
@@ -32,14 +18,14 @@ function Tasks() {
   };
 
   useEffect(() => {
-    getTaskStatus();
+    getTasks();
   }, []);
 
   return (
     <section className="oyk-tasks">
       <Heading title={t("Tasks")} />
       <section className="oyk-tasks-status">
-        {taskStatus.map((status) => (
+        {tasks.map((status) => (
           <article key={status.name} className="oyk-tasks-status-item">
             <header className="oyk-tasks-status-item-header">
               <div className="oyk-tasks-status-item-header-icon">
@@ -51,7 +37,7 @@ function Tasks() {
                 />
               </div>
               <h2 className="oyk-tasks-status-item-header-title">
-                {status.name}
+                {status.name} <span className="oyk-tasks-status-item-header-title-count">({status.tasks.length})</span>
               </h2>
               <div className="oyk-tasks-status-item-header-actions">
                 <button className="oyk-tasks-status-item-header-actions-btn">
@@ -63,9 +49,7 @@ function Tasks() {
               </div>
             </header>
             <section className="oyk-tasks-status-item-content">
-              {tasks
-                .filter((task) => task.statusId === status.id)
-                .map((task) => (
+              {status.tasks.map((task) => (
                   <article key={task.id} className="oyk-tasks-card">
                     <header className="oyk-tasks-card-header">
                       <h3 className="oyk-tasks-card-header-title">
