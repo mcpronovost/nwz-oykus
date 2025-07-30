@@ -1,3 +1,5 @@
+@import "https://fonts.googleapis.com/css?family=Work+Sans:300,400,600,700";
+
 html {
   font-size: 16px;
 }
@@ -5,7 +7,7 @@ html {
 body {
   background-color: var(--oyk-core-bg);
   color: var(--oyk-core-fg);
-  font-family: "Inter", sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   margin: 0;

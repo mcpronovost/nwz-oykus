@@ -1,5 +1,4 @@
-import Link from "@/components/common/Link";
-import Chip from "@/components/common/Chip";
+import { Chip, Link } from "@/components/common";
 
 export default function NavItem({
   icon: IconComponent,

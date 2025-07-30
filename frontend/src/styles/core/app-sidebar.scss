@@ -5,9 +5,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: flex-basis 0.3s;
 
   &.open {
-    flex: 0 1 var(--oyk-app-sidebar-width-open);
+    flex-basis: var(--oyk-app-sidebar-width-open);
   }
 
   &-header {
