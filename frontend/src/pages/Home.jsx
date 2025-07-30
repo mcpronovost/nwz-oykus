@@ -1,7 +1,11 @@
+import { useTranslation } from "@/services/translation";
+
 function Home() {
+  const { t } = useTranslation();
+
   return (
     <div>
-      <h1>Home Page</h1>
+      <h1>{t("Home")}</h1>
     </div>
   );
 }

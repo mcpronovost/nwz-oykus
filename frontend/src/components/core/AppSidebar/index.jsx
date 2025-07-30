@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   CircleAlert,
   LayoutDashboard,
@@ -10,10 +9,12 @@ import {
   Users,
 } from "lucide-react";
 import { useStore } from "@/services/store";
+import { useTranslation } from "@/services/translation";
 import OykNavItem from "./NavItem";
 
 export default function AppSidebar() {
   const { storeAppSidebarOpen } = useStore();
+  const { t } = useTranslation();
 
   return (
     <aside className={`oyk-app-sidebar ${storeAppSidebarOpen ? "open" : ""}`}>
@@ -28,20 +29,20 @@ export default function AppSidebar() {
       <section className="oyk-app-sidebar-menu">
         <nav className="oyk-app-sidebar-nav">
           <ul className="oyk-app-sidebar-nav-list">
-            <OykNavItem icon={LayoutDashboard} text="Dashboard" href="home" />
-            <OykNavItem icon={ListTodo} text="Tasks" href="tasks" />
+            <OykNavItem icon={LayoutDashboard} text={t("Dashboard")} href="home" />
+            <OykNavItem icon={ListTodo} text={t("Tasks")} href="tasks" />
           </ul>
           <ul className="oyk-app-sidebar-nav-list">
-            <OykNavItem icon={ShieldAlert} text="Rulebook" href="rulebook" sideIcon={CircleAlert} sideIconColor="danger" />
-            <OykNavItem icon={LibraryBig} text="Lore" href="lore" sideChip="nouveauté" sideChipColor="primary" />
-            <OykNavItem icon={Users} text="Community" href="community" sideChip="2" sideChipColor="primary" />
+            <OykNavItem icon={ShieldAlert} text={t("Rulebook")} href="rulebook" sideIcon={CircleAlert} sideIconColor="danger" />
+            <OykNavItem icon={LibraryBig} text={t("Lore")} href="lore" sideChip="nouveauté" sideChipColor="primary" />
+            <OykNavItem icon={Users} text={t("Community")} href="community" sideChip="2" sideChipColor="primary" />
           </ul>
         </nav>
       </section>
       <footer className="oyk-app-sidebar-footer">
         <nav className="oyk-app-sidebar-nav">
           <ul className="oyk-app-sidebar-nav-list">
-            <OykNavItem icon={Settings} text="Settings" href="/404" />
+            <OykNavItem icon={Settings} text={t("Settings")} href="404" />
           </ul>
         </nav>
       </footer>

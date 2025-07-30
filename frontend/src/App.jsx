@@ -1,6 +1,7 @@
 import "@/styles/main.scss";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "@/services/router";
+import { getLangFromPath } from "@/services/router/utils";
 
 import Providers from "@/components/Providers";
 import AppSidebar from "@/components/core/AppSidebar";
@@ -212,8 +213,23 @@ function SettingsModal({ onClose }) {
   );
 }
 
-function Layout() {
+function MainLayout() {
   const { route } = useRouter();
+  
+  return (
+      <main id="oyk-app-main">
+        {(route && route.component) ? (
+          <React.Suspense fallback={<AppLoading />}>
+            {React.createElement(route.component)}
+          </React.Suspense>
+        ) : (
+          <AppNotFound />
+        )}
+      </main>
+  );
+}
+
+function Layout() {
   const [showSettings, setShowSettings] = useState(false);
   
   return (
@@ -221,15 +237,7 @@ function Layout() {
       <AppSidebar />
       <div id="oyk-app-core">
         <AppBar />
-        <main id="oyk-app-main">
-          {(route && route.component) ? (
-            <React.Suspense fallback={<AppLoading />}>
-              {React.createElement(route.component)}
-            </React.Suspense>
-          ) : (
-            <AppNotFound />
-          )}
-        </main>
+        <MainLayout />
       </div>
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
     </div>
@@ -237,8 +245,10 @@ function Layout() {
 }
 
 function App() {
+  const lang = useRef(getLangFromPath(window.location.pathname));
+
   return (
-    <Providers>
+    <Providers lang={lang.current}>
       <Layout />
     </Providers>
   );
