@@ -1,4 +1,4 @@
-export const okpCode = (text) => {
+export const oykCode = (text) => {
   let r = text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -35,7 +35,7 @@ export const okpCode = (text) => {
   return r;
 };
 
-export const okpDate = (
+export const oykDate = (
   value,
   show = "full",
   lang = "fr",
@@ -55,7 +55,11 @@ export const okpDate = (
   return d.toLocaleString(lang, o);
 };
 
-export const okpUnit = (num, digits = 2) => {
+export const oykDateLessThan = (date, days) => {
+  return new Date(date) < new Date(Date.now() + 1000 * 60 * 60 * 24 * days);
+};
+
+export const oykUnit = (num, digits = 2) => {
   const l = [
     { v: 1, u: "" },
     { v: 1e3, u: "k" },
@@ -107,7 +111,7 @@ const adjustColor = (colour, percent) => {
   return `#${r}${g}${b}`;
 };
 
-export const okpContrast = (colour) => {
+export const oykContrast = (colour) => {
   return isLightColor(colour)
     ? adjustColor(colour, -0.6)
     : adjustColor(colour, 0.6);
