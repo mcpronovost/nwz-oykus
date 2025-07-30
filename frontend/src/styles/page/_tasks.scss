@@ -1,0 +1,188 @@
+.oyk-tasks {
+  display: block;
+
+  &-status {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 32px;
+    margin: 0 auto;
+
+    &-item {
+      background-color: var(--oyk-card-bg);
+      border-radius: var(--oyk-card-radius);
+      flex: 1;
+      min-height: 25vh;
+      min-width: 250px;
+      padding: 8px;
+
+      &-header {
+        color: var(--oyk-card-fg);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0;
+        margin: 0 0 8px;
+
+        &-icon {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          &-dot {
+            border-radius: 1rem;
+            display: block;
+            width: 0.4rem;
+            height: 1rem;
+          }
+        }
+
+        &-title {
+          font-size: 1rem;
+          font-weight: 600;
+          flex: 1;
+          margin: 0;
+        }
+
+        &-actions {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 4px;
+
+          &-btn {
+            font-size: 14px;
+            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            padding: 4px;
+
+            &:hover {
+              opacity: 1;
+            }
+
+            &:active {
+              transform: scale(0.9);
+            }
+          }
+        }
+      }
+
+      &-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  }
+
+  &-card {
+    background-color: var(--oyk-card-item-bg);
+    border-radius: var(--oyk-card-radius);
+    color: var(--oyk-card-fg);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    &:active {
+      opacity: 0.6;
+      transform: scale(0.98);
+    }
+
+    &-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      &-infos {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+        gap: 8px;
+        order: 0;
+        margin: 0 0 4px;
+
+        &-datedue {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 6px;
+
+          &-label {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1;
+            display: inline-block;
+          }
+        }
+      }
+
+      &-title {
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.2;
+        order: 1;
+        margin: 0;
+      }
+    }
+
+    &-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      opacity: 0.7;
+
+      &-infos {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+
+        &-comments {
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+          gap: 8px;
+
+          &-count {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1;
+            display: inline-block;
+          }
+        }
+
+        &-assignees {
+          flex: 1;
+
+          > ul {
+            text-align: right;
+            display: block;
+
+            > li {
+              display: inline-block;
+              position: relative;
+
+              + li {
+                margin-left: -8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
