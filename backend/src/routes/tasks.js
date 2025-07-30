@@ -20,38 +20,10 @@ router.get("/users", async (req, res) => {
 });
 
 // --- TASKS ---
-// Get all tasks for a world (list view, ordered by createdAt desc)
+// Get all tasks for a world (grouped by status, ordered by priority)
 router.get("/world/:worldId/tasks", async (req, res) => {
   const { worldId } = req.params;
-  const tasks = await prisma.task.findMany({
-    where: { worldId: Number(worldId) },
-    include: {
-      author: true,
-      assignees: true,
-      status: true,
-      tags: true,
-      comments: true,
-      history: true,
-    },
-    orderBy: { createdAt: "desc" },
-  });
-  res.json(tasks);
-});
-
-// Get all task statuses for a world
-router.get("/world/:worldId/task-status", async (req, res) => {
-  const { worldId } = req.params;
-  const taskStatus = await prisma.taskStatus.findMany({
-    where: { worldId: Number(worldId) },
-    orderBy: { sortOrder: "asc" },
-  });
-  res.json(taskStatus);
-});
-
-// Get tasks for Kanban view (grouped by status, ordered by priority)
-router.get("/world/:worldId/kanban", async (req, res) => {
-  const { worldId } = req.params;
-  const statuses = await prisma.taskStatus.findMany({
+  const data = await prisma.taskStatus.findMany({
     where: { worldId: Number(worldId) },
     include: {
       tasks: {
@@ -65,9 +37,9 @@ router.get("/world/:worldId/kanban", async (req, res) => {
         orderBy: { priority: "desc" },
       },
     },
-    orderBy: { name: "asc" },
+    orderBy: { sortOrder: "asc" },
   });
-  res.json(statuses);
+  res.json(data);
 });
 
 // Create a new task
