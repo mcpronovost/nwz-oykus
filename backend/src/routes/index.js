@@ -9,6 +9,6 @@ router.get("/", (req, res) => {
 });
 
 router.use("/auth", authRouter);
-router.use("/tasks", tasksRouter);
+router.use("/world/:worldId/tasks", tasksRouter);
 
 export default router;

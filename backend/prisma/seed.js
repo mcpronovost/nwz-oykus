@@ -33,12 +33,15 @@ async function main() {
   // Create world
   const world = await prisma.world.upsert({
     where: { id: 1, name: "Qalatlán" },
-    update: {},
+    update: {
+      ownerId: user.id,
+    },
     create: {
       name: "Qalatlán",
       description: "Seeded world for mc",
       isActive: true,
       isPublic: false,
+      ownerId: user.id,
     },
   });
 

@@ -10,7 +10,7 @@ import { Heading } from "@/components/common";
 import TaskStatus from "./TaskStatus";
 import TaskCard from "./TaskCard";
 
-const worldId = 2;
+const worldId = 1;
 
 function Tasks() {
   const { t } = useTranslation();

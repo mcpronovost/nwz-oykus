@@ -2,34 +2,30 @@ import express from "express";
 import prisma from "../../prisma/client.js";
 import { authenticateToken } from "../middleware/auth.js";
 
-const router = express.Router();
-
-// Apply authentication to all routes
-router.use(authenticateToken);
-
-// --- USERS ---
-// Get all users (for assignee selection)
-router.get("/users", async (req, res) => {
-  const users = await prisma.user.findMany({
-    select: {
-      id: true,
-      username: true,
-      email: true,
-      playerName: true,
-    },
-    where: { isActive: true },
-    orderBy: { username: "asc" },
-  });
-  res.json(users);
-});
+const router = express.Router({ mergeParams: true });
 
 // --- TASKS ---
 /**
  * Get all tasks for a world (grouped by status, ordered by priority)
  * @param {string} req.params.worldId - The world ID
  */
-router.get("/world/:worldId/tasks", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
   const { worldId } = req.params;
+  console.log(">> worldId:", worldId);
+  // Check if worldId is a number and if not, return a 400 error
+  if (isNaN(worldId)) {
+    return res.status(400).json({ error: "World ID must be a number" });
+  }
+  // Check if world exists and current user is owner
+  const world = await prisma.world.findUnique({
+    where: { id: Number(worldId) },
+    include: {
+      owner: true,
+    },
+  });
+  if (!world || world.owner.id !== req.user.id) {
+    return res.status(403).json({ error: "You don't have permission to see this world" });
+  }
   const data = await prisma.taskStatus.findMany({
     where: { worldId: Number(worldId) },
     include: {
@@ -72,7 +68,7 @@ router.get("/world/:worldId/tasks", async (req, res) => {
  * 
  * @param {string} req.body.statusId - The task status ID
  */
-router.patch("/world/:worldId/tasks/:taskId/status", async (req, res) => {
+router.patch("/:taskId/status", async (req, res) => {
   const { worldId, taskId } = req.params;
   const { statusId } = req.body;
   const task = await prisma.task.update({
@@ -92,7 +88,7 @@ router.patch("/world/:worldId/tasks/:taskId/status", async (req, res) => {
  * @param {string[]} req.body.assigneeIds - The task assignee IDs
  * @param {string} req.body.statusId - The task status ID
  */
-router.post("/world/:worldId/tasks/create", async (req, res) => {
+router.post("/create", async (req, res) => {
   const { worldId } = req.params;
   const { title, content, authorId, assigneeIds, statusId, priority, tagIds } = req.body;
   const task = await prisma.task.create({
@@ -125,7 +121,7 @@ router.post("/world/:worldId/tasks/create", async (req, res) => {
  * @param {string} req.body.color - The task status color
  * @param {number} req.body.sortOrder - The task status sort order
  */
-router.patch("/world/:worldId/tasks/status/:statusId/edit", async (req, res) => {
+router.patch("/status/:statusId/edit", async (req, res) => {
   const { worldId, statusId } = req.params;
   const { name, color, sortOrder } = req.body;
   const status = await prisma.taskStatus.update({
@@ -175,7 +171,7 @@ router.delete("/tasks/:taskId", async (req, res) => {
 
 // --- STATUSES ---
 // Get all statuses for a world
-router.get("/world/:worldId/statuses", async (req, res) => {
+router.get("/statuses", async (req, res) => {
   const { worldId } = req.params;
   const statuses = await prisma.taskStatus.findMany({
     where: { worldId: Number(worldId) },
