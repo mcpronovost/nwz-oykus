@@ -1,6 +1,8 @@
 import { useState } from "react";
+
 import { useRouter } from "@/services/router";
 import { api } from "@/services/api";
+import { Link } from "@/components/common";
 
 export default function Register() {
   const { n } = useRouter();
@@ -123,12 +125,12 @@ export default function Register() {
           <h1 className="oyk-auth-header-title">Create your account</h1>
           <p className="oyk-auth-header-subtitle">
             Or{" "}
-            <button
-              onClick={() => n("login")}
-              className="oyk-auth-header-subtitle a"
+            <Link
+              routeName="login"
+              className="oyk-auth-header-subtitle"
             >
               sign in to your existing account
-            </button>
+            </Link>
           </p>
         </div>
 

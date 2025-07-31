@@ -1,14 +1,13 @@
 .oyk-auth {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--oyk-core-bg);
+  min-height: 100%;
   padding: 3rem 1rem;
 
   &-container {
-    max-width: 400px;
     width: 100%;
+    max-width: 400px;
   }
 
   &-header {
@@ -30,8 +29,8 @@
 
       a {
         color: var(--oyk-primary);
-        text-decoration: none;
         font-weight: 500;
+        text-decoration: none;
 
         &:hover {
           text-decoration: underline;
@@ -44,7 +43,6 @@
     background: var(--oyk-card-bg);
     border-radius: var(--oyk-radius);
     padding: 2rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   }
 
   &-error {
@@ -65,26 +63,26 @@
     margin-bottom: 1.5rem;
 
     &-label {
-      display: block;
       color: var(--oyk-card-fg);
       font-size: 0.875rem;
       font-weight: 500;
+      display: block;
       margin-bottom: 0.5rem;
     }
 
     &-input {
-      width: 100%;
-      padding: 0.75rem;
       background-color: var(--oyk-card-item-bg);
       border: 1px solid var(--oyk-card-item-bg);
       border-radius: var(--oyk-radius);
       color: var(--oyk-card-fg);
       font-size: 0.875rem;
+      width: 100%;
+      padding: 0.75rem;
       transition: border-color 0.2s ease;
 
       &:focus {
-        outline: none;
         border-color: var(--oyk-primary);
+        outline: none;
       }
 
       &--error {
@@ -105,15 +103,15 @@
   }
 
   &-button {
-    width: 100%;
-    padding: 0.75rem 1rem;
     background-color: var(--oyk-primary);
-    color: var(--oyk-primary-fg);
     border: none;
     border-radius: var(--oyk-radius);
+    color: var(--oyk-primary-fg);
     font-size: 0.875rem;
     font-weight: 500;
+    width: 100%;
     cursor: pointer;
+    padding: 0.75rem 1rem;
     transition: background-color 0.2s ease;
 
     &:hover:not(:disabled) {
@@ -125,4 +123,4 @@
       cursor: not-allowed;
     }
   }
-} 
+}

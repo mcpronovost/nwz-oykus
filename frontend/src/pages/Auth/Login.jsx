@@ -1,6 +1,8 @@
 import { useState } from "react";
+
 import { useRouter } from "@/services/router";
 import { api } from "@/services/api";
+import { Link } from "@/components/common";
 
 export default function Login() {
   const { n } = useRouter();
@@ -75,12 +77,12 @@ export default function Login() {
           <h1 className="oyk-auth-header-title">Sign in to your account</h1>
           <p className="oyk-auth-header-subtitle">
             Or{" "}
-            <button
-              onClick={() => n("register")}
-              className="oyk-auth-header-subtitle a"
+            <Link
+              routeName="register"
+              className="oyk-auth-header-subtitle"
             >
               create a new account
-            </button>
+            </Link>
           </p>
         </div>
 
