@@ -1,9 +1,11 @@
 import "@/styles/page/_tasks.scss";
 import { useEffect, useState } from "react";
-import { Timer, MessagesSquare, Plus, EllipsisVertical } from "lucide-react";
+import { Plus, EllipsisVertical } from "lucide-react";
 
 import { useTranslation } from "@/services/translation";
-import { Avatar, Chip, Heading } from "@/components/common";
+import { Heading } from "@/components/common";
+
+import TaskStatus from "./TaskStatus";
 import TaskCard from "./TaskCard";
 
 function Tasks() {
@@ -28,33 +30,10 @@ function Tasks() {
       <section className="oyk-tasks-status">
         {tasks.map((status) => (
           <article key={status.name} className="oyk-tasks-status-item">
-            <header className="oyk-tasks-status-item-header">
-              <div className="oyk-tasks-status-item-header-icon">
-                <span
-                  className="oyk-tasks-status-item-header-icon-dot"
-                  style={{
-                    backgroundColor: status.color || "var(--oyk-primary)",
-                  }}
-                />
-              </div>
-              <h2 className="oyk-tasks-status-item-header-title">
-                {status.name}{" "}
-                <span className="oyk-tasks-status-item-header-title-count">
-                  ({status.tasks.length})
-                </span>
-              </h2>
-              <div className="oyk-tasks-status-item-header-actions">
-                <button className="oyk-tasks-status-item-header-actions-btn">
-                  <Plus size={16} />
-                </button>
-                <button className="oyk-tasks-status-item-header-actions-btn">
-                  <EllipsisVertical size={16} />
-                </button>
-              </div>
-            </header>
-            <section className="oyk-tasks-status-item-content">
+            <TaskStatus status={status} />
+            <section className={`oyk-tasks-status-item-content ${status.isCompleted ? "oyk-tasks-status-item-content-completed" : ""}`}>
               {status.tasks.map((task) => (
-                <TaskCard key={task.id} task={task} />
+                <TaskCard key={task.id} task={task} isCompleted={status.isCompleted} />
               ))}
             </section>
           </article>

@@ -2,7 +2,8 @@
   "watch": [
     "src/**/*.js",
     "prisma/**/*.js",
-    "prisma/**/*.prisma"
+    "prisma/**/*.prisma",
+    "prisma/schema/**/*.prisma"
   ],
   "ext": "js,json,prisma",
   "ignore": [
@@ -13,5 +14,7 @@
   "env": {
     "NODE_ENV": "development"
   },
-  "delay": "1000"
+  "delay": "1000",
+  "legacyWatch": true,
+  "polling": true
 } 

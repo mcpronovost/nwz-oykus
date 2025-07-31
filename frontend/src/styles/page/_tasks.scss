@@ -9,7 +9,7 @@
     width: 100%;
     max-width: 1200px;
     padding: 0 32px;
-    margin: 0 auto;
+    margin: 32px auto;
 
     &-item {
       background-color: var(--oyk-card-bg);
@@ -81,6 +81,10 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
+
+        &-completed {
+          opacity: 0.5;
+        }
       }
     }
   }
@@ -88,15 +92,17 @@
   &-card {
     background-color: var(--oyk-card-item-bg);
     border-radius: var(--oyk-card-radius);
-    color: var(--oyk-card-fg);
+    outline: 1px solid transparent;
+    color: var(--oyk-card-item-fg);
     display: flex;
     flex-direction: column;
     gap: 8px;
     padding: 8px;
     opacity: 1;
+    transition: outline 0.2s;
 
     &:hover {
-      opacity: 0.9;
+      outline: 1px solid color-mix(in srgb, var(--oyk-card-item-fg) 10%, transparent);
       cursor: pointer;
     }
 

@@ -26,14 +26,6 @@ export const ROUTES = [
     },
   },
   {
-    name: "kanban",
-    component: React.lazy(() => import("../../../pages/Kanban")),
-    paths: {
-      fr: "kanban",
-      en: "kanban",
-    },
-  },
-  {
     name: "404",
     component: React.lazy(() => import("../../../pages/Error404")),
     paths: {

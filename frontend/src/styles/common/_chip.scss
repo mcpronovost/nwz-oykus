@@ -65,6 +65,15 @@
     }
   }
 
+  &.oyk-chip-info {
+    background-color: color-mix(in srgb, var(--oyk-c-info) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-c-info) 50%, transparent);
+
+    .oyk-chip-content {
+      color: var(--oyk-c-info);
+    }
+  }
+
   &.oyk-chip-success {
     background-color: color-mix(in srgb, var(--oyk-c-success) 30%, transparent);
     border-color: color-mix(in srgb, var(--oyk-c-success) 50%, transparent);

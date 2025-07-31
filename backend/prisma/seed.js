@@ -16,6 +16,18 @@ async function main() {
       abbr: "MC",
     },
   });
+  const kamuy = await prisma.user.upsert({
+    where: { email: "kamuy@oykus.ca" },
+    update: {},
+    create: {
+      id: "bf50764f-c2e1-427d-9e30-eb199942851c",
+      email: "kamuy@oykus.ca",
+      username: "kamuy",
+      password: "123",
+      playerName: "Kamuy Sinen",
+      abbr: "KS",
+    },
+  });
 
   // Create world
   const world = await prisma.world.upsert({
@@ -67,7 +79,19 @@ async function main() {
       worldId: 1,
       name: "Done",
       color: "#4a8d35",
+      isCompleted: true,
       sortOrder: 4,
+    },
+  });
+
+  // Create task tags
+  const roleplayTag = await prisma.taskTag.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      worldId: 1,
+      name: "Roleplay",
+      color: null,
     },
   });
 
@@ -88,7 +112,7 @@ async function main() {
       content: "Créer la gestion du lore",
       priority: "HIGH",
       statusId: 1,
-      dueAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      dueAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
       authorId: user.id,
       assignees: {
         connect: {
@@ -120,7 +144,8 @@ async function main() {
     create: {
       worldId: 1,
       title: "Gestion des commentaires",
-      content: "Créer le frontend et le backend pour la gestion des commentaires",
+      content:
+        "Créer le frontend et le backend pour la gestion des commentaires",
       priority: "LOW",
       statusId: 1,
       authorId: user.id,
@@ -142,9 +167,14 @@ async function main() {
       statusId: 1,
       authorId: user.id,
       assignees: {
-        connect: {
-          id: user.id,
-        },
+        connect: [
+          {
+            id: user.id,
+          },
+          {
+            id: kamuy.id,
+          },
+        ],
       },
     },
   });
@@ -163,10 +193,39 @@ async function main() {
           id: user.id,
         },
       },
+      tags: {
+        connect: {
+          id: roleplayTag.id,
+        },
+      },
+    },
+  });
+  await prisma.task.upsert({
+    where: { id: 6 },
+    update: {},
+    create: {
+      worldId: 1,
+      title: "Créer la gestion des tâches",
+      content:
+        "Développer la gestion des tâches, en commençant par le backend, les schemas prisma et les routes, puis, le frontend.",
+      dueAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      statusId: 4,
+      priority: "MEDIUM",
+      authorId: user.id,
+      assignees: {
+        connect: {
+          id: user.id,
+        },
+      },
+      tags: {
+        connect: {
+          id: roleplayTag.id,
+        },
+      },
     },
   });
 
-  console.log({ user, world });
+  console.log({ user, world, roleplayTag });
 }
 
 main()

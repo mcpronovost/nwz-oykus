@@ -6,25 +6,25 @@ import { oykDate, oykDateLessThan } from "@/utils";
 import { useTranslation } from "@/services/translation";
 import { Avatar, Chip, Heading } from "@/components/common";
 
-function TaskCard({ task }) {
+function TaskCard({ task, isCompleted }) {
   const { t, lang } = useTranslation();
 
   return (
     <article key={task.id} className="oyk-tasks-card">
       <header className="oyk-tasks-card-header">
         <h3 className="oyk-tasks-card-header-title">{task.title}</h3>
-        {(task.priority || task.dueAt) && (
+        {(!isCompleted && (task.priority || task.dueAt)) && (
           <div className="oyk-tasks-card-header-infos">
             {task.priority && (
               <div className="oyk-tasks-card-header-infos-priority">
                 {task.priority === "HIGH" && (
-                  <Chip color="danger">{t("PriorityHigh")}</Chip>
+                  <Chip color="danger" outline>{t("PriorityHigh")}</Chip>
                 )}
                 {task.priority === "MEDIUM" && (
-                  <Chip color="warning">{t("PriorityMedium")}</Chip>
+                  <Chip color="warning" outline>{t("PriorityMedium")}</Chip>
                 )}
                 {task.priority === "LOW" && (
-                  <Chip color="success">{t("PriorityLow")}</Chip>
+                  <Chip color="success" outline>{t("PriorityLow")}</Chip>
                 )}
               </div>
             )}
@@ -50,7 +50,7 @@ function TaskCard({ task }) {
         )}
       </header>
       <section className="oyk-tasks-card-content">
-        {task.content && task.content != task.title && (
+        {(!isCompleted && task.content && task.content != task.title) && (
           <div className="oyk-tasks-card-content-descritpion">
             <p>
               {task.content.length > 64
@@ -59,10 +59,10 @@ function TaskCard({ task }) {
             </p>
           </div>
         )}
-        {task.tags.length > 0 && (
+        {(!isCompleted && task.tags.length > 0) && (
           <div className="oyk-tasks-card-content-tags">
             {task.tags.map((tag) => (
-              <Chip key={tag.id} outline>
+              <Chip key={tag.id} color={tag.color || undefined}>
                 {tag.name}
               </Chip>
             ))}
@@ -83,7 +83,11 @@ function TaskCard({ task }) {
             <ul>
               {task.assignees.map((assignee) => (
                 <li key={assignee.id}>
-                  <Avatar name={assignee.name} abbr={assignee.abbr} />
+                  <Avatar
+                    name={assignee.name}
+                    abbr={assignee.abbr}
+                    borderColor="var(--oyk-card-item-bg)"
+                  />
                 </li>
               ))}
             </ul>

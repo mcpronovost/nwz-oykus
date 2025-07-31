@@ -16,8 +16,8 @@ enum TaskHistoryChangeType {
 }
 
 model Task {
-  id       Int          @id @default(autoincrement())
-  title    String       @db.VarChar(120)
+  id       Int           @id @default(autoincrement())
+  title    String        @db.VarChar(120)
   content  String
   priority TaskPriority?
 
@@ -36,16 +36,17 @@ model Task {
   history   TaskHistory[]
 
   // Important Dates
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   dueAt     DateTime?
 }
 
 model TaskStatus {
-  id        Int     @id @default(autoincrement())
-  name      String
-  color    String?
-  sortOrder Int?
+  id          Int     @id @default(autoincrement())
+  name        String
+  color       String?
+  isCompleted Boolean @default(false)
+  sortOrder   Int?
 
   // to-1-Relations
   worldId Int
@@ -60,8 +61,9 @@ model TaskStatus {
 }
 
 model TaskTag {
-  id   Int    @id @default(autoincrement())
-  name String
+  id    Int     @id @default(autoincrement())
+  name  String
+  color String?
 
   // to-1-Relations
   worldId Int
@@ -73,6 +75,8 @@ model TaskTag {
   // Important Dates
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([worldId, name])
 }
 
 model TaskComment {

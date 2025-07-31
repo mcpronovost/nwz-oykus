@@ -1,6 +1,6 @@
-export default function Avatar({ name, abbr, src }) {
+export default function Avatar({ name, abbr, src, borderColor = "var(--oyk-card-bg)" }) {
   return (
-    <div className="oyk-avatar">
+    <div className="oyk-avatar" style={{ borderColor }}>
       {src ? (
         <img src={src} alt={name} />
       ) : (

@@ -28,8 +28,21 @@ router.get("/world/:worldId/tasks", async (req, res) => {
     include: {
       tasks: {
         include: {
-          author: true,
-          assignees: true,
+          author: {
+            select: {
+              id: true,
+              playerName: true,
+              abbr: true,
+            },
+          },
+          assignees: {
+            select: {
+              id: true,
+              playerName: true,
+              abbr: true,
+            },
+            orderBy: { playerName: "asc" },
+          },
           tags: true,
           comments: true,
           history: true,
