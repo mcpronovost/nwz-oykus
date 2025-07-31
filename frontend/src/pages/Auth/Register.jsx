@@ -3,14 +3,14 @@ import { useRouter } from "@/services/router";
 import { api } from "@/services/api";
 
 export default function Register() {
-  const router = useRouter();
+  const { n } = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     username: "",
     password: "",
     confirmPassword: "",
     playerName: "",
-    abbr: ""
+    abbr: "",
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -18,19 +18,19 @@ export default function Register() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear field-specific error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
-    
+
     // Clear general error when user makes changes
     if (generalError) {
       setGeneralError("");
@@ -51,14 +51,20 @@ export default function Register() {
     if (!formData.username.trim()) {
       newErrors.username = "Username is required";
     } else if (!/^[a-zA-Z0-9_]{3,20}$/.test(formData.username)) {
-      newErrors.username = "Username must be 3-20 characters, alphanumeric and underscores only";
+      newErrors.username =
+        "Username must be 3-20 characters, alphanumeric and underscores only";
     }
 
     // Password validation
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/.test(formData.password)) {
-      newErrors.password = "Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number";
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/.test(
+        formData.password
+      )
+    ) {
+      newErrors.password =
+        "Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number";
     }
 
     // Confirm password validation
@@ -72,7 +78,8 @@ export default function Register() {
     if (!formData.playerName.trim()) {
       newErrors.playerName = "Player name is required";
     } else if (!/^[a-zA-Z0-9\s\-']{2,50}$/.test(formData.playerName)) {
-      newErrors.playerName = "Player name must be 2-50 characters, letters, numbers, spaces, hyphens, apostrophes only";
+      newErrors.playerName =
+        "Player name must be 2-50 characters, letters, numbers, spaces, hyphens, apostrophes only";
     }
 
     // Abbreviation validation
@@ -88,7 +95,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -99,9 +106,11 @@ export default function Register() {
     try {
       const { confirmPassword, ...registrationData } = formData;
       await api.register(registrationData);
-      router.n("home"); // Redirect to home page after successful registration
+      n("home"); // Redirect to home page after successful registration
     } catch (error) {
-      setGeneralError(error.message || "Registration failed. Please try again.");
+      setGeneralError(
+        error.message || "Registration failed. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -111,13 +120,11 @@ export default function Register() {
     <div className="oyk-auth">
       <div className="oyk-auth-container">
         <div className="oyk-auth-header">
-          <h1 className="oyk-auth-header-title">
-            Create your account
-          </h1>
+          <h1 className="oyk-auth-header-title">Create your account</h1>
           <p className="oyk-auth-header-subtitle">
             Or{" "}
             <button
-              onClick={() => router.n("login")}
+              onClick={() => n("login")}
               className="oyk-auth-header-subtitle a"
             >
               sign in to your existing account
@@ -144,7 +151,9 @@ export default function Register() {
               required
               value={formData.email}
               onChange={handleChange}
-              className={`oyk-auth-field-input ${errors.email ? "oyk-auth-field-input--error" : ""}`}
+              className={`oyk-auth-field-input ${
+                errors.email ? "oyk-auth-field-input--error" : ""
+              }`}
               placeholder="Enter your email"
             />
             {errors.email && (
@@ -164,7 +173,9 @@ export default function Register() {
               required
               value={formData.username}
               onChange={handleChange}
-              className={`oyk-auth-field-input ${errors.username ? "oyk-auth-field-input--error" : ""}`}
+              className={`oyk-auth-field-input ${
+                errors.username ? "oyk-auth-field-input--error" : ""
+              }`}
               placeholder="Enter your username"
             />
             {errors.username && (
@@ -184,7 +195,9 @@ export default function Register() {
               required
               value={formData.playerName}
               onChange={handleChange}
-              className={`oyk-auth-field-input ${errors.playerName ? "oyk-auth-field-input--error" : ""}`}
+              className={`oyk-auth-field-input ${
+                errors.playerName ? "oyk-auth-field-input--error" : ""
+              }`}
               placeholder="Enter your player name"
             />
             {errors.playerName && (
@@ -204,7 +217,9 @@ export default function Register() {
               required
               value={formData.abbr}
               onChange={handleChange}
-              className={`oyk-auth-field-input ${errors.abbr ? "oyk-auth-field-input--error" : ""}`}
+              className={`oyk-auth-field-input ${
+                errors.abbr ? "oyk-auth-field-input--error" : ""
+              }`}
               placeholder="2-4 characters"
               maxLength={4}
             />
@@ -225,7 +240,9 @@ export default function Register() {
               required
               value={formData.password}
               onChange={handleChange}
-              className={`oyk-auth-field-input ${errors.password ? "oyk-auth-field-input--error" : ""}`}
+              className={`oyk-auth-field-input ${
+                errors.password ? "oyk-auth-field-input--error" : ""
+              }`}
               placeholder="Enter your password"
             />
             {errors.password && (
@@ -245,7 +262,9 @@ export default function Register() {
               required
               value={formData.confirmPassword}
               onChange={handleChange}
-              className={`oyk-auth-field-input ${errors.confirmPassword ? "oyk-auth-field-input--error" : ""}`}
+              className={`oyk-auth-field-input ${
+                errors.confirmPassword ? "oyk-auth-field-input--error" : ""
+              }`}
               placeholder="Confirm your password"
             />
             {errors.confirmPassword && (
@@ -264,4 +283,4 @@ export default function Register() {
       </div>
     </div>
   );
-} 
+}

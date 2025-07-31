@@ -6,7 +6,7 @@ export default function Login() {
   const { n } = useRouter();
   const [formData, setFormData] = useState({
     username: "",
-    password: ""
+    password: "",
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -14,19 +14,19 @@ export default function Login() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear field-specific error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
-    
+
     // Clear general error when user makes changes
     if (generalError) {
       setGeneralError("");
@@ -50,7 +50,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -72,9 +72,7 @@ export default function Login() {
     <div className="oyk-auth">
       <div className="oyk-auth-container">
         <div className="oyk-auth-header">
-          <h1 className="oyk-auth-header-title">
-            Sign in to your account
-          </h1>
+          <h1 className="oyk-auth-header-title">Sign in to your account</h1>
           <p className="oyk-auth-header-subtitle">
             Or{" "}
             <button
@@ -105,7 +103,9 @@ export default function Login() {
               required
               value={formData.username}
               onChange={handleChange}
-              className={`oyk-auth-field-input ${errors.username ? "oyk-auth-field-input--error" : ""}`}
+              className={`oyk-auth-field-input ${
+                errors.username ? "oyk-auth-field-input--error" : ""
+              }`}
               placeholder="Enter your username"
             />
             {errors.username && (
@@ -125,7 +125,9 @@ export default function Login() {
               required
               value={formData.password}
               onChange={handleChange}
-              className={`oyk-auth-field-input ${errors.password ? "oyk-auth-field-input--error" : ""}`}
+              className={`oyk-auth-field-input ${
+                errors.password ? "oyk-auth-field-input--error" : ""
+              }`}
               placeholder="Enter your password"
             />
             {errors.password && (
@@ -144,4 +146,4 @@ export default function Login() {
       </div>
     </div>
   );
-} 
+}
