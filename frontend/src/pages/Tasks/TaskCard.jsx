@@ -1,18 +1,31 @@
 import "@/styles/page/_tasks.scss";
-import { useEffect, useState } from "react";
-import { Timer, MessagesSquare, Plus, EllipsisVertical } from "lucide-react";
+import { Timer, MessagesSquare } from "lucide-react";
+import { useDrag } from "react-dnd";
 
 import { oykDate, oykDateLessThan } from "@/utils";
 import { useTranslation } from "@/services/translation";
-import { Avatar, Chip, Heading } from "@/components/common";
+import { Avatar, Chip } from "@/components/common";
 
-function TaskCard({ task, isCompleted }) {
+export default function TaskCard({ task, isCompleted, statusId }) {
   const { t, lang } = useTranslation();
 
+  const [{ isDragging }, drag] = useDrag({
+    type: "TASK",
+    item: { id: task.id, statusId: statusId },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
   return (
-    <article key={task.id} className="oyk-tasks-card">
+    <article 
+      ref={drag}
+      key={task.id} 
+      className={`oyk-tasks-card ${isDragging ? "oyk-tasks-card-dragging" : ""}`}
+      style={{ opacity: isDragging ? 0.5 : 1 }}
+    >
       <header className="oyk-tasks-card-header">
-        <h3 className="oyk-tasks-card-header-title">{task.title}</h3>
+        <h3 className={`oyk-tasks-card-header-title ${isCompleted ? "oyk-tasks-card-header-title-completed" : ""}`}>{task.title}</h3>
         {(!isCompleted && (task.priority || task.dueAt)) && (
           <div className="oyk-tasks-card-header-infos">
             {task.priority && (
@@ -49,8 +62,8 @@ function TaskCard({ task, isCompleted }) {
           </div>
         )}
       </header>
-      <section className="oyk-tasks-card-content">
-        {(!isCompleted && task.content && task.content != task.title) && (
+      {!isCompleted && (<section className="oyk-tasks-card-content">
+        {(task.content && task.content != task.title) && (
           <div className="oyk-tasks-card-content-descritpion">
             <p>
               {task.content.length > 64
@@ -59,7 +72,7 @@ function TaskCard({ task, isCompleted }) {
             </p>
           </div>
         )}
-        {(!isCompleted && task.tags.length > 0) && (
+        {(task.tags.length > 0) && (
           <div className="oyk-tasks-card-content-tags">
             {task.tags.map((tag) => (
               <Chip key={tag.id} color={tag.color || undefined}>
@@ -68,7 +81,7 @@ function TaskCard({ task, isCompleted }) {
             ))}
           </div>
         )}
-      </section>
+      </section>)}
       <footer className="oyk-tasks-card-footer">
         <div className="oyk-tasks-card-footer-infos">
           {task.comments > 0 && (
@@ -97,5 +110,3 @@ function TaskCard({ task, isCompleted }) {
     </article>
   );
 }
-
-export default TaskCard;
