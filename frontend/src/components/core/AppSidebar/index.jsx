@@ -5,11 +5,13 @@ import {
   ListTodo,
   Settings,
   ShieldAlert,
-  SquircleDashed,
   Users,
 } from "lucide-react";
+
 import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
+
+import OykSidebarHeader from "./SidebarHeader";
 import OykNavItem from "./NavItem";
 
 export default function AppSidebar() {
@@ -18,27 +20,25 @@ export default function AppSidebar() {
 
   return (
     <aside className={`oyk-app-sidebar ${storeAppSidebarOpen ? "open" : ""}`}>
-      <header className="oyk-app-sidebar-header">
-        <button className="oyk-app-sidebar-header-button">
-          <span className="oyk-app-sidebar-header-button-logo">
-            <SquircleDashed size={18} color="var(--oyk-primary-fg)" />
-          </span>
-          <span className="oyk-app-sidebar-header-button-brand">Oykus</span>
-        </button>
-      </header>
+      <OykSidebarHeader />
       <section className="oyk-app-sidebar-menu">
         <nav className="oyk-app-sidebar-nav">
-          {(!currentWorld) && (
-            <ul className="oyk-app-sidebar-nav-list">
-              <OykNavItem icon={Compass} text={t("Discover")} href="discover" />
-            </ul>
-          )}
-          {(currentUser && currentWorld) && (
+          {!currentWorld && (
             <ul className="oyk-app-sidebar-nav-list">
               <OykNavItem
                 icon={LayoutDashboard}
                 text={t("Dashboard")}
                 href="home"
+              />
+              <OykNavItem icon={Compass} text={t("Discover")} href="discover" />
+            </ul>
+          )}
+          {currentUser && currentWorld && (
+            <ul className="oyk-app-sidebar-nav-list">
+              <OykNavItem
+                icon={LayoutDashboard}
+                text={t("Dashboard")}
+                href="dashboard"
               />
               <OykNavItem icon={ListTodo} text={t("Tasks")} href="tasks" />
             </ul>

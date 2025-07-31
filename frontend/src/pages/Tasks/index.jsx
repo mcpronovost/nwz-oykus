@@ -4,16 +4,17 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { api } from "@/services/api";
+import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
 import AppNotAuthorized from "@/components/core/AppNotAuthorized";
+import AppNotFound from "@/components/core/AppNotFound";
 import { Heading } from "@/components/common";
 
 import TaskStatus from "./TaskStatus";
 import TaskCard from "./TaskCard";
 
-const worldId = 1;
-
 function Tasks() {
+  const { currentWorld } = useStore();
   const { t } = useTranslation();
 
   const [error, setError] = useState(null);
@@ -21,7 +22,7 @@ function Tasks() {
 
   const getTasks = async () => {
     try {
-      const data = await api.getTasks(worldId);
+      const data = await api.getTasks(currentWorld.id);
       setTasks(data);
     } catch (error) {
       if (error?.status === 401) {
@@ -34,7 +35,7 @@ function Tasks() {
 
   const updateTaskStatus = async (taskId, newStatusId) => {
     try {
-      const res = await fetch(`/api/world/${worldId}/tasks/${taskId}/status`, {
+      const res = await fetch(`/api/world/${currentWorld.id}/tasks/${taskId}/status`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +44,6 @@ function Tasks() {
       });
 
       if (res.ok) {
-        // Refresh tasks after successful update
         await getTasks();
       } else {
         console.error("Failed to update task status");
@@ -63,6 +63,10 @@ function Tasks() {
 
   if (error === 401) {
     return <AppNotAuthorized />;
+  }
+
+  if (!currentWorld) {
+    return <AppNotFound />;
   }
 
   return (
