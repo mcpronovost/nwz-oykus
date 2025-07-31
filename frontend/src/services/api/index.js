@@ -26,28 +26,27 @@ class ApiService {
       // Handle specific HTTP status codes
       if (response.status === 401) {
         authStore.logout();
-        throw new Error("Authentication required. Please log in again.");
+        throw response;
       }
 
       if (response.status === 403) {
-        throw new Error("Access denied. You don't have permission to perform this action.");
+        throw response;
       }
 
       if (response.status === 404) {
-        throw new Error("Resource not found. The requested data doesn't exist.");
+        throw response;
       }
 
       if (response.status === 422) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Validation error. Please check your input.");
+        throw response;
       }
 
       if (response.status >= 500) {
-        throw new Error("Server error. Please try again later.");
+        throw response;
       }
 
       if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
+        throw response;
       }
 
       // Handle empty responses
@@ -64,17 +63,17 @@ class ApiService {
       }
       
       // Re-throw our custom errors
-      if (error.message.includes("Authentication required") || 
-          error.message.includes("Access denied") ||
-          error.message.includes("Resource not found") ||
-          error.message.includes("Validation error") ||
-          error.message.includes("Server error") ||
-          error.message.includes("Network error")) {
+      if ([401, 403, 404, 422, 500].includes(error.status) ||
+          error.message?.includes("Authentication required") || 
+          error.message?.includes("Access denied") ||
+          error.message?.includes("Resource not found") ||
+          error.message?.includes("Validation error") ||
+          error.message?.includes("Server error") ||
+          error.message?.includes("Network error")) {
         throw error;
       }
       
       // Handle other errors
-      console.error("API request failed:", error);
       throw new Error("An unexpected error occurred. Please try again.");
     }
   }
@@ -139,7 +138,7 @@ class ApiService {
       }
       return await this.request(`/world/${worldId}/tasks`);
     } catch (error) {
-      throw new Error(`Failed to load tasks: ${error.message}`);
+      throw error;
     }
   }
 
@@ -153,7 +152,7 @@ class ApiService {
         body: JSON.stringify({ statusId }),
       });
     } catch (error) {
-      throw new Error(`Failed to update task status: ${error.message}`);
+      throw error;
     }
   }
 
@@ -167,7 +166,7 @@ class ApiService {
         body: JSON.stringify(data),
       });
     } catch (error) {
-      throw new Error(`Failed to update status: ${error.message}`);
+      throw error;
     }
   }
 }

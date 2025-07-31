@@ -5,6 +5,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { api } from "@/services/api";
 import { useTranslation } from "@/services/translation";
+import AppNotAuthorized from "@/components/core/AppNotAuthorized";
 import { Heading } from "@/components/common";
 
 import TaskStatus from "./TaskStatus";
@@ -15,11 +16,20 @@ const worldId = 1;
 function Tasks() {
   const { t } = useTranslation();
 
+  const [error, setError] = useState(null);
   const [tasks, setTasks] = useState([]);
 
   const getTasks = async () => {
-    const data = await api.getTasks(worldId);
-    setTasks(data);
+    try {
+      const data = await api.getTasks(worldId);
+      setTasks(data);
+    } catch (error) {
+      if (error?.status === 401) {
+        setError(401);
+      } else {
+        setError(t("An error occurred while fetching tasks"));
+      }
+    }
   };
 
   const updateTaskStatus = async (taskId, newStatusId) => {
@@ -50,6 +60,10 @@ function Tasks() {
   useEffect(() => {
     getTasks();
   }, []);
+
+  if (error === 401) {
+    return <AppNotAuthorized />;
+  }
 
   return (
     <section className="oyk-tasks">
