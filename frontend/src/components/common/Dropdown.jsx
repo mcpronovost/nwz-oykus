@@ -8,6 +8,13 @@ export default function Dropdown({ toggle, menu }) {
     setIsOpen(!isOpen);
   };
 
+  const handleMenuClick = (onClick) => {
+    if (onClick) {
+      setIsOpen(false);
+      onClick();
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -23,13 +30,13 @@ export default function Dropdown({ toggle, menu }) {
 
   return (
     <div className="oyk-dropdown" ref={dropdownRef}>
-      <div className="oyk-dropdown-toggle" onClick={handleToggle}>
+      <div className="oyk-dropdown-toggle" onClick={() => handleToggle()}>
         {toggle}
       </div>
       {isOpen && (
         <div className="oyk-dropdown-menu">
           {menu.map((item, index) => (
-            <button key={index} className="oyk-dropdown-item">
+            <button key={index} className="oyk-dropdown-item" onClick={() => handleMenuClick(item.onClick)}>
               {item.icon && <span className="icon">{item.icon}</span>}
               <span className="label">{item.label}</span>
             </button>

@@ -33,7 +33,7 @@ export function TranslationProvider({ children, lang = DEFAULT_LANG }) {
     }
 
     // eslint-disable-next-line no-console
-    console.warn(`Translation not found for key: "${key}".`);
+    // console.warn(`Translation not found for key: "${key}".`);
     return key;
   };
 

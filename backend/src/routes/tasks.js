@@ -58,6 +58,34 @@ router.get("/world/:worldId/tasks", async (req, res) => {
   res.json(data);
 });
 
+// Update a task status
+router.patch("/world/:worldId/tasks/:taskId/status", async (req, res) => {
+  const { worldId, taskId } = req.params;
+  const { statusId } = req.body;
+  const task = await prisma.task.update({
+    where: { id: Number(taskId), worldId: Number(worldId) },
+    data: { statusId },
+  });
+  res.json(task);
+});
+
+// Update a status
+router.patch("/world/:worldId/tasks/status/:statusId", async (req, res) => {
+  console.log(req.body);
+  const { worldId, statusId } = req.params;
+  const { name, color, sortOrder } = req.body;
+  const status = await prisma.taskStatus.update({
+    where: { id: Number(statusId), worldId: Number(worldId) },
+    data: { name, color, sortOrder },
+  });
+  res.json(status);
+});
+
+
+
+
+
+
 // Create a new task
 router.post("/tasks", async (req, res) => {
   const { title, content, worldId, authorId, assigneeIds, statusId, priority, tagIds } = req.body;
@@ -110,17 +138,6 @@ router.put("/tasks/:taskId", async (req, res) => {
   res.json(task);
 });
 
-// Update a task status
-router.patch("/world/:worldId/tasks/:taskId/status", async (req, res) => {
-  const { worldId, taskId } = req.params;
-  const { statusId } = req.body;
-  const task = await prisma.task.update({
-    where: { id: Number(taskId), worldId: Number(worldId) },
-    data: { statusId },
-  });
-  res.json(task);
-});
-
 // Delete a task
 router.delete("/tasks/:taskId", async (req, res) => {
   const { taskId } = req.params;
@@ -150,17 +167,6 @@ router.post("/statuses", async (req, res) => {
     },
   });
   res.status(201).json(status);
-});
-
-// Update a status
-router.put("/statuses/:statusId", async (req, res) => {
-  const { statusId } = req.params;
-  const { name, sortOrder } = req.body;
-  const status = await prisma.taskStatus.update({
-    where: { id: Number(statusId) },
-    data: { name, sortOrder },
-  });
-  res.json(status);
 });
 
 // Delete a status

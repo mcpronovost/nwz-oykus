@@ -1,15 +1,17 @@
 import { useRouter } from "@/services/router";
 
-export default function Link({ children, routeName, ...props }) {
+export default function Link({ children, routeName, disabled = false, ...props }) {
   const { n, lang } = useRouter();
 
   const handleClick = (e) => {
     e.preventDefault();
-    n(routeName);
+    if (!disabled) {
+      n(routeName);
+    }
   };
 
   return (
-    <a href={`/${lang}/${routeName}`} onClick={handleClick} {...props}>
+    <a href={!disabled ? `/${lang}/${routeName}` : "/"} onClick={handleClick} {...props}>
       {children}
     </a>
   );

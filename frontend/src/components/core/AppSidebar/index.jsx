@@ -33,16 +33,16 @@ export default function AppSidebar() {
             <OykNavItem icon={ListTodo} text={t("Tasks")} href="tasks" />
           </ul>
           <ul className="oyk-app-sidebar-nav-list">
-            <OykNavItem icon={ShieldAlert} text={t("Rulebook")} href="rulebook" sideIcon={CircleAlert} sideIconColor="danger" />
-            <OykNavItem icon={LibraryBig} text={t("Lore")} href="lore" sideChip="nouveauté" sideChipColor="primary" />
-            <OykNavItem icon={Users} text={t("Community")} href="community" sideChip="2" sideChipColor="primary" />
+            <OykNavItem icon={ShieldAlert} text={t("Rulebook")} href="rulebook" disabled />
+            <OykNavItem icon={LibraryBig} text={t("Lore")} href="lore" disabled />
+            <OykNavItem icon={Users} text={t("Community")} href="community" disabled />
           </ul>
         </nav>
       </section>
       <footer className="oyk-app-sidebar-footer">
         <nav className="oyk-app-sidebar-nav">
           <ul className="oyk-app-sidebar-nav-list">
-            <OykNavItem icon={Settings} text={t("Settings")} href="404" />
+            <OykNavItem icon={Settings} text={t("Settings")} href="settings" />
           </ul>
         </nav>
       </footer>

@@ -10,5 +10,7 @@
   "Settings": "Settings",
   "PriorityHigh": "High",
   "PriorityMedium": "Medium",
-  "PriorityLow": "Low"
+  "PriorityLow": "Low",
+  "Edit": "Edit",
+  "Delete": "Delete"
 }

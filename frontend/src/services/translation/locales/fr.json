@@ -10,5 +10,7 @@
   "Settings": "Paramètres",
   "PriorityHigh": "Élevée",
   "PriorityMedium": "Moyenne",
-  "PriorityLow": "Faible"
+  "PriorityLow": "Faible",
+  "Edit": "Modifier",
+  "Delete": "Supprimer"
 }
