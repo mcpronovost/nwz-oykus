@@ -11,7 +11,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "translations": "node src/services/translation/check-translations.js --languages=fr,en --locales=./src/services/translation/locales --src=./src --extensions=jsx,tsx"
   },
   "dependencies": {
     "lucide-react": "^0.532.0",
