@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 export const oykCode = (text) => {
   let r = text
     .replace(/&/g, "&amp;")
@@ -34,6 +35,7 @@ export const oykCode = (text) => {
     .replace(/\[ico=([a-z- ]+)\]/g, '<i class="mdi $1"></i>');
   return r;
 };
+/* eslint-enable quotes */
 
 export const oykDate = (
   value,
@@ -42,7 +44,7 @@ export const oykDate = (
   tz = "America/Toronto"
 ) => {
   if (lang === "en") lang = "en-CA";
-  let d = !!value ? new Date(value) : new Date(new Date().toString());
+  let d = value ? new Date(value) : new Date(new Date().toString());
   let o = {
     timeZone: tz,
     hour12: false,

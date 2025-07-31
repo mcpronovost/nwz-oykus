@@ -1,4 +1,4 @@
-import { authStore } from "@/services/store/stores/auth";
+import { authStore } from "../store/stores/auth";
 
 class ApiService {
   constructor(baseURL = "/api") {
@@ -97,9 +97,6 @@ class ApiService {
   async logout() {
     try {
       await this.request("/auth/logout", { method: "POST" });
-    } catch (error) {
-      // Even if logout fails on server, clear local data
-      console.warn("Server logout failed, clearing local data:", error);
     } finally {
       authStore.logout();
     }
@@ -149,42 +146,30 @@ class ApiService {
 
   // Task-specific methods with proper error handling
   async getTasks(worldId) {
-    try {
-      if (!worldId) {
-        throw new Error("World ID is required");
-      }
-      return await this.request(`/world/${worldId}/tasks`);
-    } catch (error) {
-      throw error;
+    if (!worldId) {
+      throw new Error("World ID is required");
     }
+    return await this.request(`/world/${worldId}/tasks`);
   }
 
   async updateTaskStatus(worldId, taskId, statusId) {
-    try {
-      if (!worldId || !taskId || !statusId) {
-        throw new Error("World ID, Task ID, and Status ID are required");
-      }
-      return await this.request(`/world/${worldId}/tasks/${taskId}/status`, {
-        method: "PATCH",
-        body: JSON.stringify({ statusId }),
-      });
-    } catch (error) {
-      throw error;
+    if (!worldId || !taskId || !statusId) {
+      throw new Error("World ID, Task ID, and Status ID are required");
     }
+    return await this.request(`/world/${worldId}/tasks/${taskId}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ statusId }),
+    });
   }
 
   async updateStatus(worldId, statusId, data) {
-    try {
-      if (!worldId || !statusId || !data) {
-        throw new Error("World ID, Status ID, and data are required");
-      }
-      return await this.request(`/world/${worldId}/tasks/status/${statusId}`, {
-        method: "PATCH",
-        body: JSON.stringify(data),
-      });
-    } catch (error) {
-      throw error;
+    if (!worldId || !statusId || !data) {
+      throw new Error("World ID, Status ID, and data are required");
     }
+    return await this.request(`/world/${worldId}/tasks/status/${statusId}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    });
   }
 }
 

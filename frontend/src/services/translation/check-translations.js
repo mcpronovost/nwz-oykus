@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+/* eslint-disable no-console */
 
 /**
  * This script checks for missing translations in the project.

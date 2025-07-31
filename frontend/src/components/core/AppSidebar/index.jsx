@@ -38,7 +38,7 @@ export default function AppSidebar() {
               <OykNavItem
                 icon={LayoutDashboard}
                 text={t("Dashboard")}
-                href="dashboard"
+                href="home"
               />
               <OykNavItem icon={ListTodo} text={t("Tasks")} href="tasks" />
             </ul>
