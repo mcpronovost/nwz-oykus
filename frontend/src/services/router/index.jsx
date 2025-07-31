@@ -14,6 +14,10 @@ const INITIAL_STATE = {
   history: [window.location.pathname],
   lang: getLangFromPath(window.location.pathname),
   route: findRoute(window.location.pathname, getLangFromPath(window.location.pathname)),
+  n: () => {},
+  refresh: () => {
+    window.location.reload();
+  },
 };
 
 export function RouterProvider({ children }) {
@@ -36,6 +40,16 @@ export function RouterProvider({ children }) {
     [lang]
   );
 
+  const refresh = useCallback(() => {
+    window.location.reload();
+  }, [lang, route]);
+
+  useEffect(() => {
+    if (window.document.documentElement.lang !== lang) {
+      window.document.documentElement.lang = lang;
+    }
+  }, [lang]);
+
   useEffect(() => {
     const onPopState = () => {
       const newLang = getLangFromPath(window.location.pathname);
@@ -52,6 +66,7 @@ export function RouterProvider({ children }) {
     lang,
     history,
     n: (name, language = lang) => navigate(name, language),
+    refresh,
   };
 
   return (
