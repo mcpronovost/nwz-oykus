@@ -9,6 +9,7 @@ import React, {
 import { authStore } from "./stores/auth";
 import { KEY_TOKEN, KEY_USER, KEY_APP_SIDEBAR_OPEN, KEY_WORLD } from "./constants";
 import { storeGetItem, storeSetItem, storeRemoveItem } from "./utils";
+import { api } from "@/services/api";
 
 const StoreContext = createContext();
 
@@ -66,12 +67,48 @@ export function StoreProvider({ children }) {
     handleSetAuthenticated,
   ]);
 
+  // Periodic user profile refresh
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+
+    // Initial profile fetch on mount
+    const fetchProfile = async () => {
+      try {
+        await api.getUserProfile();
+      } catch (error) {
+        console.warn("Failed to fetch user profile:", error);
+      }
+    };
+
+    fetchProfile();
+
+    // Set up periodic refresh every 5 minutes
+    const interval = setInterval(fetchProfile, 5 * 60 * 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isAuthenticated]);
+
   const value = {
     // Auth
     currentUser,
     setCurrentUser: handleSetCurrentUser,
     isAuthenticated,
     setAuthenticated: handleSetAuthenticated,
+    // Manual refresh function
+    refreshUserProfile: async () => {
+      if (isAuthenticated) {
+        try {
+          await api.getUserProfile();
+        } catch (error) {
+          console.warn("Failed to refresh user profile:", error);
+          throw error;
+        }
+      }
+    },
     // App
     storeAppSidebarOpen,
     setStoreAppSidebarOpen: handleSetStoreAppSidebarOpen,

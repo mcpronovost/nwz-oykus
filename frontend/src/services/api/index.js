@@ -130,6 +130,23 @@ class ApiService {
     return authStore.getUser();
   }
 
+  // Fetch current user profile from server
+  async getUserProfile() {
+    try {
+      const response = await this.request("/auth/profile");
+      if (response.user) {
+        authStore.setUser(response.user);
+      }
+      return response.user;
+    } catch (error) {
+      // If profile fetch fails due to auth issues, logout
+      if (error.status === 401) {
+        authStore.logout();
+      }
+      throw error;
+    }
+  }
+
   // Task-specific methods with proper error handling
   async getTasks(worldId) {
     try {
