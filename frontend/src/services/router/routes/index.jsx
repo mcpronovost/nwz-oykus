@@ -42,14 +42,6 @@ export const ROUTES = [
     },
   },
   {
-    name: "settings",
-    component: React.lazy(() => import("../../../pages/ModalExample")),
-    paths: {
-      fr: "parametres",
-      en: "settings",
-    },
-  },
-  {
     name: "404",
     component: React.lazy(() => import("../../../pages/Error404")),
     paths: {
