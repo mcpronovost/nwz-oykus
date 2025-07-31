@@ -6,7 +6,7 @@ import { Dropdown, Modal } from "@/components/common";
 
 import ModalStatusEdit from "./modals/ModalStatusEdit";
 
-export default function TaskStatusHeader({ status }) {
+export default function TaskStatusHeader({ status, onTasksUpdate = () => {} }) {
   const { t } = useTranslation();
 
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -16,16 +16,34 @@ export default function TaskStatusHeader({ status }) {
     setIsModalEditOpen(true);
   };
 
+  const handleCloseModalEdit = (updated) => {
+    setIsModalEditOpen(false);
+    if (updated) {
+      onTasksUpdate();
+    }
+  };
+
   const handleDeleteClick = () => {
     setIsModalDeleteOpen(true);
   };
 
+  const handleCloseModalDelete = (updated) => {
+    setIsModalDeleteOpen(false);
+    if (updated) {
+      onTasksUpdate();
+    }
+  };
+
   return (
     <>
-      <ModalStatusEdit isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} status={status} />
+      <ModalStatusEdit
+        isOpen={isModalEditOpen}
+        onClose={handleCloseModalEdit}
+        status={status}
+      />
       <Modal
         isOpen={isModalDeleteOpen}
-        onClose={() => setIsModalDeleteOpen(false)}
+        onClose={handleCloseModalDelete}
         title={t("Delete")}
       >
         <p>Delete</p>

@@ -58,7 +58,7 @@ function Tasks() {
         <section className="oyk-tasks-status">
           {tasks.map((status) => (
             <article key={status.name} className="oyk-tasks-status-item">
-              <TaskStatus status={status} onDrop={handleDrop}>
+              <TaskStatus status={status} onDrop={handleDrop} onTasksUpdate={getTasks}>
                 <section
                   className={`oyk-tasks-status-item-content ${
                     status.isCompleted

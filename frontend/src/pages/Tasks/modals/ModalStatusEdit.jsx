@@ -26,7 +26,7 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
       if (!response.ok) {
         throw new Error("Failed to update status");
       }
-      onClose();
+      onClose(true);
     } catch (error) {
       console.error(error);
     }
