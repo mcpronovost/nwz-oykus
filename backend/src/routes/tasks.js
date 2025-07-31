@@ -110,6 +110,17 @@ router.put("/tasks/:taskId", async (req, res) => {
   res.json(task);
 });
 
+// Update a task status
+router.patch("/world/:worldId/tasks/:taskId/status", async (req, res) => {
+  const { worldId, taskId } = req.params;
+  const { statusId } = req.body;
+  const task = await prisma.task.update({
+    where: { id: Number(taskId), worldId: Number(worldId) },
+    data: { statusId },
+  });
+  res.json(task);
+});
+
 // Delete a task
 router.delete("/tasks/:taskId", async (req, res) => {
   const { taskId } = req.params;
