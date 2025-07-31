@@ -26,13 +26,12 @@
   - CRUD for Tasks, Statuses, Tags, Priorities, Comments, and History
   - Endpoints for Kanban/List views (filtering, sorting by priority)
 - Frontend State & Data
-  - State management for tasks, statuses, tags, priorities, comments, and history
+  - State management for tasks, status, tags, priorities, comments, and history
   - Data fetching/mutation hooks
 - UI/UX Implementation
   - Kanban board (react-dnd, latest)
   - List view
   - Task details (history, comments, assignees, tags, priority)
-  - Visuals matching the provided design
 
 ## Concrete Steps & Deliverables
 
