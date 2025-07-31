@@ -43,6 +43,7 @@ export function StoreProvider({ children }) {
   }, []);
 
   const handleSetStoreAppSidebarOpen = useCallback((value) => {
+    console.log("handleSetStoreAppSidebarOpen", value);
     storeSetItem(KEY_APP_SIDEBAR_OPEN, value);
     setStoreAppSidebarOpen(value);
   }, []);

@@ -1,7 +1,6 @@
 import { ArrowLeftFromLine, ArrowRightFromLine, User } from "lucide-react";
 
 import { useStore } from "@/services/store";
-import { api } from "@/services/api";
 
 import AppBarMenu from "./Menu";
 import AppBarNotifications from "./Notifications";

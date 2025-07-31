@@ -1,5 +1,7 @@
 import { useTranslation } from "@/services/translation";
 
+import { Link } from "@/components/common";
+
 export default function AppBarMenu() {
   const { t } = useTranslation();
 
@@ -8,14 +10,14 @@ export default function AppBarMenu() {
       <nav className="oyk-app-bar-menu-nav">
         <ul className="oyk-app-bar-menu-nav-list">
           <li className="oyk-app-bar-menu-nav-item">
-            <a href="/" className="oyk-app-bar-menu-nav-item-link">
+            <Link routeName="about" className="oyk-app-bar-menu-nav-item-link">
               {t("About")}
-            </a>
+            </Link>
           </li>
           <li className="oyk-app-bar-menu-nav-item">
-            <a href="/" className="oyk-app-bar-menu-nav-item-link">
+            <Link routeName="privacy-policy" className="oyk-app-bar-menu-nav-item-link">
               {t("Privacy Policy")}
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

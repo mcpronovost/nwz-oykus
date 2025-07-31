@@ -4,7 +4,7 @@ export const storeGetItem = (key) => {
 };
 
 export const storeSetItem = (key, value) => {
-  if (value) {
+  if (value !== undefined && value !== null) {
     localStorage.setItem(`oyk-${key}`, JSON.stringify(value));
   } else {
     storeRemoveItem(key);

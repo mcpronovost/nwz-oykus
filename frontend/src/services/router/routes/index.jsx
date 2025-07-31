@@ -34,6 +34,14 @@ export const ROUTES = [
     },
   },
   {
+    name: "privacy-policy",
+    component: React.lazy(() => import("../../../pages/PrivacyPolicy")),
+    paths: {
+      fr: "politique-de-confidentialite",
+      en: "privacy-policy",
+    },
+  },
+  {
     name: "tasks",
     component: React.lazy(() => import("../../../pages/Tasks")),
     paths: {
