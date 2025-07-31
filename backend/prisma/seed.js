@@ -1,4 +1,5 @@
-import { PrismaClient, TaskPriority } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { hashPassword } from "../src/utils/auth.js";
 
 const prisma = new PrismaClient();
 
@@ -6,24 +7,24 @@ async function main() {
   // Create user
   const user = await prisma.user.upsert({
     where: { email: "mc@oykus.ca" },
-    update: {},
+    update: {password: await hashPassword("123"),},
     create: {
       id: "bf50764f-c2e1-427d-9e30-eb199942851b",
       email: "mc@oykus.ca",
       username: "mc",
-      password: "123",
+      password: await hashPassword("123"),
       playerName: "mc",
       abbr: "MC",
     },
   });
   const kamuy = await prisma.user.upsert({
     where: { email: "kamuy@oykus.ca" },
-    update: {},
+    update: {password: await hashPassword("123"),},
     create: {
       id: "bf50764f-c2e1-427d-9e30-eb199942851c",
       email: "kamuy@oykus.ca",
       username: "kamuy",
-      password: "123",
+      password: await hashPassword("123"),
       playerName: "Kamuy Sinen",
       abbr: "KS",
     },

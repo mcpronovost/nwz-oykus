@@ -1,12 +1,14 @@
 import express from "express";
 import tasksRouter from "./tasks.js";
+import authRouter from "./auth.js";
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.json({ message: "Welcome to KP Kotan API!" });
+  res.json({ message: "Welcome to Oykus API!" });
 });
 
-router.use(tasksRouter);
+router.use("/auth", authRouter);
+router.use("/tasks", tasksRouter);
 
 export default router;

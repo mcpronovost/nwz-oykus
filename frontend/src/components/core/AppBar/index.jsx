@@ -1,10 +1,13 @@
 import { ArrowLeftFromLine, ArrowRightFromLine, User } from "lucide-react";
 import { useStore } from "@/services/store";
+import { api } from "@/services/api";
 import AppBarMenu from "./Menu";
 import AppBarNotifications from "./Notifications";
+import Logout from "./Logout";
 
 export default function AppBar() {
   const { storeAppSidebarOpen, setStoreAppSidebarOpen } = useStore();
+  const currentUser = api.getCurrentUser();
 
   const handleToggleSidebar = () => {
     setStoreAppSidebarOpen(!storeAppSidebarOpen);
@@ -20,12 +23,27 @@ export default function AppBar() {
       <AppBarMenu />
       <AppBarNotifications />
       <section className="oyk-app-bar-user">
-        <button className="oyk-app-bar-user-button">
-          <span className="oyk-app-bar-user-button-name">John Jones</span>
-          <span className="oyk-app-bar-user-button-avatar">
-            <User size={18} color="var(--oyk-primary-fg)" />
-          </span>
-        </button>
+        {currentUser ? (
+          <>
+            <button className="oyk-app-bar-user-button">
+              <span className="oyk-app-bar-user-button-name">{currentUser.playerName}</span>
+              <span className="oyk-app-bar-user-button-avatar">
+                <User size={18} color="var(--oyk-primary-fg)" />
+              </span>
+            </button>
+            <Logout />
+          </>
+        ) : (
+          <button 
+            className="oyk-app-bar-user-button"
+            onClick={() => window.location.href = "/en/login"}
+          >
+            <span className="oyk-app-bar-user-button-name">Sign In</span>
+            <span className="oyk-app-bar-user-button-avatar">
+              <User size={18} color="var(--oyk-primary-fg)" />
+            </span>
+          </button>
+        )}
       </section>
     </header>
   );

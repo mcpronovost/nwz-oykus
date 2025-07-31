@@ -1,7 +1,11 @@
 import express from "express";
 import prisma from "../../prisma/client.js";
+import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
+
+// Apply authentication to all routes
+router.use(authenticateToken);
 
 // --- USERS ---
 // Get all users (for assignee selection)
