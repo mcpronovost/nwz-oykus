@@ -3,7 +3,7 @@ import { useRouter } from "@/services/router";
 import { api } from "@/services/api";
 
 export default function Login() {
-  const router = useRouter();
+  const { n } = useRouter();
   const [formData, setFormData] = useState({
     username: "",
     password: ""
@@ -60,7 +60,7 @@ export default function Login() {
 
     try {
       await api.login(formData);
-      router.n("home"); // Redirect to home page after successful login
+      n("home"); // Redirect to home page after successful login
     } catch (error) {
       setGeneralError(error.message || "Login failed. Please try again.");
     } finally {
@@ -78,7 +78,7 @@ export default function Login() {
           <p className="oyk-auth-header-subtitle">
             Or{" "}
             <button
-              onClick={() => router.n("register")}
+              onClick={() => n("register")}
               className="oyk-auth-header-subtitle a"
             >
               create a new account
