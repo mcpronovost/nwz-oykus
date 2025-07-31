@@ -1,5 +1,5 @@
 import {
-  CircleAlert,
+  Compass,
   LayoutDashboard,
   LibraryBig,
   ListTodo,
@@ -13,7 +13,7 @@ import { useTranslation } from "@/services/translation";
 import OykNavItem from "./NavItem";
 
 export default function AppSidebar() {
-  const { storeAppSidebarOpen } = useStore();
+  const { currentUser, storeAppSidebarOpen, currentWorld } = useStore();
   const { t } = useTranslation();
 
   return (
@@ -28,15 +28,43 @@ export default function AppSidebar() {
       </header>
       <section className="oyk-app-sidebar-menu">
         <nav className="oyk-app-sidebar-nav">
-          <ul className="oyk-app-sidebar-nav-list">
-            <OykNavItem icon={LayoutDashboard} text={t("Dashboard")} href="home" />
-            <OykNavItem icon={ListTodo} text={t("Tasks")} href="tasks" />
-          </ul>
-          <ul className="oyk-app-sidebar-nav-list">
-            <OykNavItem icon={ShieldAlert} text={t("Rulebook")} href="rulebook" disabled />
-            <OykNavItem icon={LibraryBig} text={t("Lore")} href="lore" disabled />
-            <OykNavItem icon={Users} text={t("Community")} href="community" disabled />
-          </ul>
+          {(!currentWorld) && (
+            <ul className="oyk-app-sidebar-nav-list">
+              <OykNavItem icon={Compass} text={t("Discover")} href="discover" />
+            </ul>
+          )}
+          {(currentUser && currentWorld) && (
+            <ul className="oyk-app-sidebar-nav-list">
+              <OykNavItem
+                icon={LayoutDashboard}
+                text={t("Dashboard")}
+                href="home"
+              />
+              <OykNavItem icon={ListTodo} text={t("Tasks")} href="tasks" />
+            </ul>
+          )}
+          {currentWorld && (
+            <ul className="oyk-app-sidebar-nav-list">
+              <OykNavItem
+                icon={ShieldAlert}
+                text={t("Rulebook")}
+                href="rulebook"
+                disabled
+              />
+              <OykNavItem
+                icon={LibraryBig}
+                text={t("Lore")}
+                href="lore"
+                disabled
+              />
+              <OykNavItem
+                icon={Users}
+                text={t("Community")}
+                href="community"
+                disabled
+              />
+            </ul>
+          )}
         </nav>
       </section>
       <footer className="oyk-app-sidebar-footer">

@@ -1,4 +1,4 @@
-import { AUTH_TOKEN_KEY, USER_KEY } from "../constants";
+import { KEY_TOKEN, KEY_USER } from "../constants";
 import { storeGetItem, storeSetItem, storeRemoveItem } from "../utils";
 
 // This will be set by the store provider
@@ -11,15 +11,15 @@ export const authStore = {
   },
 
   // Token management
-  getToken: () => storeGetItem(AUTH_TOKEN_KEY),
+  getToken: () => storeGetItem(KEY_TOKEN),
   setToken: (token) => {
-    storeSetItem(AUTH_TOKEN_KEY, token);
+    storeSetItem(KEY_TOKEN, token);
     if (storeInstance) {
       storeInstance.setAuthenticated(!!token);
     }
   },
   removeToken: () => {
-    storeRemoveItem(AUTH_TOKEN_KEY);
+    storeRemoveItem(KEY_TOKEN);
     if (storeInstance) {
       storeInstance.setAuthenticated(false);
     }
@@ -30,16 +30,16 @@ export const authStore = {
     if (storeInstance) {
       return storeInstance.currentUser;
     }
-    return storeGetItem(USER_KEY);
+    return storeGetItem(KEY_USER);
   },
   setUser: (user) => {
-    storeSetItem(USER_KEY, user);
+    storeSetItem(KEY_USER, user);
     if (storeInstance) {
       storeInstance.setCurrentUser(user);
     }
   },
   removeUser: () => {
-    storeRemoveItem(USER_KEY);
+    storeRemoveItem(KEY_USER);
     if (storeInstance) {
       storeInstance.setCurrentUser(null);
     }
@@ -50,7 +50,7 @@ export const authStore = {
     if (storeInstance) {
       return storeInstance.isAuthenticated;
     }
-    const token = storeGetItem(AUTH_TOKEN_KEY);
+    const token = storeGetItem(KEY_TOKEN);
     return !!token;
   },
 

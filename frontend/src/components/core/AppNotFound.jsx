@@ -1,6 +1,9 @@
 import "@/styles/core/app-notfound.scss";
+import { useRouter } from "@/services/router";
 
 export default function AppNotFound() {
+  const { n } = useRouter();
+
   return (
     <section className="oyk-app-not-found">
       <div className="oyk-app-not-found-content">
@@ -8,7 +11,12 @@ export default function AppNotFound() {
         <p>Page not found.</p>
       </div>
       <div className="oyk-app-not-found-actions">
-        <button className="oyk-app-not-found-actions-button">Go to home</button>
+        <button
+          className="oyk-app-not-found-actions-button"
+          onClick={() => n("home")}
+        >
+          Go to home
+        </button>
       </div>
     </section>
   );

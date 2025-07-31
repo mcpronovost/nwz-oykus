@@ -4,7 +4,11 @@ export const storeGetItem = (key) => {
 };
 
 export const storeSetItem = (key, value) => {
-  localStorage.setItem(`oyk-${key}`, JSON.stringify(value));
+  if (value) {
+    localStorage.setItem(`oyk-${key}`, JSON.stringify(value));
+  } else {
+    storeRemoveItem(key);
+  }
 };
 
 export const storeRemoveItem = (key) => {
