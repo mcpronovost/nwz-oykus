@@ -1,13 +1,14 @@
 import { ArrowLeftFromLine, ArrowRightFromLine, User } from "lucide-react";
+
 import { useStore } from "@/services/store";
 import { api } from "@/services/api";
+
 import AppBarMenu from "./Menu";
 import AppBarNotifications from "./Notifications";
-import Logout from "./Logout";
+import AppBarUser from "./User";
 
 export default function AppBar() {
-  const { storeAppSidebarOpen, setStoreAppSidebarOpen } = useStore();
-  const currentUser = api.getCurrentUser();
+  const { storeAppSidebarOpen, setStoreAppSidebarOpen, currentUser } = useStore();
 
   const handleToggleSidebar = () => {
     setStoreAppSidebarOpen(!storeAppSidebarOpen);
@@ -24,15 +25,7 @@ export default function AppBar() {
       <AppBarNotifications />
       <section className="oyk-app-bar-user">
         {currentUser ? (
-          <>
-            <button className="oyk-app-bar-user-button">
-              <span className="oyk-app-bar-user-button-name">{currentUser.playerName}</span>
-              <span className="oyk-app-bar-user-button-avatar">
-                <User size={18} color="var(--oyk-primary-fg)" />
-              </span>
-            </button>
-            <Logout />
-          </>
+          <AppBarUser />
         ) : (
           <button 
             className="oyk-app-bar-user-button"
