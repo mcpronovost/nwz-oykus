@@ -1,8 +1,22 @@
-import { useState, useRef, useEffect } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 
-export default function Dropdown({ toggle, menu }) {
+const Dropdown = forwardRef(({ toggle, menu, direction = "left" }, ref) => {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  // Expose methods to parent component
+  useImperativeHandle(ref, () => ({
+    close: () => setIsOpen(false),
+    open: () => setIsOpen(true),
+    toggle: () => setIsOpen(!isOpen),
+    isOpen: () => isOpen,
+  }));
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -29,20 +43,37 @@ export default function Dropdown({ toggle, menu }) {
   }, []);
 
   return (
-    <div className="oyk-dropdown" ref={dropdownRef}>
+    <div ref={dropdownRef} className="oyk-dropdown">
       <div className="oyk-dropdown-toggle" onClick={() => handleToggle()}>
         {toggle}
       </div>
       {isOpen && (
-        <div className="oyk-dropdown-menu">
+        <div className={`oyk-dropdown-menu direction-${direction}`}>
           {menu.map((item, index) => (
-            <button key={index} className="oyk-dropdown-item" onClick={() => handleMenuClick(item.onClick)}>
-              {item.icon && <span className="icon">{item.icon}</span>}
-              <span className="label">{item.label}</span>
-            </button>
+            <div
+              key={index}
+              className="oyk-dropdown-item"
+              onClick={() => handleMenuClick(item.onClick)}
+            >
+              {item.element ? (
+                item.element
+              ) : (
+                <button
+                  className="oyk-dropdown-item-btn"
+                  onClick={() => handleMenuClick(item.onClick)}
+                >
+                  {item.icon && <span className="icon">{item.icon}</span>}
+                  <span className="label">{item.label}</span>
+                </button>
+              )}
+            </div>
           ))}
         </div>
       )}
     </div>
   );
-} 
+});
+
+Dropdown.displayName = "Dropdown";
+
+export default Dropdown;
