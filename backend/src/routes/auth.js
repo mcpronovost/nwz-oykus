@@ -1,15 +1,15 @@
 import express from "express";
 import prisma from "../../prisma/client.js";
 import logger from "../utils/logger.js";
-import { 
-  hashPassword, 
-  comparePassword, 
+import {
+  hashPassword,
+  comparePassword,
   generateToken,
   validateEmail,
   validatePassword,
   validateUsername,
   validatePlayerName,
-  validateAbbr
+  validateAbbr,
 } from "../utils/auth.js";
 import { authenticateToken } from "../middleware/auth.js";
 
@@ -22,8 +22,9 @@ router.post("/register", async (req, res) => {
 
     // Validation
     if (!email || !username || !password || !playerName || !abbr) {
-      return res.status(400).json({ 
-        error: "All fields are required: email, username, password, playerName, abbr" 
+      return res.status(400).json({
+        error:
+          "All fields are required: email, username, password, playerName, abbr",
       });
     }
 
@@ -32,39 +33,37 @@ router.post("/register", async (req, res) => {
     }
 
     if (!validatePassword(password)) {
-      return res.status(400).json({ 
-        error: "Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number" 
+      return res.status(400).json({
+        error:
+          "Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number",
       });
     }
 
     if (!validateUsername(username)) {
-      return res.status(400).json({ 
-        error: "Username must be 3-20 characters, alphanumeric and underscores only" 
+      return res.status(400).json({
+        error:
+          "Username must be 3-20 characters, alphanumeric and underscores only",
       });
     }
 
     if (!validatePlayerName(playerName)) {
-      return res.status(400).json({ 
-        error: "Player name must be 2-50 characters, letters, numbers, spaces, hyphens, apostrophes only" 
+      return res.status(400).json({
+        error:
+          "Player name must be 2-50 characters, letters, numbers, spaces, hyphens, apostrophes only",
       });
     }
 
     if (!validateAbbr(abbr)) {
-      return res.status(400).json({ 
-        error: "Abbreviation must be 2-4 alphanumeric characters" 
+      return res.status(400).json({
+        error: "Abbreviation must be 2-4 alphanumeric characters",
       });
     }
 
     // Check if user already exists
     const existingUser = await prisma.user.findFirst({
       where: {
-        OR: [
-          { email },
-          { username },
-          { playerName },
-          { abbr }
-        ]
-      }
+        OR: [{ email }, { username }, { playerName }, { abbr }],
+      },
     });
 
     if (existingUser) {
@@ -73,9 +72,9 @@ router.post("/register", async (req, res) => {
       if (existingUser.username === username) conflicts.push("username");
       if (existingUser.playerName === playerName) conflicts.push("playerName");
       if (existingUser.abbr === abbr) conflicts.push("abbr");
-      
-      return res.status(409).json({ 
-        error: `User already exists with: ${conflicts.join(", ")}` 
+
+      return res.status(409).json({
+        error: `User already exists with: ${conflicts.join(", ")}`,
       });
     }
 
@@ -89,7 +88,7 @@ router.post("/register", async (req, res) => {
         username,
         password: hashedPassword,
         playerName,
-        abbr
+        abbr,
       },
       select: {
         id: true,
@@ -104,8 +103,8 @@ router.post("/register", async (req, res) => {
         limitWorldThemes: true,
         totalWorldThemes: true,
         createdAt: true,
-        updatedAt: true
-      }
+        updatedAt: true,
+      },
     });
 
     // Generate token
@@ -116,9 +115,8 @@ router.post("/register", async (req, res) => {
     res.status(201).json({
       message: "User registered successfully",
       user,
-      token
+      token,
     });
-
   } catch (error) {
     logger.error("Registration error:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -129,17 +127,20 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
-    console.log(username, password);
 
     if (!username || !password) {
-      return res.status(400).json({ error: "Username and password are required" });
+      return res
+        .status(400)
+        .json({ error: "Username and password are required" });
     }
 
     // Find user by username
     const user = await prisma.user.findUnique({
-      where: { username }
+      where: { username },
+      include: {
+        worldsOwned: true,
+      },
     });
-    console.log(user);
 
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
@@ -151,28 +152,25 @@ router.post("/login", async (req, res) => {
 
     // Verify password
     const isValidPassword = await comparePassword(password, user.password);
-    console.log(isValidPassword);
     if (!isValidPassword) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
     // Generate token
     const token = generateToken(user.id);
-    console.log(token);
 
     // Return user data (excluding password)
     const userData = {
       id: user.id,
       playerName: user.playerName,
       abbr: user.abbr,
-      isActive: user.isActive,
-      isAdmin: user.isAdmin,
       limitWorlds: user.limitWorlds,
       totalWorlds: user.totalWorlds,
       limitWorldThemes: user.limitWorldThemes,
       totalWorldThemes: user.totalWorldThemes,
+      worldsOwned: user.worldsOwned,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+      updatedAt: user.updatedAt,
     };
 
     logger.info(`User logged in: ${user.playerName}`);
@@ -180,9 +178,8 @@ router.post("/login", async (req, res) => {
     res.json({
       message: "Login successful",
       user: userData,
-      token
+      token,
     });
-
   } catch (error) {
     logger.error("Login error:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -192,8 +189,37 @@ router.post("/login", async (req, res) => {
 // Get current user profile
 router.get("/profile", authenticateToken, async (req, res) => {
   try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      include: {
+        worldsOwned: true,
+      },
+      omit: {
+        username: true,
+        email: true,
+        password: true,
+        isAdmin: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    if (!user.isActive) {
+      return res.status(401).json({ error: "Account is deactivated" });
+    }
+
+    if (user.totalWorlds !== user.worldsOwned.length) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { totalWorlds: user.worldsOwned.length },
+      });
+      user.totalWorlds = user.worldsOwned.length;
+    }
+
     res.json({
-      user: req.user
+      user: user,
     });
   } catch (error) {
     logger.error("Profile fetch error:", error);
@@ -209,20 +235,22 @@ router.put("/profile", authenticateToken, async (req, res) => {
 
     // Validation
     if (username && !validateUsername(username)) {
-      return res.status(400).json({ 
-        error: "Username must be 3-20 characters, alphanumeric and underscores only" 
+      return res.status(400).json({
+        error:
+          "Username must be 3-20 characters, alphanumeric and underscores only",
       });
     }
 
     if (playerName && !validatePlayerName(playerName)) {
-      return res.status(400).json({ 
-        error: "Player name must be 2-50 characters, letters, numbers, spaces, hyphens, apostrophes only" 
+      return res.status(400).json({
+        error:
+          "Player name must be 2-50 characters, letters, numbers, spaces, hyphens, apostrophes only",
       });
     }
 
     if (abbr && !validateAbbr(abbr)) {
-      return res.status(400).json({ 
-        error: "Abbreviation must be 2-4 alphanumeric characters" 
+      return res.status(400).json({
+        error: "Abbreviation must be 2-4 alphanumeric characters",
       });
     }
 
@@ -234,17 +262,18 @@ router.put("/profile", authenticateToken, async (req, res) => {
             ...(username ? [{ username }] : []),
             ...(playerName ? [{ playerName }] : []),
           ],
-          NOT: { id: userId }
-        }
+          NOT: { id: userId },
+        },
       });
 
       if (existingUser) {
         const conflicts = [];
         if (existingUser.username === username) conflicts.push("username");
-        if (existingUser.playerName === playerName) conflicts.push("playerName");
-        
-        return res.status(409).json({ 
-          error: `User already exists with: ${conflicts.join(", ")}` 
+        if (existingUser.playerName === playerName)
+          conflicts.push("playerName");
+
+        return res.status(409).json({
+          error: `User already exists with: ${conflicts.join(", ")}`,
         });
       }
     }
@@ -255,7 +284,7 @@ router.put("/profile", authenticateToken, async (req, res) => {
       data: {
         ...(username && { username }),
         ...(playerName && { playerName }),
-        ...(abbr && { abbr })
+        ...(abbr && { abbr }),
       },
       select: {
         id: true,
@@ -268,17 +297,16 @@ router.put("/profile", authenticateToken, async (req, res) => {
         limitWorldThemes: true,
         totalWorldThemes: true,
         createdAt: true,
-        updatedAt: true
-      }
+        updatedAt: true,
+      },
     });
 
     logger.info(`User profile updated: ${updatedUser.playerName}`);
 
     res.json({
       message: "Profile updated successfully",
-      user: updatedUser
+      user: updatedUser,
     });
-
   } catch (error) {
     logger.error("Profile update error:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -292,22 +320,28 @@ router.put("/change-password", authenticateToken, async (req, res) => {
     const userId = req.user.id;
 
     if (!currentPassword || !newPassword) {
-      return res.status(400).json({ error: "Current password and new password are required" });
+      return res
+        .status(400)
+        .json({ error: "Current password and new password are required" });
     }
 
     if (!validatePassword(newPassword)) {
-      return res.status(400).json({ 
-        error: "New password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number" 
+      return res.status(400).json({
+        error:
+          "New password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number",
       });
     }
 
     // Get current user with password
     const user = await prisma.user.findUnique({
-      where: { id: userId }
+      where: { id: userId },
     });
 
     // Verify current password
-    const isValidPassword = await comparePassword(currentPassword, user.password);
+    const isValidPassword = await comparePassword(
+      currentPassword,
+      user.password
+    );
     if (!isValidPassword) {
       return res.status(401).json({ error: "Current password is incorrect" });
     }
@@ -318,13 +352,12 @@ router.put("/change-password", authenticateToken, async (req, res) => {
     // Update password
     await prisma.user.update({
       where: { id: userId },
-      data: { password: hashedNewPassword }
+      data: { password: hashedNewPassword },
     });
 
     logger.info(`Password changed for user: ${user.username}`);
 
     res.json({ message: "Password changed successfully" });
-
   } catch (error) {
     logger.error("Password change error:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -342,4 +375,4 @@ router.post("/logout", authenticateToken, async (req, res) => {
   }
 });
 
-export default router; 
+export default router;
