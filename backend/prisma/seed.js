@@ -151,7 +151,7 @@ async function main() {
       authorId: user.id,
       assignees: {
         connect: {
-          id: user.id,
+          id: kamuy.id,
         },
       },
     },
