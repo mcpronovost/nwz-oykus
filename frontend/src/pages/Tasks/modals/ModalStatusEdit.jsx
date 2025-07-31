@@ -16,7 +16,7 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
     e.preventDefault();
     
     try {
-      const response = await fetch(`/api/world/1/tasks/status/${status.id}`, {
+      const response = await fetch(`/api/world/1/tasks/status/${status.id}/edit`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

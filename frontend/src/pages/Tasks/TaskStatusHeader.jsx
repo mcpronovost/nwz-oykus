@@ -4,13 +4,26 @@ import { Plus, EllipsisVertical, Edit, Trash2 } from "lucide-react";
 import { useTranslation } from "@/services/translation";
 import { Dropdown, Modal } from "@/components/common";
 
+import ModalTaskCreate from "./modals/ModalTaskCreate";
 import ModalStatusEdit from "./modals/ModalStatusEdit";
 
 export default function TaskStatusHeader({ status, onTasksUpdate = () => {} }) {
   const { t } = useTranslation();
 
+  const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+
+  const handleCreateClick = () => {
+    setIsModalCreateOpen(true);
+  };
+
+  const handleCloseModalCreate = (updated) => {
+    setIsModalCreateOpen(false);
+    if (updated) {
+      onTasksUpdate();
+    }
+  };
 
   const handleEditClick = () => {
     setIsModalEditOpen(true);
@@ -36,6 +49,11 @@ export default function TaskStatusHeader({ status, onTasksUpdate = () => {} }) {
 
   return (
     <>
+      <ModalTaskCreate
+        isOpen={isModalCreateOpen}
+        onClose={handleCloseModalCreate}
+        status={status}
+      />
       <ModalStatusEdit
         isOpen={isModalEditOpen}
         onClose={handleCloseModalEdit}
@@ -44,7 +62,7 @@ export default function TaskStatusHeader({ status, onTasksUpdate = () => {} }) {
       <Modal
         isOpen={isModalDeleteOpen}
         onClose={handleCloseModalDelete}
-        title={t("Delete")}
+        status={status}
       >
         <p>Delete</p>
       </Modal>
@@ -64,7 +82,7 @@ export default function TaskStatusHeader({ status, onTasksUpdate = () => {} }) {
           </span>
         </h2>
         <div className="oyk-tasks-status-item-header-actions">
-          <button className="oyk-tasks-status-item-header-actions-btn">
+          <button className="oyk-tasks-status-item-header-actions-btn" onClick={handleCreateClick}>
             <Plus size={16} />
           </button>
           <Dropdown
