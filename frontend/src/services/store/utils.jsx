@@ -6,3 +6,7 @@ export const storeGetItem = (key) => {
 export const storeSetItem = (key, value) => {
   localStorage.setItem(`oyk-${key}`, JSON.stringify(value));
 };
+
+export const storeRemoveItem = (key) => {
+  localStorage.removeItem(`oyk-${key}`);
+};

@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
+import { api } from "@/services/api";
 import { useTranslation } from "@/services/translation";
 import { Heading } from "@/components/common";
 
 import TaskStatus from "./TaskStatus";
 import TaskCard from "./TaskCard";
 
-const worldId = 1;
+const worldId = 2;
 
 function Tasks() {
   const { t } = useTranslation();
@@ -17,8 +18,7 @@ function Tasks() {
   const [tasks, setTasks] = useState([]);
 
   const getTasks = async () => {
-    const res = await fetch(`/api/world/${worldId}/tasks`);
-    const data = await res.json();
+    const data = await api.getTasks(worldId);
     setTasks(data);
   };
 

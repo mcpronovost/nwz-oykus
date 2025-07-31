@@ -3,6 +3,10 @@ model World {
   name        String @db.VarChar(64)
   description String @db.VarChar(255)
 
+  // Owner
+  ownerId String
+  owner   User   @relation("WorldOwner", fields: [ownerId], references: [id])
+
   // Status
   isActive Boolean @default(true)
   isPublic Boolean @default(false)

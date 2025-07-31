@@ -19,6 +19,7 @@ model User {
   isAdmin  Boolean @default(false)
 
   // Relations
+  worldsOwned   World[]       @relation("WorldOwner")
   tasks         Task[]
   taskAssigned  Task[]        @relation("TaskAssignees")
   taskComments  TaskComment[]
