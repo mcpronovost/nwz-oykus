@@ -71,7 +71,16 @@ function Tasks() {
 
   return (
     <section className="oyk-page oyk-tasks">
-      <OykHeading title={t("Tasks")} />
+      <OykHeading
+        title={t("Tasks")}
+        description={t("Tasks description")}
+        actions={(
+          <>
+            <button>Test</button>
+            <button>Test</button>
+          </>
+        )}
+      />
       <DndProvider backend={HTML5Backend}>
         <section className="oyk-tasks-status">
           {tasks.map((status) => (

@@ -247,6 +247,18 @@ export default function Components() {
                 defaultValue: "-",
               },
               {
+                name: "description",
+                description: "Description",
+                type: "string",
+                defaultValue: "-",
+              },
+              {
+                name: "actions",
+                description: "Actions",
+                type: "component",
+                defaultValue: "-",
+              },
+              {
                 name: "ph",
                 description: "Horizontal padding",
                 type: "number",
