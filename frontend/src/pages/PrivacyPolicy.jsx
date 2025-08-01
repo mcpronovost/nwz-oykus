@@ -17,28 +17,27 @@ export default function PrivacyPolicy() {
           <section className="oyk-privacy-policy-section">
             <h2>1. Introduction</h2>
             <p>
-              This Privacy Policy explains how Oykus ("we", "our", or "us") collects, uses, and protects your personal data when you use our application. We are committed to protecting your privacy and ensuring compliance with the General Data Protection Regulation (GDPR) and other applicable data protection laws.
+              This Privacy Policy explains how Oykus ("we", "our", or "us") collects, uses, and protects your personal information when you use our application. We are committed to protecting your privacy and ensuring compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA) and Quebec's Act Respecting the Protection of Personal Information in the Private Sector.
             </p>
           </section>
 
           <section className="oyk-privacy-policy-section">
             <h2>2. Data Controller</h2>
             <p>
-              Oykus is the data controller responsible for processing your personal data. If you have any questions about this Privacy Policy or our data practices, please contact us.
+              Oykus, a Canadian business operating in Quebec, is responsible for processing your personal information. If you have any questions about this Privacy Policy or our data practices, please contact us.
             </p>
           </section>
 
           <section className="oyk-privacy-policy-section">
-            <h2>3. Personal Data We Collect</h2>
+            <h2>3. Personal Information We Collect</h2>
             
             <h3>3.1 Account Information</h3>
             <p>When you create an account, we collect:</p>
             <ul>
               <li>Email address (for authentication and communication)</li>
-              <li>Username (for identification within the application)</li>
-              <li>Password (encrypted and securely stored)</li>
+              <li>Username (for authentication)</li>
+              <li>Password (for authentication; encrypted and securely stored)</li>
               <li>Player name (for display purposes)</li>
-              <li>Player abbreviation (for quick identification)</li>
             </ul>
 
             <h3>3.2 Application Preferences</h3>
@@ -63,17 +62,18 @@ export default function PrivacyPolicy() {
 
           <section className="oyk-privacy-policy-section">
             <h2>4. Legal Basis for Processing</h2>
-            <p>We process your personal data based on the following legal grounds:</p>
+            <p>We process your personal information based on the following legal grounds:</p>
             <ul>
+              <li><strong>Consent:</strong> When you provide explicit consent for specific purposes</li>
               <li><strong>Contract Performance:</strong> To provide you with our services and maintain your account</li>
               <li><strong>Legitimate Interest:</strong> To improve our services and ensure security</li>
-              <li><strong>Consent:</strong> For any optional features or communications</li>
+              <li><strong>Legal Obligation:</strong> To comply with applicable laws and regulations</li>
             </ul>
           </section>
 
           <section className="oyk-privacy-policy-section">
-            <h2>5. How We Use Your Data</h2>
-            <p>We use your personal data to:</p>
+            <h2>5. How We Use Your Information</h2>
+            <p>We use your personal information to:</p>
             <ul>
               <li>Provide and maintain our application services</li>
               <li>Authenticate your identity and secure your account</li>
@@ -87,7 +87,7 @@ export default function PrivacyPolicy() {
 
           <section className="oyk-privacy-policy-section">
             <h2>6. Data Storage and Security</h2>
-            <p>Your data is stored securely using:</p>
+            <p>Your information is stored securely using:</p>
             <ul>
               <li>Encrypted passwords and secure authentication</li>
               <li>Database security measures</li>
@@ -98,32 +98,30 @@ export default function PrivacyPolicy() {
 
           <section className="oyk-privacy-policy-section">
             <h2>7. Data Retention</h2>
-            <p>We retain your personal data for as long as:</p>
+            <p>We retain your personal information for as long as:</p>
             <ul>
               <li>Your account remains active</li>
               <li>Required to provide our services</li>
               <li>Necessary to comply with legal obligations</li>
             </ul>
-            <p>You may request deletion of your account and associated data at any time.</p>
+            <p>You may request deletion of your account and associated information at any time.</p>
           </section>
 
           <section className="oyk-privacy-policy-section">
             <h2>8. Your Rights</h2>
-            <p>Under GDPR, you have the following rights:</p>
+            <p>Under Canadian privacy laws, you have the following rights:</p>
             <ul>
-              <li><strong>Access:</strong> Request a copy of your personal data</li>
-              <li><strong>Rectification:</strong> Correct inaccurate or incomplete data</li>
-              <li><strong>Erasure:</strong> Request deletion of your personal data</li>
-              <li><strong>Portability:</strong> Receive your data in a structured format</li>
-              <li><strong>Restriction:</strong> Limit how we process your data</li>
-              <li><strong>Objection:</strong> Object to certain types of processing</li>
+              <li><strong>Access:</strong> Request a copy of your personal information</li>
+              <li><strong>Correction:</strong> Correct inaccurate or incomplete information</li>
+              <li><strong>Deletion:</strong> Request deletion of your personal information</li>
               <li><strong>Withdraw Consent:</strong> Withdraw consent where applicable</li>
+              <li><strong>Complaint:</strong> File a complaint with the Privacy Commissioner of Canada or Quebec's Commission d'accès à l'information</li>
             </ul>
           </section>
 
           <section className="oyk-privacy-policy-section">
-            <h2>9. Data Sharing</h2>
-            <p>We do not sell, trade, or rent your personal data to third parties. We may share your data only:</p>
+            <h2>9. Information Sharing</h2>
+            <p>We do not sell, trade, or rent your personal information to third parties. We may share your information only:</p>
             <ul>
               <li>With your explicit consent</li>
               <li>To comply with legal obligations</li>
@@ -143,13 +141,13 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="oyk-privacy-policy-section">
-            <h2>11. International Transfers</h2>
-            <p>Your data is processed and stored within the European Economic Area (EEA) or in countries with adequate data protection standards.</p>
+            <h2>11. Data Location</h2>
+            <p>Your personal information is processed and stored within Canada, primarily in Quebec, in compliance with Canadian privacy laws and regulations.</p>
           </section>
 
           <section className="oyk-privacy-policy-section">
             <h2>12. Children's Privacy</h2>
-            <p>Our application is not intended for children under 13 years of age. We do not knowingly collect personal data from children under 13.</p>
+            <p>Our application is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.</p>
           </section>
 
           <section className="oyk-privacy-policy-section">
@@ -168,7 +166,11 @@ export default function PrivacyPolicy() {
 
           <section className="oyk-privacy-policy-section">
             <h2>15. Complaints</h2>
-            <p>If you believe we have not addressed your concerns satisfactorily, you have the right to lodge a complaint with your local data protection authority.</p>
+            <p>If you believe we have not addressed your concerns satisfactorily, you have the right to lodge a complaint with:</p>
+            <ul>
+              <li>The Privacy Commissioner of Canada</li>
+              <li>Quebec's Commission d'accès à l'information (if you are a Quebec resident)</li>
+            </ul>
           </section>
         </div>
       </div>
