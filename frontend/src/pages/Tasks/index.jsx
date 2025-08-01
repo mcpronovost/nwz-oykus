@@ -95,6 +95,7 @@ function Tasks() {
                       isCompleted={status.isCompleted}
                       statusId={status.id}
                       statusName={status.name}
+                      onCloseTaskEdit={getTasks}
                     />
                   ))}
                 </section>

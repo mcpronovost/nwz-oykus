@@ -152,6 +152,16 @@ class ApiService {
     return await this.request(`/world/${worldId}/tasks`);
   }
 
+  async updateTask(worldId, taskId, data) {
+    if (!worldId || !taskId || !data) {
+      throw new Error("World ID, Task ID, and data are required");
+    }
+    return await this.request(`/world/${worldId}/tasks/${taskId}/edit`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    });
+  }
+
   async updateTaskStatus(worldId, taskId, statusId, oldStatusName, newStatusName) {
     if (!worldId || !taskId || !statusId) {
       throw new Error("World ID, Task ID, and Status ID are required");
