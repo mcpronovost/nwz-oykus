@@ -77,26 +77,26 @@ export default function Components() {
             items={[
               {
                 name: "title",
-                description: "Title of the alert",
+                description: "Title",
                 type: "string",
                 defaultValue: "-",
               },
               {
                 name: "message",
-                description: "Message of the alert",
+                description: "Message",
                 type: "string",
                 defaultValue: "-",
               },
               {
                 name: "variant",
-                description: "Variant of the alert",
+                description: "Variant",
                 type: "string",
                 defaultValue: "default",
                 enumValue: ["default", "primary", "danger", "warning", "success"],
               },
               {
                 name: "showIcon",
-                description: "Show icon of the alert",
+                description: "Show icon",
                 type: "boolean",
                 defaultValue: "true",
               },
@@ -133,49 +133,49 @@ export default function Components() {
             items={[
               {
                 name: "name",
-                description: "Name of the avatar",
+                description: "Name to display",
                 type: "string",
                 defaultValue: '""',
               },
               {
                 name: "abbr",
-                description: "Abbreviation of the avatar",
+                description: "Abbreviation to display if no src and no icon is provided",
                 type: "string",
                 defaultValue: '""',
               },
               {
                 name: "src",
-                description: "Source of the avatar",
+                description: "Source of the avatar image",
                 type: "string",
                 defaultValue: "-",
               },
               {
                 name: "icon",
-                description: "Icon of the avatar",
+                description: "Icon to display if no src is provided",
                 type: "component",
                 defaultValue: "<User />",
               },
               {
                 name: "size",
-                description: "Size of the avatar",
+                description: "Size in pixels",
                 type: "number",
                 defaultValue: "64",
               },
               {
                 name: "bgColor",
-                description: "Background colour of the avatar",
+                description: "Background colour",
                 type: "string",
                 defaultValue: "var(--oyk-primary)",
               },
               {
                 name: "fgColor",
-                description: "Foreground colour of the avatar",
+                description: "Colour of the text and icon",
                 type: "string",
                 defaultValue: "var(--oyk-primary-fg)",
               },
               {
                 name: "borderColor",
-                description: "Border colour of the avatar",
+                description: "Border colour",
                 type: "string",
                 defaultValue: "var(--oyk-card-bg)",
               },
@@ -212,7 +212,7 @@ export default function Components() {
             items={[
               {
                 name: "color",
-                description: "Colour of the chip",
+                description: "Colour",
                 type: "string",
                 defaultValue: "default",
                 enumValue: [
@@ -226,7 +226,7 @@ export default function Components() {
               },
               {
                 name: "outline",
-                description: "Outline of the chip",
+                description: "Show chip with border and without background",
                 type: "boolean",
                 defaultValue: "false",
               },
@@ -238,6 +238,22 @@ export default function Components() {
         <article className="oyk-components-list-item">
           <OykHeading title={t("Heading")} ph={0} />
           <code className="full">{`<OykHeading title={t("Components")} />`}</code>
+          <ComponentApiTable
+            items={[
+              {
+                name: "title",
+                description: "Title",
+                type: "string",
+                defaultValue: "-",
+              },
+              {
+                name: "ph",
+                description: "Horizontal padding",
+                type: "number",
+                defaultValue: "32",
+              },
+            ]}
+          />
         </article>
       </section>
     </section>
