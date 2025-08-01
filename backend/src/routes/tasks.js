@@ -61,6 +61,55 @@ router.get("/", authenticateToken, async (req, res) => {
 });
 
 /**
+ * Create a new task
+ * @param {string} req.params.worldId - The world ID
+ *
+ * @param {string} req.body.title - The task title
+ * @param {string} req.body.content - The task content
+ * @param {string} req.body.authorId - The task author ID
+ * @param {string[]} req.body.assigneeIds - The task assignee IDs
+ * @param {string} req.body.statusId - The task status ID
+ */
+router.post("/create", authenticateToken, async (req, res) => {
+  const { worldId } = req.params;
+  const { title, content, authorId, assigneeIds, statusId, priority, tagIds } = req.body;
+  const task = await prisma.task.create({
+    data: {
+      title,
+      content,
+      world: { connect: { id: Number(worldId) } },
+      author: { connect: { id: authorId } },
+      assignees: { connect: assigneeIds?.map(id => ({ id })) },
+      status: { connect: { id: statusId } },
+      priority,
+      tags: { connect: tagIds?.map(id => ({ id })) },
+    },
+    include: {
+      author: true,
+      assignees: true,
+      status: true,
+      tags: true,
+    },
+  });
+  res.status(201).json(task);
+});
+
+router.patch("/:taskId/edit", authenticateToken, async (req, res) => {
+  const { worldId, taskId } = req.params;
+  const { title, content, priority, dueAt } = req.body;
+  const task = await prisma.task.update({
+    where: { id: Number(taskId), worldId: Number(worldId) },
+    data: {
+      title,
+      content,
+      priority,
+      dueAt: dueAt ? new Date(dueAt + "T00:00:00") : null,
+    },
+  });
+  res.json({ idd: task.id });
+});
+
+/**
  * Update the status of a task
  * @param {string} req.params.worldId - The world ID
  * @param {string} req.params.taskId - The task ID
@@ -87,40 +136,6 @@ router.patch("/:taskId/status", authenticateToken, async (req, res) => {
     },
   });
   res.json(task);
-});
-
-/**
- * Create a new task
- * @param {string} req.params.worldId - The world ID
- *
- * @param {string} req.body.title - The task title
- * @param {string} req.body.content - The task content
- * @param {string} req.body.authorId - The task author ID
- * @param {string[]} req.body.assigneeIds - The task assignee IDs
- * @param {string} req.body.statusId - The task status ID
- */
-router.post("/create", async (req, res) => {
-  const { worldId } = req.params;
-  const { title, content, authorId, assigneeIds, statusId, priority, tagIds } = req.body;
-  const task = await prisma.task.create({
-    data: {
-      title,
-      content,
-      world: { connect: { id: Number(worldId) } },
-      author: { connect: { id: authorId } },
-      assignees: { connect: assigneeIds?.map(id => ({ id })) },
-      status: { connect: { id: statusId } },
-      priority,
-      tags: { connect: tagIds?.map(id => ({ id })) },
-    },
-    include: {
-      author: true,
-      assignees: true,
-      status: true,
-      tags: true,
-    },
-  });
-  res.status(201).json(task);
 });
 
 /**
