@@ -1,4 +1,4 @@
-export default function OykFormField({ label, name, type = "text", defaultValue, onChange, ...props }) {
+export default function OykFormField({ label, name, type = "text", defaultValue, onChange, hasError, ...props }) {
   return (
     <div className="oyk-form-group" {...props}>
       <label htmlFor={`field-${name}`}>{label}</label>
@@ -9,6 +9,7 @@ export default function OykFormField({ label, name, type = "text", defaultValue,
         value={defaultValue}
         onChange={onChange}
       />
+      {hasError && <p className="oyk-form-group-error">{hasError}</p>}
     </div>
   );
 }
