@@ -1,5 +1,7 @@
 import React from "react";
 
+import { WORLD_ROUTES } from "./world";
+
 export const ROUTES = [
   {
     name: "home",
@@ -49,6 +51,7 @@ export const ROUTES = [
       en: "tasks",
     },
   },
+  ...WORLD_ROUTES,
   {
     name: "404",
     component: React.lazy(() => import("../../../pages/Error404")),

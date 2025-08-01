@@ -4,6 +4,7 @@ export default function NavItem({
   icon: IconComponent,
   text,
   href,
+  params,
   sideIcon: SideIconComponent,
   sideIconColor = "currentColor",
   sideChip,
@@ -16,7 +17,7 @@ export default function NavItem({
 
   return (
     <li className="oyk-app-sidebar-nav-item">
-      <Link routeName={href} className={`oyk-app-sidebar-nav-item-link ${disabled ? "disabled" : ""}`} disabled={disabled}>
+      <Link routeName={href} params={params} className={`oyk-app-sidebar-nav-item-link ${disabled ? "disabled" : ""}`} disabled={disabled}>
         <span className="oyk-app-sidebar-nav-item-link-icon">
           <IconComponent size={18} />
         </span>

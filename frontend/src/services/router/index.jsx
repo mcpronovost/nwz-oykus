@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import { ROUTES } from "./routes";
-import { getLangFromPath, findRoute } from "./utils";
+import { getLangFromPath, findRoute, buildRoutePath } from "./utils";
 
 const RouterContext = createContext();
 
@@ -26,16 +26,30 @@ export function RouterProvider({ children }) {
   const [route, setRoute] = useState(INITIAL_STATE.route);
 
   const navigate = useCallback(
-    (name, language = lang) => {
-      const route =
-        ROUTES.find((r) => r.name === name) ||
-        ROUTES.find((r) => r.name === "404");
-      if (!route) return;
-      const newPath = `/${language}/${route.paths[language]}`;
+    (name, language = lang, params = {}) => {
+      // Build the full path for the route
+      const routePath = buildRoutePath(name, language, params);
+      if (routePath === null || routePath === undefined) {
+        // Fallback to 404 if route not found
+        const fallbackRoute = ROUTES.find((r) => r.name === "404");
+        if (fallbackRoute) {
+          const newPath = `/${language}/${fallbackRoute.paths[language]}`;
+          window.history.pushState({}, "", newPath);
+          setHistory((h) => [...h, newPath]);
+          setLang(language);
+          setRoute(fallbackRoute);
+        }
+        return;
+      }
+
+      const newPath = `/${language}/${routePath}`;
       window.history.pushState({}, "", newPath);
       setHistory((h) => [...h, newPath]);
       setLang(language);
-      setRoute(route);
+      
+      // Find and set the actual route
+      const actualRoute = findRoute(newPath, language);
+      setRoute(actualRoute);
     },
     [lang]
   );
@@ -65,7 +79,7 @@ export function RouterProvider({ children }) {
     route,
     lang,
     history,
-    n: (name, language = lang) => navigate(name, language),
+    n: (name, language = lang, params = {}) => navigate(name, language, params),
     refresh,
   };
 

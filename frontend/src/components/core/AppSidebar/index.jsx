@@ -49,25 +49,28 @@ export default function AppSidebar() {
               <OykNavItem
                 icon={ShieldAlert}
                 text={t("Rulebook")}
-                href="rulebook"
-                disabled
+                href="world-rulebook"
+                params={{ worldSlug: currentWorld.slug }}
               />
               <OykNavItem
                 icon={LibraryBig}
                 text={t("Lore")}
-                href="lore"
+                href="world-lore"
+                params={{ worldSlug: currentWorld.slug }}
                 disabled
               />
               <OykNavItem
                 icon={Users}
                 text={t("Community")}
-                href="community"
+                href="world-community"
+                params={{ worldSlug: currentWorld.slug }}
                 disabled
               />
               <OykNavItem
                 icon={LifeBuoy}
                 text={t("Support")}
-                href="support"
+                href="world-support"
+                params={{ worldSlug: currentWorld.slug }}
                 disabled
               />
             </ul>
