@@ -6,7 +6,7 @@ model User {
 
   // Player Identity
   playerName String @unique @db.VarChar(120)
-  abbr       String @unique @db.VarChar(4)
+  abbr       String @unique @db.VarChar(3)
 
   // Limits
   limitWorlds      Int @default(2)

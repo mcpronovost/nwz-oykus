@@ -1,7 +1,9 @@
 model World {
   id          Int    @id @default(autoincrement())
-  name        String @db.VarChar(64)
+  name        String @unique @db.VarChar(64)
   description String @db.VarChar(255)
+  abbr        String @db.VarChar(3)
+  slug        String @unique @db.VarChar(120)
 
   // Owner
   ownerId String

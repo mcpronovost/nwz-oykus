@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { hashPassword } from "../src/utils/auth.js";
+import { oykSlugify } from "../src/utils/formatters.js";
 
 const prisma = new PrismaClient();
 
@@ -39,6 +40,8 @@ async function main() {
     create: {
       name: "Qalatlán",
       description: "Seeded world for mc",
+      abbr: "Q",
+      slug: oykSlugify("Qalatlán"),
       isActive: true,
       isPublic: false,
       ownerId: user.id,
