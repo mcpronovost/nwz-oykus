@@ -70,7 +70,7 @@ function Tasks() {
   }
 
   return (
-    <section className="oyk-tasks">
+    <section className="oyk-page oyk-tasks">
       <Heading title={t("Tasks")} />
       <DndProvider backend={HTML5Backend}>
         <section className="oyk-tasks-status">

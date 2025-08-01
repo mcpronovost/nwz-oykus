@@ -93,6 +93,7 @@ export function RouterProvider({ children }) {
 export function useRouter() {
   const context = useContext(RouterContext);
   if (!context) {
+    window.location.reload();
     return INITIAL_STATE;
   }
   return context;

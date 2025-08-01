@@ -71,7 +71,7 @@ export default function Login() {
   };
 
   return (
-    <div className="oyk-auth">
+    <section className="oyk-page oyk-auth">
       <div className="oyk-auth-container">
         <div className="oyk-auth-header">
           <h1 className="oyk-auth-header-title">Sign in to your account</h1>
@@ -146,6 +146,6 @@ export default function Login() {
           </button>
         </form>
       </div>
-    </div>
+    </section>
   );
 }

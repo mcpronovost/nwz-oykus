@@ -7,8 +7,8 @@ export default function Rulebook() {
   const { t } = useTranslation();
 
   return (
-    <div className="oyk-page-rulebook">
+    <section className="oyk-page oyk-rulebook">
       <Heading title={t("Rulebook")} />
-    </div>
+    </section>
   );
 }

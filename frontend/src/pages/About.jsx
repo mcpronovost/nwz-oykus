@@ -1,11 +1,12 @@
-import React from "react";
+import { useTranslation } from "@/services/translation";
+import { Heading } from "@/components/common";
 
-function About() {
+export default function About() {
+  const { t } = useTranslation();
+
   return (
-    <div>
-      <h1>About Page</h1>
-    </div>
+    <section className="oyk-page oyk-about">
+      <Heading title={t("About")} />
+    </section>
   );
 }
-
-export default About;

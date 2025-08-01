@@ -111,7 +111,7 @@ export default function Register() {
   };
 
   return (
-    <div className="oyk-auth">
+    <section className="oyk-page oyk-auth">
       <div className="oyk-auth-container">
         <div className="oyk-auth-header">
           <h1 className="oyk-auth-header-title">Create your account</h1>
@@ -252,6 +252,6 @@ export default function Register() {
           </button>
         </form>
       </div>
-    </div>
+    </section>
   );
 }
