@@ -7,12 +7,12 @@ enum TaskPriority {
 }
 
 enum TaskHistoryChangeType {
-  STATUS
   TITLE
   CONTENT
+  PRIORITY
+  STATUS
   ASSIGNEES
   TAGS
-  PRIORITY
 }
 
 model Task {

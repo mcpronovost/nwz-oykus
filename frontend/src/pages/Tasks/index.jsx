@@ -33,28 +33,28 @@ function Tasks() {
     }
   };
 
-  const updateTaskStatus = async (taskId, newStatusId) => {
+  const updateTaskStatus = async (
+    taskId,
+    newStatusId,
+    oldStatusName,
+    newStatusName
+  ) => {
     try {
-      const res = await fetch(`/api/world/${currentWorld.id}/tasks/${taskId}/status`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ statusId: newStatusId }),
-      });
-
-      if (res.ok) {
-        await getTasks();
-      } else {
-        console.error("Failed to update task status");
-      }
+      await api.updateTaskStatus(
+        currentWorld.id,
+        taskId,
+        newStatusId,
+        oldStatusName,
+        newStatusName
+      );
+      await getTasks();
     } catch (error) {
       console.error("Error updating task status:", error);
     }
   };
 
-  const handleDrop = (taskId, newStatusId) => {
-    updateTaskStatus(taskId, newStatusId);
+  const handleDrop = (taskId, newStatusId, oldStatusName, newStatusName) => {
+    updateTaskStatus(taskId, newStatusId, oldStatusName, newStatusName);
   };
 
   useEffect(() => {
@@ -76,7 +76,11 @@ function Tasks() {
         <section className="oyk-tasks-status">
           {tasks.map((status) => (
             <article key={status.name} className="oyk-tasks-status-item">
-              <TaskStatus status={status} onDrop={handleDrop} onTasksUpdate={getTasks}>
+              <TaskStatus
+                status={status}
+                onDrop={handleDrop}
+                onTasksUpdate={getTasks}
+              >
                 <section
                   className={`oyk-tasks-status-item-content ${
                     status.isCompleted
@@ -90,6 +94,7 @@ function Tasks() {
                       task={task}
                       isCompleted={status.isCompleted}
                       statusId={status.id}
+                      statusName={status.name}
                     />
                   ))}
                 </section>

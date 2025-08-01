@@ -7,7 +7,7 @@ function TaskStatus({ status, onDrop, onTasksUpdate = () => {}, children }) {
     accept: "TASK",
     drop: (item) => {
       if (item.statusId !== status.id) {
-        onDrop(item.id, status.id);
+        onDrop(item.id, status.id, item.statusName, status.name);
       }
     },
     canDrop: (item) => item.statusId !== status.id,
@@ -18,9 +18,11 @@ function TaskStatus({ status, onDrop, onTasksUpdate = () => {}, children }) {
   });
 
   return (
-    <div 
+    <div
       ref={drop}
-      className={`oyk-tasks-status-dropzone ${isOver && canDrop ? "oyk-tasks-status-dropzone-over" : ""}`}
+      className={`oyk-tasks-status-dropzone ${
+        isOver && canDrop ? "oyk-tasks-status-dropzone-over" : ""
+      }`}
     >
       <TaskStatusHeader status={status} onTasksUpdate={onTasksUpdate} />
       {children}

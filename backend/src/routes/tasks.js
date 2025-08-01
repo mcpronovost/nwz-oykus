@@ -11,7 +11,6 @@ const router = express.Router({ mergeParams: true });
  */
 router.get("/", authenticateToken, async (req, res) => {
   const { worldId } = req.params;
-  console.log(">> worldId:", worldId);
   // Check if worldId is a number and if not, return a 400 error
   if (isNaN(worldId)) {
     return res.status(400).json({ error: "World ID must be a number" });
@@ -68,12 +67,24 @@ router.get("/", authenticateToken, async (req, res) => {
  * 
  * @param {string} req.body.statusId - The task status ID
  */
-router.patch("/:taskId/status", async (req, res) => {
+router.patch("/:taskId/status", authenticateToken, async (req, res) => {
   const { worldId, taskId } = req.params;
-  const { statusId } = req.body;
+  const { statusId, oldStatusName, newStatusName } = req.body;
+  const currentUser = req.user;
+  
   const task = await prisma.task.update({
     where: { id: Number(taskId), worldId: Number(worldId) },
-    data: { statusId },
+    data: {
+      statusId,
+      history: {
+        create: {
+          changedById: currentUser.id,
+          changeType: "STATUS",
+          oldValue: oldStatusName,
+          newValue: newStatusName,
+        },
+      },
+    },
   });
   res.json(task);
 });

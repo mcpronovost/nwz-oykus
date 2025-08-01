@@ -152,13 +152,13 @@ class ApiService {
     return await this.request(`/world/${worldId}/tasks`);
   }
 
-  async updateTaskStatus(worldId, taskId, statusId) {
+  async updateTaskStatus(worldId, taskId, statusId, oldStatusName, newStatusName) {
     if (!worldId || !taskId || !statusId) {
       throw new Error("World ID, Task ID, and Status ID are required");
     }
     return await this.request(`/world/${worldId}/tasks/${taskId}/status`, {
       method: "PATCH",
-      body: JSON.stringify({ statusId }),
+      body: JSON.stringify({ statusId, oldStatusName, newStatusName }),
     });
   }
 
