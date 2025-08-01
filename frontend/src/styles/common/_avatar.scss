@@ -2,17 +2,33 @@
   background-color: var(--oyk-primary);
   border: 2px solid var(--oyk-card-bg);
   border-radius: 50%;
-  display: flex;
+  color: var(--oyk-primary-fg);
+  overflow: hidden;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 24px;
   height: 24px;
 
+  &-img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   &-abbr {
-    color: var(--oyk-primary-fg);
     font-family: "Quicksand", sans-serif;
     font-size: 8px;
     font-weight: 500;
     line-height: 1;
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
   }
 }

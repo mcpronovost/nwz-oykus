@@ -8,10 +8,34 @@
   gap: 16px;
   padding: 16px;
 
+  &-variant-default {
+    background-color: color-mix(in srgb, var(--oyk-core-fg) 10%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-core-fg) 20%, transparent);
+    color: var(--oyk-core-fg);
+  }
+
+  &-variant-primary {
+    background-color: color-mix(in srgb, var(--oyk-primary) 10%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-primary) 20%, transparent);
+    color: var(--oyk-primary);
+  }
+
   &-variant-danger {
     background-color: color-mix(in srgb, var(--oyk-c-danger) 10%, transparent);
     border-color: color-mix(in srgb, var(--oyk-c-danger) 20%, transparent);
     color: var(--oyk-c-danger);
+  }
+
+  &-variant-warning {
+    background-color: color-mix(in srgb, var(--oyk-c-warning) 10%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-c-warning) 20%, transparent);
+    color: var(--oyk-c-warning);
+  }
+
+  &-variant-success {
+    background-color: color-mix(in srgb, var(--oyk-c-success) 10%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-c-success) 20%, transparent);
+    color: var(--oyk-c-success);
   }
 
   &-icon {

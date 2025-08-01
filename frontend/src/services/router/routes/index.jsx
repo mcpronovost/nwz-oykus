@@ -53,6 +53,14 @@ export const ROUTES = [
   },
   ...WORLD_ROUTES,
   {
+    name: "components",
+    component: React.lazy(() => import("../../../pages/Components")),
+    paths: {
+      fr: "composants",
+      en: "components",
+    },
+  },
+  {
     name: "404",
     component: React.lazy(() => import("../../../pages/Error404")),
     paths: {

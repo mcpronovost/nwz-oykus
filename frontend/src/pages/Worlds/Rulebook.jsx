@@ -1,6 +1,6 @@
 import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
-import { Heading } from "@/components/common";
+import { OykHeading } from "@/components/common";
 
 export default function Rulebook() {
   const { currentWorld } = useStore();
@@ -8,7 +8,7 @@ export default function Rulebook() {
 
   return (
     <section className="oyk-page oyk-rulebook">
-      <Heading title={t("Rulebook")} />
+      <OykHeading title={t("Rulebook")} />
     </section>
   );
 }

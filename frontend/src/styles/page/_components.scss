@@ -1,0 +1,64 @@
+.oyk-components {
+  .oyk-components-list {
+    display: block;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 32px;
+    margin: 32px auto;
+
+    &-item {
+      display: block;
+      width: 100%;
+      margin-bottom: 32px;
+
+      &-example {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+
+        &.column {
+          display: block;
+        }
+      }
+
+      > code {
+        margin-top: 16px;
+      }
+    }
+  }
+
+  .oyk-components-api-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin: 16px 0;
+
+    &-head {
+      th {
+        border-bottom: 1px solid var(--oyk-core-divider);
+        font-weight: 600;
+        padding: 8px;
+      }
+    }
+
+    &-body {
+      td {
+        border-bottom: 1px solid var(--oyk-core-divider);
+        font-weight: 400;
+        padding: 8px;
+      }
+    }
+
+    &-item {
+      &-enum {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        margin-top: 8px;
+      }
+    }
+  }
+}

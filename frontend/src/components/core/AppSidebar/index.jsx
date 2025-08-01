@@ -1,4 +1,5 @@
 import {
+  Blocks,
   Compass,
   LayoutDashboard,
   LibraryBig,
@@ -81,6 +82,7 @@ export default function AppSidebar() {
         <nav className="oyk-app-sidebar-nav">
           <ul className="oyk-app-sidebar-nav-list">
             <OykNavItem icon={Settings} text={t("Settings")} href="settings" />
+            <OykNavItem icon={Blocks} text={t("Components")} href="components" />
           </ul>
         </nav>
       </footer>

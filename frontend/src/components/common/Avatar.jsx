@@ -1,10 +1,36 @@
-export default function Avatar({ name, abbr, src, borderColor = "var(--oyk-card-bg)" }) {
+import { User } from "lucide-react";
+
+export default function OykAvatar({
+  name = "",
+  abbr = "",
+  src,
+  icon: IconComponent = User,
+  size = 64,
+  bgColor = "var(--oyk-primary)",
+  fgColor = "var(--oyk-primary-fg)",
+  borderColor = "var(--oyk-card-bg)",
+}) {
   return (
-    <div className="oyk-avatar" style={{ borderColor }}>
+    <div
+      className="oyk-avatar"
+      style={{
+        backgroundColor: src ? borderColor : bgColor,
+        borderColor: borderColor,
+        color: fgColor,
+        width: size,
+        height: size,
+      }}
+    >
       {src ? (
-        <img src={src} alt={name} />
+        <img src={src} alt={name} className="oyk-avatar-img" />
+      ) : abbr || name ? (
+        <span className="oyk-avatar-abbr" style={{ fontSize: size * 0.25 }}>
+          {abbr || name.charAt(0).toUpperCase()}
+        </span>
       ) : (
-        <span className="oyk-avatar-abbr">{abbr || name.charAt(0).toUpperCase()}</span>
+        <span className="oyk-avatar-icon">
+          <IconComponent size={size * 0.5} />
+        </span>
       )}
     </div>
   );

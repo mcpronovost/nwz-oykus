@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDrag } from "react-dnd";
 
-import { Chip } from "@/components/common";
+import { OykChip } from "@/components/common";
 
 import OykTaskCardHeader from "./TaskCardHeader";
 import OykTaskCardFooter from "./TaskCardFooter";
@@ -52,9 +52,9 @@ export default function TaskCard({ task, isCompleted, statusId, statusName, onCl
             {task.tags.length > 0 && (
               <div className="oyk-tasks-card-content-tags">
                 {task.tags.map((tag) => (
-                  <Chip key={tag.id} color={tag.color || undefined}>
+                  <OykChip key={tag.id} color={tag.color || undefined}>
                     {tag.name}
-                  </Chip>
+                  </OykChip>
                 ))}
               </div>
             )}

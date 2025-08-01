@@ -1,6 +1,6 @@
 import { MessagesSquare, History } from "lucide-react";
 
-import { Avatar } from "@/components/common";
+import { OykAvatar } from "@/components/common";
 
 export default function TaskCardFooter({ task }) {
   return (
@@ -26,9 +26,10 @@ export default function TaskCardFooter({ task }) {
           <ul>
             {task.assignees.map((assignee) => (
               <li key={assignee.id}>
-                <Avatar
+                <OykAvatar
                   name={assignee.name}
                   abbr={assignee.abbr}
+                  size={24}
                   borderColor="var(--oyk-card-item-bg)"
                 />
               </li>

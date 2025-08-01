@@ -1,4 +1,4 @@
-export default function Chip({ children, color = "default", outline = false }) {
+export default function OykChip({ children, color = "default", outline = false }) {
   return (
     <span
       className={`oyk-chip ${

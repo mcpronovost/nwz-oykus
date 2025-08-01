@@ -1,4 +1,4 @@
-import { Chip, Link } from "@/components/common";
+import { OykChip, Link } from "@/components/common";
 
 export default function NavItem({
   icon: IconComponent,
@@ -29,7 +29,7 @@ export default function NavItem({
         )}
         {sideChip && (
           <span className="oyk-app-sidebar-nav-item-link-side-chip">
-            <Chip color={sideChipColor}>{sideChip}</Chip>
+            <OykChip color={sideChipColor}>{sideChip}</OykChip>
           </span>
         )}
       </Link>

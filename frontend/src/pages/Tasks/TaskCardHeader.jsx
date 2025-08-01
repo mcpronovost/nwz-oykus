@@ -2,7 +2,7 @@ import { Timer } from "lucide-react";
 
 import { oykDate, oykDateLessThan } from "@/utils";
 import { useTranslation } from "@/services/translation";
-import { Chip } from "@/components/common";
+import { OykChip } from "@/components/common";
 
 export default function TaskCardHeader({ task, isCompleted }) {
   const { t, lang } = useTranslation();
@@ -21,19 +21,19 @@ export default function TaskCardHeader({ task, isCompleted }) {
           {task.priority && (
             <div className="oyk-tasks-card-header-infos-priority">
               {task.priority === "HIGH" && (
-                <Chip color="danger" outline>
+                <OykChip color="danger" outline>
                   {t("PriorityHigh")}
-                </Chip>
+                </OykChip>
               )}
               {task.priority === "MEDIUM" && (
-                <Chip color="warning" outline>
+                <OykChip color="warning" outline>
                   {t("PriorityMedium")}
-                </Chip>
+                </OykChip>
               )}
               {task.priority === "LOW" && (
-                <Chip color="success" outline>
+                <OykChip color="success" outline>
                   {t("PriorityLow")}
-                </Chip>
+                </OykChip>
               )}
             </div>
           )}

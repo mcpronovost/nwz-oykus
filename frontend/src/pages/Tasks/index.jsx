@@ -8,7 +8,7 @@ import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
 import AppNotAuthorized from "@/components/core/AppNotAuthorized";
 import AppNotFound from "@/components/core/AppNotFound";
-import { Heading } from "@/components/common";
+import { OykHeading } from "@/components/common";
 
 import TaskStatus from "./TaskStatus";
 import TaskCard from "./TaskCard";
@@ -71,7 +71,7 @@ function Tasks() {
 
   return (
     <section className="oyk-page oyk-tasks">
-      <Heading title={t("Tasks")} />
+      <OykHeading title={t("Tasks")} />
       <DndProvider backend={HTML5Backend}>
         <section className="oyk-tasks-status">
           {tasks.map((status) => (

@@ -45,3 +45,40 @@ li {
   margin: 0;
   padding: 0;
 }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+
+  th, td {
+    text-align: left;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+code {
+  background-color: var(--oyk-card-bg);
+  border-radius: var(--oyk-radius);
+  color: var(--oyk-card-fg);
+  font-family: "Google Sans Code", monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 2;
+  white-space: pre-wrap;
+  padding: 16px;
+
+  &.full {
+    display: block;
+    width: 100%;
+  }
+
+  &.small {
+    font-size: 0.8rem;
+    display: inline-block;
+    padding: 4px 8px;
+  }
+}
