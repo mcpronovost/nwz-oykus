@@ -23,7 +23,9 @@ router.get("/", authenticateToken, async (req, res) => {
     },
   });
   if (!world || world.owner.id !== req.user.id) {
-    return res.status(403).json({ error: "You don't have permission to see this world" });
+    return res
+      .status(403)
+      .json({ error: "You don't have permission to see this world" });
   }
   const data = await prisma.taskStatus.findMany({
     where: { worldId: Number(worldId) },
@@ -51,7 +53,7 @@ router.get("/", authenticateToken, async (req, res) => {
         },
         orderBy: [
           { priority: { sort: "desc", nulls: "last" } },
-          { dueAt: "asc" }
+          { dueAt: "asc" },
         ],
       },
     },
@@ -72,17 +74,18 @@ router.get("/", authenticateToken, async (req, res) => {
  */
 router.post("/create", authenticateToken, async (req, res) => {
   const { worldId } = req.params;
-  const { title, content, authorId, assigneeIds, statusId, priority, tagIds } = req.body;
+  const { title, content, authorId, assigneeIds, statusId, priority, tagIds } =
+    req.body;
   const task = await prisma.task.create({
     data: {
       title,
       content,
       world: { connect: { id: Number(worldId) } },
       author: { connect: { id: authorId } },
-      assignees: { connect: assigneeIds?.map(id => ({ id })) },
+      assignees: { connect: assigneeIds?.map((id) => ({ id })) },
       status: { connect: { id: statusId } },
       priority,
-      tags: { connect: tagIds?.map(id => ({ id })) },
+      tags: { connect: tagIds?.map((id) => ({ id })) },
     },
     include: {
       author: true,
@@ -106,21 +109,21 @@ router.patch("/:taskId/edit", authenticateToken, async (req, res) => {
       dueAt: dueAt ? new Date(dueAt + "T00:00:00") : null,
     },
   });
-  res.json({ idd: task.id });
+  res.json({ id: task.id });
 });
 
 /**
  * Update the status of a task
  * @param {string} req.params.worldId - The world ID
  * @param {string} req.params.taskId - The task ID
- * 
+ *
  * @param {string} req.body.statusId - The task status ID
  */
 router.patch("/:taskId/status", authenticateToken, async (req, res) => {
   const { worldId, taskId } = req.params;
   const { statusId, oldStatusName, newStatusName } = req.body;
   const currentUser = req.user;
-  
+
   const task = await prisma.task.update({
     where: { id: Number(taskId), worldId: Number(worldId) },
     data: {
@@ -135,7 +138,20 @@ router.patch("/:taskId/status", authenticateToken, async (req, res) => {
       },
     },
   });
-  res.json(task);
+  res.json({ id: task.id });
+});
+
+/**
+ * Delete a task
+ * @param {string} req.params.worldId - The world ID
+ * @param {string} req.params.taskId - The task ID
+ */
+router.delete("/:taskId/delete", authenticateToken, async (req, res) => {
+  const { worldId, taskId } = req.params;
+  await prisma.task.delete({
+    where: { id: Number(taskId), worldId: Number(worldId) },
+  });
+  res.status(204).end();
 });
 
 /**
@@ -154,45 +170,7 @@ router.patch("/status/:statusId/edit", async (req, res) => {
     where: { id: Number(statusId), worldId: Number(worldId) },
     data: { name, color, sortOrder },
   });
-  res.json(status);
-});
-
-
-
-
-
-
-// Update a task
-router.put("/tasks/:taskId", async (req, res) => {
-  const { taskId } = req.params;
-  const { title, content, assigneeIds, statusId, priority, tagIds } = req.body;
-  const task = await prisma.task.update({
-    where: { id: Number(taskId) },
-    data: {
-      title,
-      content,
-      assignees: assigneeIds ? { set: assigneeIds.map(id => ({ id })) } : undefined,
-      status: statusId ? { connect: { id: statusId } } : undefined,
-      priority,
-      tags: tagIds ? { set: tagIds.map(id => ({ id })) } : undefined,
-    },
-    include: {
-      author: true,
-      assignees: true,
-      status: true,
-      tags: true,
-      comments: true,
-      history: true,
-    },
-  });
-  res.json(task);
-});
-
-// Delete a task
-router.delete("/tasks/:taskId", async (req, res) => {
-  const { taskId } = req.params;
-  await prisma.task.delete({ where: { id: Number(taskId) } });
-  res.status(204).end();
+  res.json({ id: status.id });
 });
 
 // --- STATUSES ---
@@ -304,4 +282,4 @@ router.get("/tasks/:taskId/history", async (req, res) => {
   res.json(history);
 });
 
-export default router; 
+export default router;
