@@ -53,14 +53,16 @@ const Dropdown = forwardRef(({ toggle, menu, direction = "left" }, ref) => {
             <div
               key={index}
               className="oyk-dropdown-item"
-              onClick={() => handleMenuClick(item.onClick)}
             >
-              {item.element ? (
+              {item.divider ? (
+                <div className="oyk-dropdown-item-divider" />
+              ) : item.element ? (
                 item.element
               ) : (
                 <button
                   className="oyk-dropdown-item-btn"
                   onClick={() => handleMenuClick(item.onClick)}
+                  disabled={item.disabled}
                 >
                   {item.icon && <span className="icon">{item.icon}</span>}
                   <span className="label">{item.label}</span>
