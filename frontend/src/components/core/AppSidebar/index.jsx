@@ -6,6 +6,7 @@ import {
   Settings,
   ShieldAlert,
   Users,
+  LifeBuoy,
 } from "lucide-react";
 
 import { useStore } from "@/services/store";
@@ -61,6 +62,12 @@ export default function AppSidebar() {
                 icon={Users}
                 text={t("Community")}
                 href="community"
+                disabled
+              />
+              <OykNavItem
+                icon={LifeBuoy}
+                text={t("Support")}
+                href="support"
                 disabled
               />
             </ul>

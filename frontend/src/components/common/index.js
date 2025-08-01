@@ -8,3 +8,4 @@ export { default as OykFormMessage } from "./FormMessage.jsx";
 export { default as Heading } from "./Heading.jsx";
 export { default as Link } from "./Link.jsx";
 export { default as Modal } from "./Modal.jsx";
+export { default as OykProgress } from "./Progress.jsx";

@@ -13,5 +13,6 @@
 @use "./common/form" as common-form;
 @use "./common/heading" as common-heading;
 @use "./common/modal" as common-modal;
+@use "./common/progress" as common-progress;
 
 @use "./page/auth" as page-auth;
