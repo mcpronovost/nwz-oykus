@@ -1,5 +1,6 @@
 export { default as OykAlert } from "./Alert.jsx";
 export { default as OykAvatar } from "./Avatar.jsx";
+export { default as OykButton } from "./Button.jsx";
 export { default as OykChip } from "./Chip.jsx";
 export { default as Dropdown } from "./Dropdown.jsx";
 export { default as OykForm } from "./Form.jsx";

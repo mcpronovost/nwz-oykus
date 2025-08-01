@@ -1,0 +1,100 @@
+.oyk-button {
+  background-color: color-mix(in srgb, var(--oyk-core-fg) 10%, transparent);
+  border: none;
+  border-radius: var(--oyk-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: 100%;
+  padding: 12px 24px;
+  transition: opacity 0.2s;
+
+  &:not(:disabled):hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+
+  &:not(:disabled):active {
+    opacity: 0.6;
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  &-outline {
+    background-color: transparent !important;
+    border: 1px solid color-mix(in srgb, var(--oyk-core-fg) 10%, transparent);
+    padding: 11px 23px;
+
+    .oyk-button-content {
+      filter: brightness(1);
+    }
+  }
+
+  &-content {
+    color: var(--oyk-core-fg);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    max-width: 100%;
+    filter: brightness(1.8);
+  }
+
+  &-default {
+    background-color: color-mix(in srgb, var(--oyk-core-fg) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-core-fg) 30%, transparent);
+
+    .oyk-button-content {
+      color: var(--oyk-core-fg);
+    }
+  }
+
+  &-primary {
+    background-color: color-mix(in srgb, var(--oyk-primary) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-primary) 50%, transparent);
+
+    &:not(.oyk-button-outline) .oyk-button-content {
+      color: var(--oyk-primary-fg);
+      filter: brightness(1);
+    }
+
+    &.oyk-button-outline .oyk-button-content {
+      color: var(--oyk-primary);
+    }
+  }
+
+  &-danger {
+    background-color: color-mix(in srgb, var(--oyk-c-danger) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-c-danger) 50%, transparent);
+
+    .oyk-button-content {
+      color: var(--oyk-c-danger);
+    }
+  }
+
+  &-warning {
+    background-color: color-mix(in srgb, var(--oyk-c-warning) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-c-warning) 50%, transparent);
+
+    .oyk-button-content {
+      color: var(--oyk-c-warning);
+    }
+  }
+
+  &-success {
+    background-color: color-mix(in srgb, var(--oyk-c-success) 30%, transparent);
+    border-color: color-mix(in srgb, var(--oyk-c-success) 50%, transparent);
+
+    .oyk-button-content {
+      color: var(--oyk-c-success);
+    }
+  }
+}

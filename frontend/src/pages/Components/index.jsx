@@ -1,6 +1,12 @@
 import "@/styles/page/_components.scss";
 import { useTranslation } from "@/services/translation";
-import { OykAlert, OykAvatar, OykChip, OykHeading } from "@/components/common";
+import {
+  OykAlert,
+  OykAvatar,
+  OykButton,
+  OykChip,
+  OykHeading,
+} from "@/components/common";
 import ComponentApiTable from "./ComponentApiTable";
 
 export default function Components() {
@@ -92,7 +98,13 @@ export default function Components() {
                 description: "Variant",
                 type: "string",
                 defaultValue: "default",
-                enumValue: ["default", "primary", "danger", "warning", "success"],
+                enumValue: [
+                  "default",
+                  "primary",
+                  "danger",
+                  "warning",
+                  "success",
+                ],
               },
               {
                 name: "showIcon",
@@ -139,7 +151,8 @@ export default function Components() {
               },
               {
                 name: "abbr",
-                description: "Abbreviation to display if no src and no icon is provided",
+                description:
+                  "Abbreviation to display if no src and no icon is provided",
                 type: "string",
                 defaultValue: '""',
               },
@@ -178,6 +191,89 @@ export default function Components() {
                 description: "Border colour",
                 type: "string",
                 defaultValue: "var(--oyk-card-bg)",
+              },
+            ]}
+          />
+        </article>
+
+        {/* Button */}
+        <article id="button" className="oyk-components-list-item">
+          <OykHeading title={t("Button")} ph={0} />
+          <div className="oyk-components-list-item-example">
+            <div>
+              <OykButton>Default Button</OykButton>{" "}
+              <OykButton color="primary">Primary Button</OykButton>{" "}
+              <OykButton color="danger">Danger Button</OykButton>{" "}
+              <OykButton color="warning">Warning Button</OykButton>{" "}
+              <OykButton color="success">Success Button</OykButton>
+            </div>
+            <div>
+              <OykButton disabled>Default Button</OykButton>{" "}
+              <OykButton disabled color="primary">Primary Button</OykButton>{" "}
+              <OykButton disabled color="danger">Danger Button</OykButton>{" "}
+              <OykButton disabled color="warning">Warning Button</OykButton>{" "}
+              <OykButton disabled color="success">Success Button</OykButton>
+            </div>
+            <div>
+              <OykButton outline>Default Button</OykButton>{" "}
+              <OykButton outline color="primary">Primary Button</OykButton>{" "}
+              <OykButton outline color="danger">Danger Button</OykButton>{" "}
+              <OykButton outline color="warning">Warning Button</OykButton>{" "}
+              <OykButton outline color="success">Success Button</OykButton>
+            </div>
+          </div>
+          <code className="full">{`<OykButton>Default Button</OykButton>`}</code>
+          <ComponentApiTable
+            items={[
+              {
+                name: "children",
+                description: "Button content",
+                type: "string",
+                defaultValue: "-",
+              },
+              {
+                name: "routeName",
+                description: "Route name",
+                type: "string",
+                defaultValue: "-",
+              },
+              {
+                name: "params",
+                description: "Route parameters",
+                type: "object",
+                defaultValue: "{}",
+              },
+              {
+                name: "action",
+                description: "Action to perform",
+                type: "function",
+                defaultValue: "-",
+              },
+              {
+                name: "disabled",
+                description: "Disable button",
+                type: "boolean",
+                defaultValue: "false",
+              },
+              {
+                name: "color",
+                description: "Colour",
+                type: "string",
+                defaultValue: "default",
+                enumValue: [
+                  "default",
+                  "primary",
+                  "danger",
+                  "warning",
+                  "success",
+                  "#(hex)",
+                ],
+              },
+              {
+                name: "outline",
+                description: "Show button with border and without background",
+                type: "boolean",
+                defaultValue: "false",
               },
             ]}
           />
