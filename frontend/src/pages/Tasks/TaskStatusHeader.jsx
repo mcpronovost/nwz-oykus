@@ -7,7 +7,7 @@ import { Dropdown, Modal } from "@/components/common";
 import ModalTaskCreate from "./modals/ModalTaskCreate";
 import ModalStatusEdit from "./modals/ModalStatusEdit";
 
-export default function TaskStatusHeader({ status, onTasksUpdate = () => {} }) {
+export default function TaskStatusHeader({ status, statusOptions = [], onTasksUpdate = () => {} }) {
   const { t } = useTranslation();
 
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
@@ -53,6 +53,7 @@ export default function TaskStatusHeader({ status, onTasksUpdate = () => {} }) {
         isOpen={isModalCreateOpen}
         onClose={handleCloseModalCreate}
         status={status}
+        statusOptions={statusOptions}
       />
       <ModalStatusEdit
         isOpen={isModalEditOpen}

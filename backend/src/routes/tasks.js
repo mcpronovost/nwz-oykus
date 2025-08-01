@@ -83,8 +83,8 @@ router.post("/create", authenticateToken, async (req, res) => {
       world: { connect: { id: Number(worldId) } },
       author: { connect: { id: authorId } },
       assignees: { connect: assigneeIds?.map((id) => ({ id })) },
-      status: { connect: { id: statusId } },
-      priority,
+      status: { connect: { id: Number(statusId) } },
+      priority: priority || undefined,
       tags: { connect: tagIds?.map((id) => ({ id })) },
     },
     include: {
@@ -94,7 +94,7 @@ router.post("/create", authenticateToken, async (req, res) => {
       tags: true,
     },
   });
-  res.status(201).json(task);
+  res.status(201).json({ id: task.id });
 });
 
 router.patch("/:taskId/edit", authenticateToken, async (req, res) => {

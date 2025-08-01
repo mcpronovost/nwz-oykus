@@ -5,6 +5,8 @@ export default function OykButton({
   routeName,
   params = {},
   action,
+  icon: IconComponent,
+  type = "button",
   disabled = false,
   color = "default",
   outline = false,
@@ -12,7 +14,9 @@ export default function OykButton({
   const { n, lang } = useRouter();
 
   const handleClick = (e) => {
-    e.preventDefault();
+    if (type !== "submit") {
+      e.preventDefault();
+    }
     if (!disabled && routeName) {
       n(routeName, lang, params);
     } else if (!disabled && action) {
@@ -22,12 +26,12 @@ export default function OykButton({
 
   return (
     <button
-      type="button"
+      type={type}
       onClick={handleClick}
       disabled={disabled}
       className={`oyk-button ${color ? `oyk-button-${color}` : ""} ${
         outline ? "oyk-button-outline" : ""
-      }`}
+      } ${IconComponent && !children ? "oyk-button-icon" : ""}`}
       style={
         color?.startsWith("#")
           ? {
@@ -41,7 +45,8 @@ export default function OykButton({
         className="oyk-button-content"
         style={color?.startsWith("#") ? { color: color } : {}}
       >
-        {children}
+        {IconComponent && <IconComponent size={18} />}
+        {children && children}
       </span>
     </button>
   );

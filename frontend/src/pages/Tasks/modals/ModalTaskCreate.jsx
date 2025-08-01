@@ -1,39 +1,40 @@
 import { useState } from "react";
-import { useTranslation } from "@/services/translation";
-import { Modal } from "@/components/common";
 
-export default function ModalTaskCreate({ isOpen, onClose, status }) {
+import { api } from "@/services/api";
+import { useStore } from "@/services/store";
+import { useTranslation } from "@/services/translation";
+import { OykButton,OykForm, OykFormField, OykFormMessage, Modal } from "@/components/common";
+
+export default function ModalTaskCreate({ isOpen, onClose, status, statusOptions }) {
+  const { currentUser, currentWorld } = useStore();
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [hasError, setHasError] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
-    priority: "LOW",
-    authorId: "bf50764f-c2e1-427d-9e30-eb199942851b",
-    statusId: status.id,
+    priority: "",
+    authorId: currentUser.id,
+    statusId: status?.id || "",
     assignees: [],
     tags: [],
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
+  const handleSubmit = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    setHasError(null);
     try {
-      const response = await fetch(`/api/world/1/tasks/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to create task");
+      const data = await api.createTask(currentWorld.id, formData);
+      if (!data.id) {
+        throw new Error(data.message || data.error || t("Failed to create task"));
       }
       onClose(true);
     } catch (error) {
-      console.error(error);
+      setHasError(error.message || error.error || error || t("An error occurred"));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -42,37 +43,49 @@ export default function ModalTaskCreate({ isOpen, onClose, status }) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleSubmit}>
-        <div className="oyk-form-group">
-          <label htmlFor="title">{t("Title")}</label>
-          <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} />
-        </div>
-        <div className="oyk-form-group">
-          <label htmlFor="content">{t("Content")}</label>
-          <textarea id="content" name="content" value={formData.content} onChange={handleChange} />
-        </div>
-        <div className="oyk-form-group">
-          <label htmlFor="priority">{t("Priority")}</label>
-          <select id="priority" name="priority" value={formData.priority} onChange={handleChange}>
-            <option value="LOW">{t("Low")}</option>
-            <option value="MEDIUM">{t("Medium")}</option>
-            <option value="HIGH">{t("High")}</option>
-          </select>
-        </div>
-        <div className="oyk-form-group">
-          <label htmlFor="statusId">{t("Status")}</label>
-          <select id="statusId" name="statusId" value={formData.statusId} onChange={handleChange}>
-            <option value="1">{t("To Do")}</option>
-            <option value="2">{t("In Progress")}</option>
-            <option value="3">{t("Done")}</option>
-          </select>
-        </div>
+    <Modal title={t("Create a new task")} isOpen={isOpen} onClose={onClose}>
+      <OykForm onSubmit={handleSubmit} isLoading={isLoading}>
+        <OykFormField
+          label={t("Title")}
+          name="title"
+          defaultValue={formData.title}
+          onChange={handleChange}
+          required
+        />
+        <OykFormField
+          label={t("Content")}
+          name="content"
+          type="textarea"
+          defaultValue={formData.content}
+          onChange={handleChange}
+        />
+        <OykFormField
+          label={t("Priority")}
+          name="priority"
+          type="select"
+          options={[
+            { label: t("Low"), value: "LOW" },
+            { label: t("Medium"), value: "MEDIUM" },
+            { label: t("High"), value: "HIGH" },
+          ]}
+          defaultValue={formData.priority}
+          onChange={handleChange}
+        />
+        <OykFormField
+          label={t("Status")}
+          name="statusId"
+          type="select"
+          options={statusOptions}
+          defaultValue={formData.statusId}
+          onChange={handleChange}
+          required
+        />
+        <OykFormMessage hasError={hasError} />
         <div className="oyk-form-actions">
-          <button type="submit">{t("Save")}</button>
-          <button type="button" onClick={onClose}>{t("Cancel")}</button>
+          <OykButton type="submit" color="primary">{t("Save")}</OykButton>
+          <OykButton outline action={onClose}>{t("Cancel")}</OykButton>
         </div>
-      </form>
+      </OykForm>
     </Modal>
   );
 }

@@ -60,6 +60,10 @@ table {
   }
 }
 
+textarea {
+  resize: vertical;
+}
+
 code {
   background-color: var(--oyk-card-bg);
   border-radius: var(--oyk-radius);

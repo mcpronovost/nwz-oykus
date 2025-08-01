@@ -39,11 +39,22 @@
     }
   }
 
+  &-icon {
+    padding: 12px;
+
+    &.oyk-button-outline {
+      padding: 11px;
+    }
+  }
+
   &-content {
     color: var(--oyk-core-fg);
     text-overflow: ellipsis;
     overflow: hidden;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     max-width: 100%;
     filter: brightness(1.8);
   }
@@ -54,6 +65,15 @@
 
     .oyk-button-content {
       color: var(--oyk-core-fg);
+    }
+  }
+
+  &-card {
+    background-color: var(--oyk-card-bg);
+    border-color: var(--oyk-card-bg);
+
+    .oyk-button-content {
+      color: var(--oyk-card-fg);
     }
   }
 

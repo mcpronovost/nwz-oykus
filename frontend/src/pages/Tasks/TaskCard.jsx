@@ -38,7 +38,7 @@ export default function TaskCard({ task, isCompleted, statusId, statusName, onCl
         style={{ opacity: isDragging ? 0.5 : isCompleted ? 0.7 : 1 }}
       >
         <OykTaskCardHeader task={task} isCompleted={isCompleted} />
-        {!isCompleted && (
+        {!isCompleted && ((task.content && task.content != task.title) || task.tags.length > 0) && (
           <section className="oyk-tasks-card-content">
             {task.content && task.content != task.title && (
               <div className="oyk-tasks-card-content-descritpion">

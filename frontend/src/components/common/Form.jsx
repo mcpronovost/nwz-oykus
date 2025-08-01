@@ -1,6 +1,7 @@
 export default function OykForm({ children, onSubmit, isLoading, ...props }) {
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (onSubmit && !isLoading) {
       onSubmit(e);
     }

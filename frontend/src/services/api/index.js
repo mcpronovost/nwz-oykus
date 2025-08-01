@@ -152,6 +152,16 @@ class ApiService {
     return await this.request(`/world/${worldId}/tasks`);
   }
 
+  async createTask(worldId, data) {
+    if (!worldId || !data) {
+      throw new Error("World ID and data are required");
+    }
+    return await this.request(`/world/${worldId}/tasks/create`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  }
+
   async updateTask(worldId, taskId, data) {
     if (!worldId || !taskId || !data) {
       throw new Error("World ID, Task ID, and data are required");

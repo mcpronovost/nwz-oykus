@@ -13,9 +13,15 @@
       flex: 0 0 120px;
       width: 120px;
       padding: 12px 0;
+
+      .oyk-form-group-required {
+        color: var(--oyk-c-danger);
+        display: inline-block;
+        margin-left: 4px;
+      }
     }
 
-    input {
+    input, textarea, select {
       background-color: var(--oyk-card-item-bg);
       border: 1px solid var(--oyk-card-item-bg);
       border-radius: var(--oyk-radius);
