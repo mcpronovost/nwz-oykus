@@ -1,0 +1,55 @@
+.oyk-form {
+  &-group {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-bottom: 16px;
+
+    label {
+      color: var(--oyk-card-fg);
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: block;
+      flex: 0 0 120px;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      background-color: var(--oyk-card-item-bg);
+      border: 1px solid var(--oyk-card-item-bg);
+      border-radius: var(--oyk-radius);
+      color: var(--oyk-card-fg);
+      font-size: 0.875rem;
+      width: 100%;
+      padding: 0.75rem;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        border-color: var(--oyk-primary);
+        outline: none;
+      }
+
+      &--error {
+        border-color: var(--oyk-c-danger);
+      }
+
+      &::placeholder {
+        color: var(--oyk-core-fg);
+        opacity: 0.6;
+      }
+    }
+  }
+
+  &-message {
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+  }
+}

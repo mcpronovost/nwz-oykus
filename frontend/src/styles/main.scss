@@ -6,9 +6,11 @@
 @use "./core/app-bar" as core-app-bar;
 @use "./core/app-sidebar" as core-app-sidebar;
 
+@use "./common/alert" as common-alert;
 @use "./common/avatar" as common-avatar;
 @use "./common/chip" as common-chip;
 @use "./common/dropdown" as common-dropdown;
+@use "./common/form" as common-form;
 @use "./common/heading" as common-heading;
 @use "./common/modal" as common-modal;
 
