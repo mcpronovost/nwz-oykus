@@ -12,7 +12,6 @@ export default function Register() {
     password: "",
     confirmPassword: "",
     playerName: "",
-    abbr: "",
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -82,13 +81,6 @@ export default function Register() {
     } else if (!/^[a-zA-Z0-9\s\-']{2,50}$/.test(formData.playerName)) {
       newErrors.playerName =
         "Player name must be 2-50 characters, letters, numbers, spaces, hyphens, apostrophes only";
-    }
-
-    // Abbreviation validation
-    if (!formData.abbr.trim()) {
-      newErrors.abbr = "Abbreviation is required";
-    } else if (!/^[a-zA-Z0-9]{2,4}$/.test(formData.abbr)) {
-      newErrors.abbr = "Abbreviation must be 2-4 alphanumeric characters";
     }
 
     setErrors(newErrors);
@@ -204,29 +196,6 @@ export default function Register() {
             />
             {errors.playerName && (
               <p className="oyk-auth-field-error">{errors.playerName}</p>
-            )}
-          </div>
-
-          <div className="oyk-auth-field">
-            <label htmlFor="abbr" className="oyk-auth-field-label">
-              Abbreviation
-            </label>
-            <input
-              id="abbr"
-              name="abbr"
-              type="text"
-              autoComplete="off"
-              required
-              value={formData.abbr}
-              onChange={handleChange}
-              className={`oyk-auth-field-input ${
-                errors.abbr ? "oyk-auth-field-input--error" : ""
-              }`}
-              placeholder="2-4 characters"
-              maxLength={4}
-            />
-            {errors.abbr && (
-              <p className="oyk-auth-field-error">{errors.abbr}</p>
             )}
           </div>
 
