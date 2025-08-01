@@ -29,7 +29,7 @@ export default function TaskCardFooter({ task }) {
                 <OykAvatar
                   name={assignee.name}
                   abbr={assignee.abbr}
-                  size={24}
+                  size={32}
                   borderColor="var(--oyk-card-item-bg)"
                 />
               </li>

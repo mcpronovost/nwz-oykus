@@ -25,6 +25,14 @@ export const WORLD_ROUTES = [
               en: "rulebook",
             },
           },
+          {
+            name: "world-support",
+            component: React.lazy(() => import("../../../pages/Worlds/Support")),
+            paths: {
+              fr: "support",
+              en: "support",
+            },
+          },
         ],
       },
     ],

@@ -39,3 +39,8 @@ body {
   display: block;
   height: calc(100vh - var(--oyk-app-bar-height));
 }
+
+.oyk-page {
+  display: block;
+  width: 100%;
+}

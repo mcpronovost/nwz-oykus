@@ -1,8 +1,9 @@
 import "@/styles/page/_privacy-policy.scss";
 import { useTranslation } from "@/services/translation";
+import { oykDate } from "@/utils/formatters";
 
 export default function PrivacyPolicy() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
 
   return (
     <section className="oyk-page oyk-privacy-policy">
@@ -11,7 +12,7 @@ export default function PrivacyPolicy() {
         
         <div className="oyk-privacy-policy-content">
           <p className="oyk-privacy-policy-last-updated">
-            Last updated: {new Date().toLocaleDateString()}
+            Last updated: {oykDate(new Date(), "date", lang)}
           </p>
 
           <section className="oyk-privacy-policy-section">

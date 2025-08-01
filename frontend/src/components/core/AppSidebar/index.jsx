@@ -72,7 +72,6 @@ export default function AppSidebar() {
                 text={t("Support")}
                 href="world-support"
                 params={{ worldSlug: currentWorld.slug }}
-                disabled
               />
             </ul>
           )}

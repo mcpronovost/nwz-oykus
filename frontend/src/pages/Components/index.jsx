@@ -111,19 +111,19 @@ export default function Components() {
             <OykAvatar /> <OykAvatar size={24} />{" "}
             <OykAvatar name="John Johnson" /> <OykAvatar abbr="JJ" />{" "}
             <OykAvatar abbr="JJ" size={32} />{" "}
-            <OykAvatar src="https://placehold.jp/150x150.png" />{" "}
+            <OykAvatar src="https://testingbot.com/free-online-tools/random-avatar/140" />{" "}
             <OykAvatar
-              src="https://placehold.jp/64x64.png"
+              src="https://testingbot.com/free-online-tools/random-avatar/64"
               name="John Johnson"
               size={48}
             />{" "}
             <OykAvatar
-              src="https://placehold.jp/50x150.png"
+              src="https://testingbot.com/free-online-tools/random-avatar/32"
               abbr="JD"
               size={24}
             />{" "}
             <OykAvatar
-              src="https://placehold.jp/300x150.png"
+              src="https://testingbot.com/free-online-tools/random-avatar/92"
               name="John Doe"
               abbr="JD"
             />{" "}

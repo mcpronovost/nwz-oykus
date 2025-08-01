@@ -41,14 +41,19 @@
         }
 
         &-title {
-          font-size: 1rem;
+          font-size: 1.1rem;
           font-weight: 600;
+          display: flex;
           flex: 1;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 8px;
           margin: 0;
 
           &-count {
-            font-size: 14px;
+            font-size: 1rem;
             font-weight: 400;
+            display: inline-block;
             opacity: 0.7;
           }
         }
@@ -60,8 +65,6 @@
           gap: 4px;
 
           &-btn {
-            font-size: 14px;
-            line-height: 1;
             opacity: 0.7;
             transition: opacity 0.2s;
             padding: 4px;
@@ -98,31 +101,6 @@
       background-color: color-mix(in srgb, var(--oyk-primary) 5%, transparent);
       border: 2px dashed var(--oyk-primary);
     }
-
-    .oyk-tasks-status-header {
-      color: var(--oyk-card-fg);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0;
-      margin: 0 0 8px;
-
-      &-title {
-        font-size: 1rem;
-        font-weight: 600;
-        flex: 1;
-        margin: 0;
-      }
-
-      &-count {
-        font-size: 14px;
-        font-weight: 400;
-        opacity: 0.7;
-        background-color: var(--oyk-card-item-bg);
-        padding: 2px 8px;
-        border-radius: 12px;
-      }
-    }
   }
 
   &-card {
@@ -139,7 +117,8 @@
     cursor: grab;
 
     &:hover {
-      outline: 1px solid color-mix(in srgb, var(--oyk-card-item-fg) 10%, transparent);
+      outline: 1px solid
+        color-mix(in srgb, var(--oyk-card-item-fg) 10%, transparent);
     }
 
     &:active {
@@ -209,7 +188,7 @@
       gap: 8px;
 
       &-descritpion {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         font-weight: 400;
         line-height: 1.2;
         opacity: 0.7;
