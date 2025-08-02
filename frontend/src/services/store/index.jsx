@@ -43,7 +43,6 @@ export function StoreProvider({ children }) {
   }, []);
 
   const handleSetStoreAppSidebarOpen = useCallback((value) => {
-    console.log("handleSetStoreAppSidebarOpen", value);
     storeSetItem(KEY_APP_SIDEBAR_OPEN, value);
     setStoreAppSidebarOpen(value);
   }, []);
@@ -66,8 +65,10 @@ export function StoreProvider({ children }) {
   }, [
     currentUser,
     isAuthenticated,
+    currentWorld,
     handleSetCurrentUser,
     handleSetAuthenticated,
+    handleSetCurrentWorld,
   ]);
 
   // Periodic user profile refresh
@@ -94,6 +95,50 @@ export function StoreProvider({ children }) {
       clearInterval(interval);
     };
   }, [isAuthenticated]);
+
+  // Update world theme if currentWorld exists and has themes, otherwise remove custom theme styles
+  useEffect(() => {
+    const styleSheet = document.createElement("style");
+    styleSheet.id = "oyk-world-theme";
+
+    if (currentWorld?.themes?.[0]) {
+      const theme = currentWorld.themes[0];
+      styleSheet.textContent = `
+        :root {
+          --oyk-core-bg: ${theme.coreBg};
+          --oyk-core-fg: ${theme.coreFg}; 
+          --oyk-core-divider: ${theme.coreDivider};
+          --oyk-primary: ${theme.primary};
+          --oyk-primary-fg: ${theme.primaryFg};
+          --oyk-danger: ${theme.cDanger};
+          --oyk-warning: ${theme.cWarning};
+          --oyk-success: ${theme.cSuccess};
+          --oyk-app-bar-bg: ${theme.appBarBg};
+          --oyk-app-sidebar-bg: ${theme.appSidebarBg};
+          --oyk-popper-bg: ${theme.popperBg};
+          --oyk-popper-fg: ${theme.popperFg};
+          --oyk-popper-item-bg: ${theme.popperItemBg};
+          --oyk-popper-item-fg: ${theme.popperItemFg};
+          --oyk-card-bg: ${theme.cardBg};
+          --oyk-card-fg: ${theme.cardFg};
+          --oyk-card-item-bg: ${theme.cardItemBg};
+          --oyk-card-item-fg: ${theme.cardItemFg};
+          --oyk-radius: ${theme.radius}px;
+        }
+      `;
+    }
+
+    const existingStyle = document.getElementById("oyk-world-theme");
+    if (existingStyle) {
+      existingStyle.remove();
+    }
+
+    document.head.appendChild(styleSheet);
+
+    return () => {
+      styleSheet.remove();
+    };
+  }, [currentWorld]);
 
   const value = {
     // Auth

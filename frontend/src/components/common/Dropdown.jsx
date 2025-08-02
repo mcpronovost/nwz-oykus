@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
 } from "react";
 
-const Dropdown = forwardRef(({ toggle, menu, direction = "left" }, ref) => {
+const Dropdown = forwardRef(({ toggle, menu, direction = "left", disabled = false }, ref) => {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,6 +19,7 @@ const Dropdown = forwardRef(({ toggle, menu, direction = "left" }, ref) => {
   }));
 
   const handleToggle = () => {
+    if (disabled) return;
     setIsOpen(!isOpen);
   };
 
@@ -44,7 +45,7 @@ const Dropdown = forwardRef(({ toggle, menu, direction = "left" }, ref) => {
 
   return (
     <div ref={dropdownRef} className="oyk-dropdown">
-      <div className="oyk-dropdown-toggle" onClick={() => handleToggle()}>
+      <div className={`oyk-dropdown-toggle ${disabled ? "disabled" : ""}`} onClick={() => handleToggle()}>
         {toggle}
       </div>
       {isOpen && (

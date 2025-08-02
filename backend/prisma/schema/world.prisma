@@ -32,6 +32,32 @@ model WorldTheme {
   // Theme Identity
   name String @db.VarChar(64)
 
+  // Colours
+  coreBg      String? @default("#16171C") @db.VarChar(7)
+  coreFg      String? @default("#838489") @db.VarChar(7)
+  coreDivider String? @default("#24272e") @db.VarChar(7)
+  primary     String? @default("#0e75ad") @db.VarChar(7)
+  primaryFg   String? @default("#ffffff") @db.VarChar(7)
+
+  cDanger  String? @default("#e25353") @db.VarChar(7)
+  cWarning String? @default("#dea125") @db.VarChar(7)
+  cSuccess String? @default("#358d63") @db.VarChar(7)
+
+  appBarBg     String? @default("#0E0F12") @db.VarChar(7)
+  appSidebarBg String? @default("#0E0F12") @db.VarChar(7)
+
+  popperBg     String? @default("#0E0F12") @db.VarChar(7)
+  popperFg     String? @default("#838489") @db.VarChar(7)
+  popperItemBg String? @default("#14161a") @db.VarChar(7)
+  popperItemFg String? @default("#a9acb6") @db.VarChar(7)
+
+  cardBg     String? @default("#121317") @db.VarChar(7)
+  cardFg     String? @default("#aeafb7") @db.VarChar(7)
+  cardItemBg String? @default("#1C1D23") @db.VarChar(7)
+  cardItemFg String? @default("#838489") @db.VarChar(7)
+
+  radius Int? @default(6)
+
   // Status
   isActive Boolean @default(false)
 

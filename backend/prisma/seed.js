@@ -48,6 +48,19 @@ async function main() {
     },
   });
 
+  // Create world theme
+  await prisma.worldTheme.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      worldId: 1,
+      name: "Qalatlán Default",
+      isActive: true,
+      primary: "#8d8305",
+      primaryFg: "#ffffff",
+    },
+  });
+
   // Create task status
   await prisma.taskStatus.upsert({
     where: { id: 1 },

@@ -15,6 +15,34 @@ import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
+const USER_INCLUDES = {
+  worldsOwned: {
+    where: {
+      isActive: true,
+    },
+    select: {
+      id: true,
+      name: true,
+      abbr: true,
+      slug: true,
+      themes: {
+        where: {
+          isActive: true,
+        },
+      },
+    },
+  },
+}
+
+const USER_SELECT = {
+  select: {
+    id: true,
+    playerName: true,
+    abbr: true,
+    ...USER_INCLUDES,
+  },
+}
+
 // Register new user
 router.post("/register", async (req, res) => {
   try {
@@ -137,9 +165,7 @@ router.post("/login", async (req, res) => {
     // Find user by username
     const user = await prisma.user.findUnique({
       where: { username },
-      include: {
-        worldsOwned: true,
-      },
+      include: USER_INCLUDES,
     });
 
     if (!user) {
@@ -164,13 +190,7 @@ router.post("/login", async (req, res) => {
       id: user.id,
       playerName: user.playerName,
       abbr: user.abbr,
-      limitWorlds: user.limitWorlds,
-      totalWorlds: user.totalWorlds,
-      limitWorldThemes: user.limitWorldThemes,
-      totalWorldThemes: user.totalWorldThemes,
       worldsOwned: user.worldsOwned,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
     };
 
     logger.info(`User logged in: ${user.playerName}`);
@@ -190,24 +210,12 @@ router.post("/login", async (req, res) => {
 router.get("/profile", authenticateToken, async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: req.user.id },
-      include: {
-        worldsOwned: true,
-      },
-      omit: {
-        username: true,
-        email: true,
-        password: true,
-        isAdmin: true,
-      },
+      where: { id: req.user.id, isActive: true },
+      ...USER_SELECT,
     });
 
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
-    }
-
-    if (!user.isActive) {
-      return res.status(401).json({ error: "Account is deactivated" });
     }
 
     if (user.totalWorlds !== user.worldsOwned.length) {

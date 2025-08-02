@@ -29,8 +29,8 @@ export default function SidebarHeader() {
                 className="oyk-app-sidebar-header-button-dropdown-item"
                 onClick={() => handleWorldClick()}
               >
-                <span className="oyk-app-sidebar-header-button-dropdown-item-logo">
-                  <SquircleDashed size={18} color="var(--oyk-primary-fg)" />
+                <span className="oyk-app-sidebar-header-button-dropdown-item-logo" style={{ backgroundColor: "var(--oyk-default-primary)" }}>
+                  <SquircleDashed size={18} color="var(--oyk-default-primary-fg)" />
                 </span>
                 <span className="oyk-app-sidebar-header-button-dropdown-item-brand">
                   Oykus
@@ -45,8 +45,10 @@ export default function SidebarHeader() {
                 className="oyk-app-sidebar-header-button-dropdown-item"
                 onClick={() => handleWorldClick(world)}
               >
-                <span className="oyk-app-sidebar-header-button-dropdown-item-logo">
-                  <SquircleDashed size={18} color="var(--oyk-primary-fg)" />
+                <span className="oyk-app-sidebar-header-button-dropdown-item-logo" style={{ backgroundColor: world.themes[0]?.primary || "var(--oyk-primary)" }}>
+                  <span style={{ color: world.themes[0]?.primaryFg || "var(--oyk-primary-fg)" }}>
+                    {world.abbr}
+                  </span>
                 </span>
                 <span className="oyk-app-sidebar-header-button-dropdown-item-brand">
                   {world.name}
@@ -63,11 +65,13 @@ export default function SidebarHeader() {
       <Dropdown
         ref={dropdownRef}
         toggle={
-          <button className="oyk-app-sidebar-header-button">
-            {currentWorld ? (
+          <button className="oyk-app-sidebar-header-button" disabled={!currentUser}>
+            {currentUser && currentWorld ? (
               <>
-                <span className="oyk-app-sidebar-header-button-logo">
-                  <SquircleDashed size={18} color="var(--oyk-primary-fg)" />
+                <span className="oyk-app-sidebar-header-button-logo" style={{ backgroundColor: currentWorld.themes[0]?.primary || "var(--oyk-primary)" }}>
+                  <span style={{ color: currentWorld.themes[0]?.primaryFg || "var(--oyk-primary-fg)" }}>
+                    {currentWorld.abbr}
+                  </span>
                 </span>
                 <span className="oyk-app-sidebar-header-button-brand">
                   {currentWorld.name}
@@ -87,6 +91,7 @@ export default function SidebarHeader() {
         }
         menu={worldsMenu}
         direction="full"
+        disabled={!currentUser}
       />
     </header>
   );
