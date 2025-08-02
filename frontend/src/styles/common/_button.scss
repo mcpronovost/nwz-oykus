@@ -30,6 +30,11 @@
     opacity: 0.5;
   }
 
+  &-plain {
+    background-color: transparent !important;
+    border: none;
+  }
+
   &-outline {
     background-color: transparent !important;
     border: 1px solid color-mix(in srgb, var(--oyk-core-fg) 10%, transparent);

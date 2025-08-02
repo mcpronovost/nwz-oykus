@@ -9,6 +9,7 @@ export default function OykButton({
   type = "button",
   disabled = false,
   color = "default",
+  plain = false,
   outline = false,
   block = false,
 }) {
@@ -31,6 +32,8 @@ export default function OykButton({
       onClick={handleClick}
       disabled={disabled}
       className={`oyk-button ${color ? `oyk-button-${color}` : ""} ${
+        plain ? "oyk-button-plain" : ""
+      } ${
         outline ? "oyk-button-outline" : ""
       } ${block ? "oyk-button-block" : ""} ${
         IconComponent && !children ? "oyk-button-icon" : ""
