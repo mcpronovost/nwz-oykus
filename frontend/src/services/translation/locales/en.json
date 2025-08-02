@@ -16,6 +16,7 @@
   "Register": "Register",
   "Login": "Login",
   "Logout": "Logout",
+  "PriorityNone": "None",
   "PriorityHigh": "High",
   "PriorityMedium": "Medium",
   "PriorityLow": "Low",

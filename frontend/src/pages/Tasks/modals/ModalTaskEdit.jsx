@@ -93,9 +93,10 @@ export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
           name="priority"
           type="radio"
           options={[
-            { label: t("Low"), value: "LOW" },
-            { label: t("Medium"), value: "MEDIUM" },
-            { label: t("High"), value: "HIGH" },
+            { label: t("PriorityNone"), value: "" },
+            { label: t("PriorityLow"), value: "LOW" },
+            { label: t("PriorityMedium"), value: "MEDIUM" },
+            { label: t("PriorityHigh"), value: "HIGH" },
           ]}
           defaultValue={formData.priority}
           onChange={handleChange}

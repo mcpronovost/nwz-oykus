@@ -127,7 +127,7 @@ router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (r
       changedById: currentUser.id,
       changeType: TaskHistoryChangeType.PRIORITY,
       oldValue: currentTask.priority,
-      newValue: priority,
+      newValue: priority === "" ? null : priority,
     });
   }
 
@@ -147,7 +147,7 @@ router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (r
     data: {
       title: title !== undefined ? title : currentTask.title,
       content: content !== undefined ? content : currentTask.content,
-      priority: priority !== undefined ? priority : currentTask.priority,
+      priority: priority !== undefined ? (priority === "" ? null : priority) : currentTask.priority,
       dueAt: newDueAt,
       ...(historyEntries.length > 0 && {
         history: {

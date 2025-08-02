@@ -16,6 +16,7 @@
   "Register": "Inscription",
   "Login": "Connexion",
   "Logout": "Déconnexion",
+  "PriorityNone": "Aucune",
   "PriorityHigh": "Élevée",
   "PriorityMedium": "Moyenne",
   "PriorityLow": "Faible",
