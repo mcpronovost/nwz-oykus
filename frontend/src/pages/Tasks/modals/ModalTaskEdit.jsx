@@ -52,7 +52,7 @@ export default function ModalTaskEdit({ isOpen, onClose, task }) {
   }, [isOpen]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal title={t("Edit Task")} isOpen={isOpen} onClose={onClose}>
       <OykForm onSubmit={handleSubmit} isLoading={isLoading}>
         <OykFormField
           label={t("Title")}
@@ -80,13 +80,20 @@ export default function ModalTaskEdit({ isOpen, onClose, task }) {
           onChange={handleChange}
         />
         <OykFormMessage hasError={hasError} />
-        <div className="oyk-form-actions">
-          <OykButton type="submit" color="primary">
-            {t("Save")}
-          </OykButton>
-          <OykButton type="button" action={onClose} outline>
-            {t("Cancel")}
-          </OykButton>
+        <div className="oyk-form-actions oyk-form-actions-spacing">
+          <div className="oyk-form-actions-group">
+            <OykButton type="submit" color="primary">
+              {t("Save")}
+            </OykButton>
+            <OykButton type="button" action={onClose} outline>
+              {t("Cancel")}
+            </OykButton>
+          </div>
+          <div className="oyk-form-actions-group">
+            <OykButton type="button" color="danger" action={() => onClose(true)} outline>
+              {t("Delete")}
+            </OykButton>
+          </div>
         </div>
       </OykForm>
     </Modal>

@@ -24,6 +24,10 @@ class ApiService {
       const response = await fetch(url, config);
 
       // Handle specific HTTP status codes
+      if (response.status === 204) {
+        return { status: 204 };
+      }
+
       if (response.status === 401) {
         authStore.logout();
         throw response;
@@ -57,24 +61,7 @@ class ApiService {
         return await response.text();
       }
     } catch (error) {
-      // Don't re-throw fetch errors (network issues)
-      if (error.name === "TypeError" && error.message.includes("fetch")) {
-        throw new Error("Network error. Please check your connection.");
-      }
-      
-      // Re-throw our custom errors
-      if ([401, 403, 404, 422, 500].includes(error.status) ||
-          error.message?.includes("Authentication required") || 
-          error.message?.includes("Access denied") ||
-          error.message?.includes("Resource not found") ||
-          error.message?.includes("Validation error") ||
-          error.message?.includes("Server error") ||
-          error.message?.includes("Network error")) {
-        throw error;
-      }
-      
-      // Handle other errors
-      throw new Error("An unexpected error occurred. Please try again.");
+      throw error;
     }
   }
 
@@ -179,6 +166,15 @@ class ApiService {
     return await this.request(`/world/${worldId}/tasks/${taskId}/status`, {
       method: "PATCH",
       body: JSON.stringify({ statusId, oldStatusName, newStatusName }),
+    });
+  }
+
+  async deleteTask(worldId, taskId) {
+    if (!worldId || !taskId) {
+      throw new Error("World ID and Task ID are required");
+    }
+    return await this.request(`/world/${worldId}/tasks/${taskId}/delete`, {
+      method: "DELETE",
     });
   }
 

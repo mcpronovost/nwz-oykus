@@ -4,5 +4,8 @@
   "No tasks found": "Aucune tâche trouvée",
   "Start by creating a new status before adding tasks": "Commencez par créer un nouveau statut avant d'ajouter des tâches",
   "No statuses available": "Aucun statut disponible",
-  "Please create a status first": "Veuillez créer un statut d'abord"
+  "Please create a status first": "Veuillez créer un statut d'abord",
+  "Delete Task": "Supprimer la tâche",
+  "Are you sure you want to delete this task?": "Êtes-vous sûr de vouloir supprimer cette tâche ?",
+  "This action cannot be undone.": "Cette action est irréversible."
 }

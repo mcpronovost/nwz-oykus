@@ -6,9 +6,11 @@ import { OykChip } from "@/components/common";
 import OykTaskCardHeader from "./TaskCardHeader";
 import OykTaskCardFooter from "./TaskCardFooter";
 import ModalTaskEdit from "./modals/ModalTaskEdit";
+import ModalTaskDelete from "./modals/ModalTaskDelete";
 
-export default function TaskCard({ task, isCompleted, statusId, statusName, onCloseTaskEdit = () => {} }) {
+export default function TaskCard({ task, isCompleted, statusId, statusName, onCloseRefresh = () => {} }) {
   const [isModalTaskEditOpen, setIsModalTaskEditOpen] = useState(false);
+  const [isModalTaskDeleteOpen, setIsModalTaskDeleteOpen] = useState(false);
 
   const [{ isDragging }, drag] = useDrag({
     type: "TASK",
@@ -18,16 +20,26 @@ export default function TaskCard({ task, isCompleted, statusId, statusName, onCl
     }),
   });
   
-  const handleEditTaskClose = () => {
+  const handleEditTaskClose = (showDelete = false) => {
     setIsModalTaskEditOpen(false);
-    if (onCloseTaskEdit) {
-      onCloseTaskEdit();
+    if (showDelete) {
+      setIsModalTaskDeleteOpen(true);
+    } else if (onCloseRefresh) {
+      onCloseRefresh();
+    }
+  };
+
+  const handleDeleteTaskClose = () => {
+    setIsModalTaskDeleteOpen(false);
+    if (onCloseRefresh) {
+      onCloseRefresh();
     }
   };
 
   return (
     <>
       <ModalTaskEdit isOpen={isModalTaskEditOpen} onClose={handleEditTaskClose} task={task} />
+      <ModalTaskDelete isOpen={isModalTaskDeleteOpen} onClose={handleDeleteTaskClose} task={task} />
       <article
         ref={drag}
         key={task.id}

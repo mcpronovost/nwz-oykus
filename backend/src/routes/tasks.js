@@ -1,6 +1,7 @@
 import express from "express";
 import prisma from "../../prisma/client.js";
 import { authenticateToken } from "../middleware/auth.js";
+import { permissionsWorldStaff } from "../middleware/world.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -9,24 +10,8 @@ const router = express.Router({ mergeParams: true });
  * Get all tasks for a world (grouped by status, ordered by priority)
  * @param {string} req.params.worldId - The world ID
  */
-router.get("/", authenticateToken, async (req, res) => {
+router.get("/", authenticateToken, permissionsWorldStaff, async (req, res) => {
   const { worldId } = req.params;
-  // Check if worldId is a number and if not, return a 400 error
-  if (isNaN(worldId)) {
-    return res.status(400).json({ error: "World ID must be a number" });
-  }
-  // Check if world exists and current user is owner
-  const world = await prisma.world.findUnique({
-    where: { id: Number(worldId) },
-    include: {
-      owner: true,
-    },
-  });
-  if (!world || world.owner.id !== req.user.id) {
-    return res
-      .status(403)
-      .json({ error: "You don't have permission to see this world" });
-  }
   // Get all tasks grouped by status
   const data = await prisma.taskStatus.findMany({
     where: { worldId: Number(worldId) },
@@ -73,7 +58,7 @@ router.get("/", authenticateToken, async (req, res) => {
  * @param {string[]} req.body.assigneeIds - The task assignee IDs
  * @param {string} req.body.statusId - The task status ID
  */
-router.post("/create", authenticateToken, async (req, res) => {
+router.post("/create", authenticateToken, permissionsWorldStaff, async (req, res) => {
   const { worldId } = req.params;
   const { title, content, authorId, assigneeIds, statusId, priority, tagIds } =
     req.body;
@@ -98,7 +83,7 @@ router.post("/create", authenticateToken, async (req, res) => {
   res.status(201).json({ id: task.id });
 });
 
-router.patch("/:taskId/edit", authenticateToken, async (req, res) => {
+router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (req, res) => {
   const { worldId, taskId } = req.params;
   const { title, content, priority, dueAt } = req.body;
   const task = await prisma.task.update({
@@ -120,7 +105,7 @@ router.patch("/:taskId/edit", authenticateToken, async (req, res) => {
  *
  * @param {string} req.body.statusId - The task status ID
  */
-router.patch("/:taskId/status", authenticateToken, async (req, res) => {
+router.patch("/:taskId/status", authenticateToken, permissionsWorldStaff, async (req, res) => {
   const { worldId, taskId } = req.params;
   const { statusId, oldStatusName, newStatusName } = req.body;
   const currentUser = req.user;
@@ -147,37 +132,21 @@ router.patch("/:taskId/status", authenticateToken, async (req, res) => {
  * @param {string} req.params.worldId - The world ID
  * @param {string} req.params.taskId - The task ID
  */
-router.delete("/:taskId/delete", authenticateToken, async (req, res) => {
+router.delete("/:taskId/delete", authenticateToken, permissionsWorldStaff, async (req, res) => {
   const { worldId, taskId } = req.params;
   await prisma.task.delete({
     where: { id: Number(taskId), worldId: Number(worldId) },
   });
-  res.status(204).end();
+  res.status(204).json({ ok: true });
 });
 
 /**
  * Create a new status
  * @param {string} req.params.worldId - The world ID
  */
-router.post("/status/create", authenticateToken, async (req, res) => {
+router.post("/status/create", authenticateToken, permissionsWorldStaff, async (req, res) => {
   const { worldId } = req.params;
   const { name, color, sortOrder } = req.body;
-  // Check if worldId is a number and if not, return a 400 error
-  if (isNaN(worldId)) {
-    return res.status(400).json({ error: "World ID must be a number" });
-  }
-  // Check if world exists and current user is owner
-  const world = await prisma.world.findUnique({
-    where: { id: Number(worldId) },
-    include: {
-      owner: true,
-    },
-  });
-  if (!world || world.owner.id !== req.user.id) {
-    return res
-      .status(403)
-      .json({ error: "You don't have permission to see this world" });
-  }
   const status = await prisma.taskStatus.create({
     data: {
       name,
@@ -198,25 +167,9 @@ router.post("/status/create", authenticateToken, async (req, res) => {
  * @param {string} req.body.color - The task status color
  * @param {number} req.body.sortOrder - The task status sort order
  */
-router.patch("/status/:statusId/edit", authenticateToken, async (req, res) => {
+router.patch("/status/:statusId/edit", authenticateToken, permissionsWorldStaff, async (req, res) => {
   const { worldId, statusId } = req.params;
   const { name, color, sortOrder } = req.body;
-  // Check if worldId is a number and if not, return a 400 error
-  if (isNaN(worldId)) {
-    return res.status(400).json({ error: "World ID must be a number" });
-  }
-  // Check if world exists and current user is owner
-  const world = await prisma.world.findUnique({
-    where: { id: Number(worldId) },
-    include: {
-      owner: true,
-    },
-  });
-  if (!world || world.owner.id !== req.user.id) {
-    return res
-      .status(403)
-      .json({ error: "You don't have permission to see this world" });
-  }
   // Update the status
   const status = await prisma.taskStatus.update({
     where: { id: Number(statusId), worldId: Number(worldId) },

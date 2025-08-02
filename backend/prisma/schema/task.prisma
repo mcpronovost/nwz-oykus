@@ -85,7 +85,7 @@ model TaskComment {
 
   // to-1-Relations
   taskId   Int
-  task     Task    @relation(fields: [taskId], references: [id])
+  task     Task    @relation(fields: [taskId], references: [id], onDelete: Cascade)
   authorId String?
   author   User?   @relation(fields: [authorId], references: [id])
 
@@ -102,7 +102,7 @@ model TaskHistory {
 
   // to-1-Relations
   taskId      Int
-  task        Task   @relation(fields: [taskId], references: [id])
+  task        Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
   changedById String
   changedBy   User?  @relation(fields: [changedById], references: [id])
 

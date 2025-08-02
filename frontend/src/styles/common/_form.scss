@@ -73,6 +73,17 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-top: 32px;
+    margin-top: 48px;
+
+    &-spacing {
+      justify-content: space-between;
+    }
+
+    &-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
   }
 }
