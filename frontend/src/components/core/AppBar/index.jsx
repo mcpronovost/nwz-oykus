@@ -32,7 +32,7 @@ export default function AppBar() {
           >
             <span className="oyk-app-bar-user-button-name">Sign In</span>
             <span className="oyk-app-bar-user-button-avatar">
-              <User size={18} color="var(--oyk-primary-fg)" />
+              <User size={18} color="var(--oyk-c-primary-fg)" />
             </span>
           </button>
         )}

@@ -6,8 +6,8 @@ export default function OykAvatar({
   src,
   icon: IconComponent = User,
   size = 64,
-  bgColor = "var(--oyk-primary)",
-  fgColor = "var(--oyk-primary-fg)",
+  bgColor = "var(--oyk-c-primary)",
+  fgColor = "var(--oyk-c-primary-fg)",
   borderColor = "var(--oyk-card-bg)",
 }) {
   return (

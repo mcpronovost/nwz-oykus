@@ -108,8 +108,8 @@ export function StoreProvider({ children }) {
           --oyk-core-bg: ${theme.coreBg};
           --oyk-core-fg: ${theme.coreFg}; 
           --oyk-core-divider: ${theme.coreDivider};
-          --oyk-primary: ${theme.primary};
-          --oyk-primary-fg: ${theme.primaryFg};
+          --oyk-c-primary: ${theme.primary};
+          --oyk-c-primary-fg: ${theme.primaryFg};
           --oyk-danger: ${theme.cDanger};
           --oyk-warning: ${theme.cWarning};
           --oyk-success: ${theme.cSuccess};

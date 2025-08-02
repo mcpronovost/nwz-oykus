@@ -7,7 +7,7 @@ export default function OykProgress({
   max = 100,
   size = 48,
   borderSize = 4,
-  colours = ["var(--oyk-primary)"],
+  colours = ["var(--oyk-c-primary)"],
   bgColour = "var(--oyk-card-fg)",
   className = "",
 }) {

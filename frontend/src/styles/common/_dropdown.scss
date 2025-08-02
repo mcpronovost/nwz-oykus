@@ -46,7 +46,6 @@
     &-btn {
       background: none;
       color: var(--oyk-popper-fg);
-      font-size: 0.8rem;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -70,12 +69,19 @@
       }
 
       span.icon {
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0;
         flex-shrink: 0;
         height: 16px;
         width: 16px;
       }
 
       span.label {
+        font-size: 0.9rem;
+        line-height: 1;
         text-align: left;
         flex: 1;
       }

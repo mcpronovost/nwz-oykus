@@ -31,14 +31,14 @@
       }
 
       &::after {
-        border-color: var(--oyk-primary);
+        border-color: var(--oyk-c-primary);
         animation-delay: 1s;
       }
     }
 
     &.oyk-layers {
       background: var(--oyk-core-fg);
-      color: var(--oyk-primary);
+      color: var(--oyk-c-primary);
       position: relative;
       width: 48px;
       height: 48px;
@@ -47,7 +47,7 @@
 
       &:after {
         content: "";
-        background-color: var(--oyk-primary);
+        background-color: var(--oyk-c-primary);
         inset: 0;
         position: absolute;
         opacity: 0.5;
@@ -57,7 +57,7 @@
 
     &.oyk-circles {
       border: 3px solid;
-      border-color: var(--oyk-primary) var(--oyk-primary) transparent
+      border-color: var(--oyk-c-primary) var(--oyk-c-primary) transparent
         transparent;
       border-radius: 50%;
       box-sizing: border-box;
@@ -86,7 +86,7 @@
         animation: oykloadingtriplerotationBack 0.5s linear infinite;
       }
       &::before {
-        border-color: var(--oyk-primary) var(--oyk-primary) transparent
+        border-color: var(--oyk-c-primary) var(--oyk-c-primary) transparent
           transparent;
         width: 32px;
         height: 32px;

@@ -15,7 +15,7 @@
     margin-bottom: 2rem;
 
     &-title {
-      color: var(--oyk-primary-fg);
+      color: var(--oyk-c-primary-fg);
       font-family: "Work Sans", sans-serif;
       font-size: 1.75rem;
       font-weight: 600;
@@ -28,7 +28,7 @@
       margin: 0;
 
       a {
-        color: var(--oyk-primary);
+        color: var(--oyk-c-primary);
         font-weight: 500;
         text-decoration: none;
 
@@ -81,7 +81,7 @@
       transition: border-color 0.2s ease;
 
       &:focus {
-        border-color: var(--oyk-primary);
+        border-color: var(--oyk-c-primary);
         outline: none;
       }
 
@@ -103,10 +103,10 @@
   }
 
   &-button {
-    background-color: var(--oyk-primary);
+    background-color: var(--oyk-c-primary);
     border: none;
     border-radius: var(--oyk-radius);
-    color: var(--oyk-primary-fg);
+    color: var(--oyk-c-primary-fg);
     font-size: 0.875rem;
     font-weight: 500;
     width: 100%;

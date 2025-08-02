@@ -94,8 +94,8 @@
     transition: background-color 0.3s, border-color 0.3s;
 
     &-over {
-      background-color: color-mix(in srgb, var(--oyk-primary) 5%, transparent);
-      border: 2px dashed var(--oyk-primary);
+      background-color: color-mix(in srgb, var(--oyk-c-primary) 5%, transparent);
+      border: 2px dashed var(--oyk-c-primary);
     }
   }
 

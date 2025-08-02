@@ -25,11 +25,11 @@
   }
 
   &-variant-primary {
-    border-color: color-mix(in srgb, var(--oyk-primary) 20%, transparent);
-    color: var(--oyk-primary);
+    border-color: color-mix(in srgb, var(--oyk-c-primary) 20%, transparent);
+    color: var(--oyk-c-primary);
 
     &.oyk-feedback-ghost {
-      background-color: color-mix(in srgb, var(--oyk-primary) 3%, transparent);
+      background-color: color-mix(in srgb, var(--oyk-c-primary) 3%, transparent);
     }
   }
 

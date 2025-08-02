@@ -5,7 +5,7 @@ import { useStore } from "@/services/store";
 import { useRouter } from "@/services/router";
 import { useTranslation } from "@/services/translation";
 
-import { Dropdown } from "@/components/common";
+import { OykDropdown } from "@/components/common";
 
 export default function SidebarHeader() {
   const { currentUser, currentWorld, setCurrentWorld } = useStore();
@@ -62,14 +62,14 @@ export default function SidebarHeader() {
 
   return (
     <header className="oyk-app-sidebar-header">
-      <Dropdown
+      <OykDropdown
         ref={dropdownRef}
         toggle={
           <button className="oyk-app-sidebar-header-button" disabled={!currentUser}>
             {currentUser && currentWorld ? (
               <>
-                <span className="oyk-app-sidebar-header-button-logo" style={{ backgroundColor: currentWorld.themes[0]?.primary || "var(--oyk-primary)" }}>
-                  <span style={{ color: currentWorld.themes[0]?.primaryFg || "var(--oyk-primary-fg)" }}>
+                <span className="oyk-app-sidebar-header-button-logo" style={{ backgroundColor: currentWorld.themes[0]?.primary || "var(--oyk-c-primary)" }}>
+                  <span style={{ color: currentWorld.themes[0]?.primaryFg || "var(--oyk-c-primary-fg)" }}>
                     {currentWorld.abbr}
                   </span>
                 </span>
@@ -80,7 +80,7 @@ export default function SidebarHeader() {
             ) : (
               <>
                 <span className="oyk-app-sidebar-header-button-logo">
-                  <SquircleDashed size={18} color="var(--oyk-primary-fg)" />
+                  <SquircleDashed size={18} color="var(--oyk-c-primary-fg)" />
                 </span>
                 <span className="oyk-app-sidebar-header-button-brand">
                   Oykus

@@ -24,7 +24,7 @@ export default function Components() {
           <OykHeading title={t("Predefined Colours")} ph={0} />
           <div className="oyk-components-list-item-example">
             <span style={{ color: "var(--oyk-core-fg)" }}>Default text</span>
-            <span style={{ color: "var(--oyk-primary)" }}>Primary</span>
+            <span style={{ color: "var(--oyk-c-primary)" }}>Primary</span>
             <span style={{ color: "var(--oyk-c-danger)" }}>Danger</span>
             <span style={{ color: "var(--oyk-c-warning)" }}>Warning</span>
             <span style={{ color: "var(--oyk-c-success)" }}>Success</span>
@@ -42,7 +42,7 @@ export default function Components() {
               <span style={{ color: "var(--oyk-card-fg)" }}>
                 Card default text
               </span>
-              <span style={{ color: "var(--oyk-primary)" }}>Primary</span>
+              <span style={{ color: "var(--oyk-c-primary)" }}>Primary</span>
               <span style={{ color: "var(--oyk-c-danger)" }}>Danger</span>
               <span style={{ color: "var(--oyk-c-warning)" }}>Warning</span>
               <span style={{ color: "var(--oyk-c-success)" }}>Success</span>
@@ -194,13 +194,13 @@ export default function Components() {
                 name: "bgColor",
                 description: "Background colour",
                 type: "string",
-                defaultValue: "var(--oyk-primary)",
+                defaultValue: "var(--oyk-c-primary)",
               },
               {
                 name: "fgColor",
                 description: "Colour of the text and icon",
                 type: "string",
-                defaultValue: "var(--oyk-primary-fg)",
+                defaultValue: "var(--oyk-c-primary-fg)",
               },
               {
                 name: "borderColor",

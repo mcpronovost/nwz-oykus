@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus, EllipsisVertical, Edit, Trash2 } from "lucide-react";
 
 import { useTranslation } from "@/services/translation";
-import { Dropdown, Modal } from "@/components/common";
+import { OykDropdown, Modal } from "@/components/common";
 
 import ModalTaskCreate from "./modals/ModalTaskCreate";
 import ModalStatusEdit from "./modals/ModalStatusEdit";
@@ -72,7 +72,7 @@ export default function TaskStatusHeader({ status, statusOptions = [], onTasksUp
           <span
             className="oyk-tasks-status-item-header-icon-dot"
             style={{
-              backgroundColor: status.color || "var(--oyk-primary)",
+              backgroundColor: status.color || "var(--oyk-c-primary)",
             }}
           />
         </div>
@@ -86,7 +86,7 @@ export default function TaskStatusHeader({ status, statusOptions = [], onTasksUp
           <button className="oyk-tasks-status-item-header-actions-btn" onClick={handleCreateClick}>
             <Plus size={16} />
           </button>
-          <Dropdown
+          <OykDropdown
             toggle={
               <button className="oyk-tasks-status-item-header-actions-btn">
                 <EllipsisVertical size={16} />
