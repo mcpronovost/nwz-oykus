@@ -2,7 +2,7 @@
 CREATE TYPE "public"."TaskPriority" AS ENUM ('LOW', 'MEDIUM', 'HIGH');
 
 -- CreateEnum
-CREATE TYPE "public"."TaskHistoryChangeType" AS ENUM ('STATUS', 'TITLE', 'CONTENT', 'ASSIGNEES', 'TAGS', 'PRIORITY');
+CREATE TYPE "public"."TaskHistoryChangeType" AS ENUM ('TITLE', 'CONTENT', 'PRIORITY', 'STATUS', 'ASSIGNEES', 'TAGS');
 
 -- CreateTable
 CREATE TABLE "public"."Task" (
@@ -79,7 +79,7 @@ CREATE TABLE "public"."User" (
     "username" VARCHAR(120) NOT NULL,
     "password" TEXT NOT NULL,
     "playerName" VARCHAR(120) NOT NULL,
-    "abbr" VARCHAR(4) NOT NULL,
+    "abbr" VARCHAR(3) NOT NULL,
     "limitWorlds" INTEGER NOT NULL DEFAULT 2,
     "totalWorlds" INTEGER NOT NULL DEFAULT 0,
     "limitWorldThemes" INTEGER NOT NULL DEFAULT 2,
@@ -97,6 +97,8 @@ CREATE TABLE "public"."World" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(64) NOT NULL,
     "description" VARCHAR(255) NOT NULL,
+    "abbr" VARCHAR(3) NOT NULL,
+    "slug" VARCHAR(120) NOT NULL,
     "ownerId" TEXT NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "isPublic" BOOLEAN NOT NULL DEFAULT false,
@@ -148,6 +150,12 @@ CREATE UNIQUE INDEX "User_playerName_key" ON "public"."User"("playerName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_abbr_key" ON "public"."User"("abbr");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "World_name_key" ON "public"."World"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "World_slug_key" ON "public"."World"("slug");
 
 -- CreateIndex
 CREATE INDEX "_TaskAssignees_B_index" ON "public"."_TaskAssignees"("B");
