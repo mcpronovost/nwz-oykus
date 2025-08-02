@@ -3,17 +3,27 @@ import { useState } from "react";
 import { api } from "@/services/api";
 import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
-import { OykButton, OykForm, OykFormField, OykFormMessage, Modal } from "@/components/common";
+import {
+  OykButton,
+  OykForm,
+  OykFormField,
+  OykFormMessage,
+  Modal,
+} from "@/components/common";
 
-export default function ModalStatusEdit({ isOpen, onClose, status }) {
+export default function ModalStatusCreate({
+  isOpen,
+  onClose,
+}) {
   const { currentWorld } = useStore();
   const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(null);
   const [formData, setFormData] = useState({
-    name: status.name,
-    color: status.color,
-    sortOrder: status.sortOrder,
+    name: "",
+    color: "",
+    sortOrder: "",
   });
 
   const handleSubmit = async () => {
@@ -21,7 +31,7 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
     setIsLoading(true);
     setHasError(null);
     try {
-      const data = await api.updateTasksStatus(currentWorld.id, status.id, formData);
+      const data = await api.createTasksStatus(currentWorld.id, formData);
       if (!data.id) {
         throw new Error(
           data.message || data.error || t("Failed to create status")
@@ -29,8 +39,9 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
       }
       onClose(true);
     } catch (error) {
-      console.error(error);
-      setHasError(error.message || error.error || error || t("An error occurred"));
+      setHasError(
+        error.message || error.error || error || t("An error occurred")
+      );
     } finally {
       setIsLoading(false);
     }
@@ -41,13 +52,14 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal title={t("Create a new status")} isOpen={isOpen} onClose={onClose}>
       <OykForm onSubmit={handleSubmit} isLoading={isLoading}>
         <OykFormField
           label={t("Name")}
           name="name"
           defaultValue={formData.name}
           onChange={handleChange}
+          required
         />
         <OykFormField
           label={t("Color")}
@@ -57,7 +69,7 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
           onChange={handleChange}
         />
         <OykFormField
-          label={t("Sort Order")}
+          label={t("Sort order")}
           name="sortOrder"
           type="number"
           defaultValue={formData.sortOrder}
@@ -68,7 +80,7 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
           <OykButton type="submit" color="primary">
             {t("Save")}
           </OykButton>
-          <OykButton type="button" action={onClose} outline>
+          <OykButton outline action={onClose}>
             {t("Cancel")}
           </OykButton>
         </div>

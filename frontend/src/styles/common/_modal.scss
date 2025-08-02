@@ -9,7 +9,7 @@
   right: 0;
   bottom: 0;
   z-index: 2000;
-  padding: 1rem;
+  padding: 16px;
   animation: modal-fade-in 0.2s ease-out;
 }
 
@@ -62,7 +62,7 @@
     color: var(--oyk-card-fg);
     overflow-y: auto;
     flex: 1;
-    padding: 16px;
+    padding: 16px 16px 32px;
   }
 }
 

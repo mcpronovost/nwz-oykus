@@ -46,6 +46,12 @@
       }
     }
 
+    input[type="color"] {
+      max-width: 45px;
+      height: 45px;
+      padding: 1px 4px;
+    }
+
     @media (max-width: 768px) {
       flex-direction: column;
 

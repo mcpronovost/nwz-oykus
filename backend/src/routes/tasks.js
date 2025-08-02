@@ -27,6 +27,7 @@ router.get("/", authenticateToken, async (req, res) => {
       .status(403)
       .json({ error: "You don't have permission to see this world" });
   }
+  // Get all tasks grouped by status
   const data = await prisma.taskStatus.findMany({
     where: { worldId: Number(worldId) },
     include: {
@@ -155,6 +156,40 @@ router.delete("/:taskId/delete", authenticateToken, async (req, res) => {
 });
 
 /**
+ * Create a new status
+ * @param {string} req.params.worldId - The world ID
+ */
+router.post("/status/create", authenticateToken, async (req, res) => {
+  const { worldId } = req.params;
+  const { name, color, sortOrder } = req.body;
+  // Check if worldId is a number and if not, return a 400 error
+  if (isNaN(worldId)) {
+    return res.status(400).json({ error: "World ID must be a number" });
+  }
+  // Check if world exists and current user is owner
+  const world = await prisma.world.findUnique({
+    where: { id: Number(worldId) },
+    include: {
+      owner: true,
+    },
+  });
+  if (!world || world.owner.id !== req.user.id) {
+    return res
+      .status(403)
+      .json({ error: "You don't have permission to see this world" });
+  }
+  const status = await prisma.taskStatus.create({
+    data: {
+      name,
+      color,
+      sortOrder: Number(sortOrder) || null,
+      world: { connect: { id: Number(worldId) } },
+    },
+  });
+  res.status(201).json(status);
+});
+
+/**
  * Update a task status
  * @param {string} req.params.worldId - The world ID
  * @param {string} req.params.statusId - The task status ID
@@ -163,9 +198,26 @@ router.delete("/:taskId/delete", authenticateToken, async (req, res) => {
  * @param {string} req.body.color - The task status color
  * @param {number} req.body.sortOrder - The task status sort order
  */
-router.patch("/status/:statusId/edit", async (req, res) => {
+router.patch("/status/:statusId/edit", authenticateToken, async (req, res) => {
   const { worldId, statusId } = req.params;
   const { name, color, sortOrder } = req.body;
+  // Check if worldId is a number and if not, return a 400 error
+  if (isNaN(worldId)) {
+    return res.status(400).json({ error: "World ID must be a number" });
+  }
+  // Check if world exists and current user is owner
+  const world = await prisma.world.findUnique({
+    where: { id: Number(worldId) },
+    include: {
+      owner: true,
+    },
+  });
+  if (!world || world.owner.id !== req.user.id) {
+    return res
+      .status(403)
+      .json({ error: "You don't have permission to see this world" });
+  }
+  // Update the status
   const status = await prisma.taskStatus.update({
     where: { id: Number(statusId), worldId: Number(worldId) },
     data: { name, color, sortOrder },
@@ -182,19 +234,6 @@ router.get("/statuses", async (req, res) => {
     orderBy: { sortOrder: "asc" },
   });
   res.json(statuses);
-});
-
-// Create a new status
-router.post("/statuses", async (req, res) => {
-  const { name, worldId, sortOrder } = req.body;
-  const status = await prisma.taskStatus.create({
-    data: {
-      name,
-      sortOrder,
-      world: { connect: { id: Number(worldId) } },
-    },
-  });
-  res.status(201).json(status);
 });
 
 // Delete a status

@@ -182,11 +182,21 @@ class ApiService {
     });
   }
 
-  async updateStatus(worldId, statusId, data) {
+  async createTasksStatus(worldId, data) {
+    if (!worldId || !data) {
+      throw new Error("World ID and data are required");
+    }
+    return await this.request(`/world/${worldId}/tasks/status/create`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateTasksStatus(worldId, statusId, data) {
     if (!worldId || !statusId || !data) {
       throw new Error("World ID, Status ID, and data are required");
     }
-    return await this.request(`/world/${worldId}/tasks/status/${statusId}`, {
+    return await this.request(`/world/${worldId}/tasks/status/${statusId}/edit`, {
       method: "PATCH",
       body: JSON.stringify(data),
     });

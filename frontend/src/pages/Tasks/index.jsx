@@ -11,6 +11,7 @@ import AppNotAuthorized from "@/components/core/AppNotAuthorized";
 import AppNotFound from "@/components/core/AppNotFound";
 import { OykButton, OykFeedback, OykHeading } from "@/components/common";
 
+import ModalStatusCreate from "./modals/ModalStatusCreate";
 import ModalTaskCreate from "./modals/ModalTaskCreate";
 import TaskStatus from "./TaskStatus";
 import TaskCard from "./TaskCard";
@@ -22,6 +23,7 @@ function Tasks() {
   const [error, setError] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [statusOptions, setStatusOptions] = useState([]);
+  const [isModalStatusCreateOpen, setIsModalStatusCreateOpen] = useState(false);
   const [isModalTaskCreateOpen, setIsModalTaskCreateOpen] = useState(false);
 
   const getTasks = async () => {
@@ -65,6 +67,17 @@ function Tasks() {
     updateTaskStatus(taskId, newStatusId, oldStatusName, newStatusName);
   };
 
+  const handleStatusCreateClick = () => {
+    setIsModalStatusCreateOpen(true);
+  };
+
+  const handleCloseModalStatusCreate = (updated) => {
+    setIsModalStatusCreateOpen(false);
+    if (updated) {
+      getTasks();
+    }
+  };
+
   const handleTaskCreateClick = () => {
     setIsModalTaskCreateOpen(true);
   };
@@ -90,6 +103,10 @@ function Tasks() {
 
   return (
     <section className="oyk-page oyk-tasks">
+      <ModalStatusCreate
+        isOpen={isModalStatusCreateOpen}
+        onClose={handleCloseModalStatusCreate}
+      />
       <ModalTaskCreate
         isOpen={isModalTaskCreateOpen}
         onClose={handleCloseModalTaskCreate}
@@ -153,7 +170,7 @@ function Tasks() {
           >
             <OykButton
               color="primary"
-              action={handleTaskCreateClick}
+              action={handleStatusCreateClick}
             >
               {t("Create a new status")}
             </OykButton>
