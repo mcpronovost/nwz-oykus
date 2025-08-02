@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Edit, Ellipsis, Trash2, X } from "lucide-react";
+import { Ellipsis, History, Trash2, X } from "lucide-react";
 
 import { api } from "@/services/api";
 import { useTranslation } from "@/services/translation";
+import { oykDate } from "@/utils/formatters";
 import {
+  OykAvatar,
   OykButton,
   OykDropdown,
   OykForm,
@@ -17,6 +19,7 @@ export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(null);
+  const [isShowHistory, setIsShowHistory] = useState(false);
   const [formData, setFormData] = useState({
     title: task.title,
     content: task.content,
@@ -48,9 +51,14 @@ export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const onClickShowHistory = () => {
+    setIsShowHistory(!isShowHistory);
+  };
+
   useEffect(() => {
     setIsLoading(false);
     setHasError(null);
+    setIsShowHistory(false);
   }, [isOpen]);
 
   return (
@@ -63,6 +71,14 @@ export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
           <OykDropdown
             toggle={<OykButton icon={Ellipsis} plain />}
             menu={[
+              {
+                label: isShowHistory ? t("Hide history") : t("Show history"),
+                icon: <History size={16} />,
+                onClick: () => onClickShowHistory(),
+              },
+              {
+                divider: true,
+              },
               {
                 label: t("Delete"),
                 icon: <Trash2 size={16} />,
@@ -118,6 +134,33 @@ export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
           </OykButton>
         </div>
       </OykForm>
+      {isShowHistory && (
+        <section className="oyk-modal-section">
+          <header className="oyk-modal-section-header">
+            <h3 className="oyk-modal-section-header-title">{t("History")}</h3>
+            <OykButton icon={X} action={onClickShowHistory} plain />
+          </header>
+          <div className="oyk-modal-section-content">
+            <ul className="oyk-tasks-history">
+              {task.history.map((history) => (
+                <li key={history.id}>
+                  <div className="oyk-tasks-history-avatar">
+                    <OykAvatar name={history.changedBy.playerName} abbr={history.changedBy.abbr} size={32} />
+                  </div>
+                  <div className="oyk-tasks-history-content">
+                    <p>
+                      {history.changedBy.playerName} as changed "
+                      {t(history.changeType)}" from "{history.oldValue}" to "
+                      {history.newValue}"<br />
+                      {oykDate(history.createdAt)}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
     </Modal>
   );
 }

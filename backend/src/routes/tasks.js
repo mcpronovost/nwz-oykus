@@ -35,7 +35,24 @@ router.get("/", authenticateToken, permissionsWorldStaff, async (req, res) => {
           },
           tags: true,
           comments: true,
-          history: true,
+          history: {
+            select: {
+              id: true,
+              changedById: true,
+              changedBy: {
+                select: {
+                  id: true,
+                  playerName: true,
+                  abbr: true,
+                },
+              },
+              changeType: true,
+              oldValue: true,
+              newValue: true,
+              createdAt: true,
+            },
+            orderBy: { createdAt: "desc" },
+          },
         },
         orderBy: [
           { priority: { sort: "desc", nulls: "last" } },
