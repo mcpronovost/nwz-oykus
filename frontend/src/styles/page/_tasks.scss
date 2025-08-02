@@ -253,4 +253,15 @@
       }
     }
   }
+
+  &-empty {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 32px;
+    margin: 32px auto;
+  }
 }

@@ -2,14 +2,14 @@ import "@/styles/page/_tasks.scss";
 import { useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Plus, Settings } from "lucide-react";
+import { Frown, Plus, Settings } from "lucide-react";
 
 import { api } from "@/services/api";
 import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
 import AppNotAuthorized from "@/components/core/AppNotAuthorized";
 import AppNotFound from "@/components/core/AppNotFound";
-import { OykButton, OykHeading } from "@/components/common";
+import { OykButton, OykFeedback, OykHeading } from "@/components/common";
 
 import ModalTaskCreate from "./modals/ModalTaskCreate";
 import TaskStatus from "./TaskStatus";
@@ -100,18 +100,18 @@ function Tasks() {
         description={t("Tasks description")}
         actions={
           <>
-            <OykButton
+            {tasks.length > 0 && (<OykButton
               color="primary"
               icon={Plus}
               action={handleTaskCreateClick}
             >
-              Create a new task
-            </OykButton>
+              {t("Create a new task")}
+            </OykButton>)}
             <OykButton icon={Settings} outline />
           </>
         }
       />
-      <DndProvider backend={HTML5Backend}>
+      {tasks.length > 0 ? (<DndProvider backend={HTML5Backend}>
         <section className="oyk-tasks-status">
           {tasks.map((status) => (
             <article key={status.name} className="oyk-tasks-status-item">
@@ -143,7 +143,23 @@ function Tasks() {
             </article>
           ))}
         </section>
-      </DndProvider>
+      </DndProvider>) : (
+        <section className="oyk-tasks-empty">
+          <OykFeedback
+            title={t("No tasks found")}
+            message={t("Start by creating a new status before adding tasks")}
+            icon={Frown}
+            ghost
+          >
+            <OykButton
+              color="primary"
+              action={handleTaskCreateClick}
+            >
+              {t("Create a new status")}
+            </OykButton>
+          </OykFeedback>
+        </section>
+      )}
     </section>
   );
 }

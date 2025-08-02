@@ -47,6 +47,19 @@ async function main() {
       ownerId: user.id,
     },
   });
+  await prisma.world.upsert({
+    where: { id: 2, name: "Hobeon" },
+    update: {},
+    create: {
+      name: "Hobeon",
+      description: "Hollow beings on.",
+      abbr: "H",
+      slug: oykSlugify("Hobeon"),
+      isActive: true,
+      isPublic: false,
+      ownerId: user.id,
+    },
+  });
 
   // Create world theme
   await prisma.worldTheme.upsert({

@@ -45,8 +45,8 @@ export default function SidebarHeader() {
                 className="oyk-app-sidebar-header-button-dropdown-item"
                 onClick={() => handleWorldClick(world)}
               >
-                <span className="oyk-app-sidebar-header-button-dropdown-item-logo" style={{ backgroundColor: world.themes[0]?.primary || "var(--oyk-primary)" }}>
-                  <span style={{ color: world.themes[0]?.primaryFg || "var(--oyk-primary-fg)" }}>
+                <span className="oyk-app-sidebar-header-button-dropdown-item-logo" style={{ backgroundColor: world.themes[0]?.primary || "var(--oyk-default-primary)" }}>
+                  <span style={{ color: world.themes[0]?.primaryFg || "var(--oyk-default-primary-fg)" }}>
                     {world.abbr}
                   </span>
                 </span>
