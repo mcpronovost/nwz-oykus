@@ -86,13 +86,74 @@ router.post("/create", authenticateToken, permissionsWorldStaff, async (req, res
 router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (req, res) => {
   const { worldId, taskId } = req.params;
   const { title, content, priority, dueAt } = req.body;
+  const currentUser = req.user;
+
+  // First, get the current task to compare values
+  const currentTask = await prisma.task.findUnique({
+    where: { id: Number(taskId), worldId: Number(worldId) },
+  });
+
+  if (!currentTask) {
+    return res.status(404).json({ error: "Task not found" });
+  }
+
+  // Prepare history entries for changed fields
+  const historyEntries = [];
+  const newDueAt = dueAt ? new Date(dueAt + "T00:00:00") : null;
+
+  // Check if title changed
+  if (title !== undefined && title !== currentTask.title) {
+    historyEntries.push({
+      changedById: currentUser.id,
+      changeType: "TITLE",
+      oldValue: currentTask.title,
+      newValue: title,
+    });
+  }
+
+  // Check if content changed
+  if (content !== undefined && content !== currentTask.content) {
+    historyEntries.push({
+      changedById: currentUser.id,
+      changeType: "CONTENT",
+      oldValue: currentTask.content,
+      newValue: content,
+    });
+  }
+
+  // Check if priority changed
+  if (priority !== undefined && priority !== currentTask.priority) {
+    historyEntries.push({
+      changedById: currentUser.id,
+      changeType: "PRIORITY",
+      oldValue: currentTask.priority,
+      newValue: priority,
+    });
+  }
+
+  // Check if dueAt changed
+  if (dueAt !== undefined && newDueAt?.getTime() !== currentTask.dueAt?.getTime()) {
+    historyEntries.push({
+      changedById: currentUser.id,
+      changeType: "DUE_AT",
+      oldValue: currentTask.dueAt ? currentTask.dueAt.toISOString().split("T")[0] : null,
+      newValue: dueAt,
+    });
+  }
+
+  // Update the task with new values and create history entries
   const task = await prisma.task.update({
     where: { id: Number(taskId), worldId: Number(worldId) },
     data: {
-      title,
-      content,
-      priority,
-      dueAt: dueAt ? new Date(dueAt + "T00:00:00") : null,
+      title: title !== undefined ? title : currentTask.title,
+      content: content !== undefined ? content : currentTask.content,
+      priority: priority !== undefined ? priority : currentTask.priority,
+      dueAt: newDueAt,
+      ...(historyEntries.length > 0 && {
+        history: {
+          create: historyEntries,
+        },
+      }),
     },
   });
   res.json({ id: task.id });

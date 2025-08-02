@@ -11,8 +11,9 @@ enum TaskHistoryChangeType {
   CONTENT
   PRIORITY
   STATUS
-  ASSIGNEES
   TAGS
+  ASSIGNEES
+  DUE_AT
 }
 
 model Task {
