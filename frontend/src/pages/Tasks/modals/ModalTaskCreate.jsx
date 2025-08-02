@@ -3,9 +3,20 @@ import { useState } from "react";
 import { api } from "@/services/api";
 import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
-import { OykButton,OykForm, OykFormField, OykFormMessage, Modal } from "@/components/common";
+import {
+  OykButton,
+  OykForm,
+  OykFormField,
+  OykFormMessage,
+  Modal,
+} from "@/components/common";
 
-export default function ModalTaskCreate({ isOpen, onClose, status, statusOptions }) {
+export default function ModalTaskCreate({
+  isOpen,
+  onClose,
+  status,
+  statusOptions,
+}) {
   const { currentUser, currentWorld } = useStore();
   const { t } = useTranslation();
 
@@ -28,11 +39,15 @@ export default function ModalTaskCreate({ isOpen, onClose, status, statusOptions
     try {
       const data = await api.createTask(currentWorld.id, formData);
       if (!data.id) {
-        throw new Error(data.message || data.error || t("Failed to create task"));
+        throw new Error(
+          data.message || data.error || t("Failed to create task")
+        );
       }
       onClose(true);
     } catch (error) {
-      setHasError(error.message || error.error || error || t("An error occurred"));
+      setHasError(
+        error.message || error.error || error || t("An error occurred")
+      );
     } finally {
       setIsLoading(false);
     }
@@ -82,8 +97,12 @@ export default function ModalTaskCreate({ isOpen, onClose, status, statusOptions
         />
         <OykFormMessage hasError={hasError} />
         <div className="oyk-form-actions">
-          <OykButton type="submit" color="primary">{t("Save")}</OykButton>
-          <OykButton outline action={onClose}>{t("Cancel")}</OykButton>
+          <OykButton type="submit" color="primary">
+            {t("Save")}
+          </OykButton>
+          <OykButton outline action={onClose}>
+            {t("Cancel")}
+          </OykButton>
         </div>
       </OykForm>
     </Modal>

@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 
 import { api } from "@/services/api";
 import { useTranslation } from "@/services/translation";
-import { OykForm, OykFormField, OykFormMessage, Modal } from "@/components/common";
+import {
+  OykButton,
+  OykForm,
+  OykFormField,
+  OykFormMessage,
+  Modal,
+} from "@/components/common";
 
 export default function ModalTaskEdit({ isOpen, onClose, task }) {
   const { t } = useTranslation();
@@ -75,10 +81,12 @@ export default function ModalTaskEdit({ isOpen, onClose, task }) {
         />
         <OykFormMessage hasError={hasError} />
         <div className="oyk-form-actions">
-          <button type="submit">{t("Save")}</button>
-          <button type="button" onClick={onClose}>
+          <OykButton type="submit" color="primary">
+            {t("Save")}
+          </OykButton>
+          <OykButton type="button" action={onClose} outline>
             {t("Cancel")}
-          </button>
+          </OykButton>
         </div>
       </OykForm>
     </Modal>
