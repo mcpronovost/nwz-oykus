@@ -6,6 +6,7 @@ export default function Modal({
   onClose,
   title,
   size = "medium",
+  actions,
 }) {
   const modalRef = useRef(null);
 
@@ -45,6 +46,7 @@ export default function Modal({
         {title && (
           <header className="oyk-modal-header">
             <h3 className="oyk-modal-header-title">{title}</h3>
+            {actions && <div className="oyk-modal-header-actions">{actions}</div>}
           </header>
         )}
         <div className="oyk-modal-content">{children}</div>
