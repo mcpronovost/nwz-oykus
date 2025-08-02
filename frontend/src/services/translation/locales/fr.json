@@ -19,6 +19,8 @@
   "PriorityHigh": "Élevée",
   "PriorityMedium": "Moyenne",
   "PriorityLow": "Faible",
+  "Save": "Enregistrer",
+  "Cancel": "Annuler",
   "Edit": "Modifier",
   "Delete": "Supprimer"
 }

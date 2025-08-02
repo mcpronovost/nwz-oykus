@@ -19,6 +19,8 @@
   "PriorityHigh": "High",
   "PriorityMedium": "Medium",
   "PriorityLow": "Low",
+  "Save": "Save",
+  "Cancel": "Cancel",
   "Edit": "Edit",
   "Delete": "Delete"
 }
