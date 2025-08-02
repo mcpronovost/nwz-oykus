@@ -60,6 +60,8 @@ export function StoreProvider({ children }) {
       setCurrentUser: handleSetCurrentUser,
       isAuthenticated,
       setAuthenticated: handleSetAuthenticated,
+      currentWorld,
+      setCurrentWorld: handleSetCurrentWorld,
     });
   }, [
     currentUser,

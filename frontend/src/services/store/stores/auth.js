@@ -1,4 +1,4 @@
-import { KEY_TOKEN, KEY_USER } from "../constants";
+import { KEY_TOKEN, KEY_USER, KEY_WORLD } from "../constants";
 import { storeGetItem, storeSetItem, storeRemoveItem } from "../utils";
 
 // This will be set by the store provider
@@ -45,6 +45,21 @@ export const authStore = {
     }
   },
 
+  // World management
+  getWorld: () => storeGetItem(KEY_WORLD),
+  setWorld: (world) => {
+    storeSetItem(KEY_WORLD, world);
+    if (storeInstance) {
+      storeInstance.setCurrentWorld(world);
+    }
+  },
+  removeWorld: () => {
+    storeRemoveItem(KEY_WORLD);
+    if (storeInstance) {
+      storeInstance.setCurrentWorld(null);
+    }
+  },
+
   // Authentication state
   isAuthenticated: () => {
     if (storeInstance) {
@@ -58,5 +73,6 @@ export const authStore = {
   logout: () => {
     authStore.removeToken();
     authStore.removeUser();
+    authStore.removeWorld();
   },
 };
