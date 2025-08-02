@@ -20,9 +20,20 @@
   "PriorityHigh": "High",
   "PriorityMedium": "Medium",
   "PriorityLow": "Low",
+  "PriorityHIGH": "High",
+  "PriorityMEDIUM": "Medium",
+  "PriorityLOW": "Low",
+  "Prioritynull": "None",
   "Save": "Save",
   "Cancel": "Cancel",
   "Edit": "Edit",
   "Delete": "Delete",
-  "Close": "Close"
+  "Close": "Close",
+  "Title": "Title",
+  "Content": "Content",
+  "Priority": "Priority",
+  "Due At": "Due At",
+  "History": "History",
+  "Show history": "Show history",
+  "Hide history": "Hide history"
 }

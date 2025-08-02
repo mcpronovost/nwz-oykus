@@ -51,7 +51,7 @@ export default function OykButton({
         className="oyk-button-content"
         style={color?.startsWith("#") ? { color: color } : {}}
       >
-        {IconComponent && <IconComponent size={18} />}
+        {IconComponent && <IconComponent size={16} />}
         {children && children}
       </span>
     </button>

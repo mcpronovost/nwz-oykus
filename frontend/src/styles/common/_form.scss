@@ -7,11 +7,11 @@
 
     &-label {
       color: var(--oyk-card-fg);
-      font-size: 0.875rem;
+      font-size: 0.9rem;
       font-weight: 500;
       display: block;
-      flex: 0 0 120px;
-      width: 120px;
+      flex: 0 0 150px;
+      width: 150px;
       padding: 12px 0;
 
       .oyk-form-field-required {
@@ -35,6 +35,7 @@
         border: 1px solid var(--oyk-card-item-bg);
         border-radius: var(--oyk-radius);
         color: var(--oyk-card-fg);
+        font-family: "Work Sans", sans-serif;
         font-size: 0.875rem;
         width: 100%;
         padding: 12px;

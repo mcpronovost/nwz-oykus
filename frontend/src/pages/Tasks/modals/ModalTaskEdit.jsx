@@ -101,6 +101,7 @@ export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
         <OykFormField
           label={t("Content")}
           name="content"
+          type="textarea"
           defaultValue={formData.content}
           onChange={handleChange}
         />
@@ -145,13 +146,25 @@ export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
               {task.history.map((history) => (
                 <li key={history.id}>
                   <div className="oyk-tasks-history-avatar">
-                    <OykAvatar name={history.changedBy.playerName} abbr={history.changedBy.abbr} size={32} />
+                    <OykAvatar
+                      name={history.changedBy.playerName}
+                      abbr={history.changedBy.abbr}
+                      size={32}
+                    />
                   </div>
                   <div className="oyk-tasks-history-content">
                     <p>
-                      {history.changedBy.playerName} as changed "
-                      {t(history.changeType)}" from "{history.oldValue}" to "
-                      {history.newValue}"<br />
+                      {history.changedBy.playerName} {t("taskHistoryAsChanged")}{" "}
+                      "{t(`taskHistory${history.changeType}`)}"{" "}
+                      {t("taskHistoryFrom")} "
+                      {history.changeType === "PRIORITY"
+                        ? t(`Priority${history.oldValue}`)
+                        : history.oldValue}
+                      " {t("taskHistoryTo")} "
+                      {history.changeType === "PRIORITY"
+                        ? t(`Priority${history.newValue}`)
+                        : history.newValue}
+                      "<br />
                       {oykDate(history.createdAt)}
                     </p>
                   </div>

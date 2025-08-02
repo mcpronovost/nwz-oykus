@@ -20,9 +20,20 @@
   "PriorityHigh": "Élevée",
   "PriorityMedium": "Moyenne",
   "PriorityLow": "Faible",
+  "PriorityHIGH": "Élevée",
+  "PriorityMEDIUM": "Moyenne",
+  "PriorityLOW": "Faible",
+  "Prioritynull": "Aucune",
   "Save": "Enregistrer",
   "Cancel": "Annuler",
   "Edit": "Modifier",
   "Delete": "Supprimer",
-  "Close": "Fermer"
+  "Close": "Fermer",
+  "Title": "Titre",
+  "Content": "Contenu",
+  "Priority": "Priorité",
+  "Due At": "Date d'échéance",
+  "History": "Historique",
+  "Show history": "Afficher l'historique",
+  "Hide history": "Masquer l'historique"
 }

@@ -8,5 +8,13 @@
   "Edit Task": "Edit Task",
   "Delete Task": "Delete Task",
   "Are you sure you want to delete this task?": "Are you sure you want to delete this task?",
-  "This action cannot be undone.": "This action cannot be undone."
+  "This action cannot be undone.": "This action cannot be undone.",
+  "taskHistoryAsChanged": "as changed",
+  "taskHistoryFrom": "from",
+  "taskHistoryTo": "to",
+  "taskHistoryTITLE": "Title",
+  "taskHistoryCONTENT": "Content",
+  "taskHistorySTATUS": "Status",
+  "taskHistoryPRIORITY": "Priority",
+  "taskHistoryDUE_AT": "Due at"
 }
