@@ -8,6 +8,7 @@ import {
   OykButton,
   OykChip,
   OykFeedback,
+  OykGrid,
   OykHeading,
 } from "@/components/common";
 import ComponentApiTable from "./ComponentApiTable";
@@ -17,7 +18,7 @@ export default function Components() {
 
   return (
     <section className="oyk-page oyk-components">
-      <section className="oyk-components-list">
+      <OykGrid className="oyk-components-list">
         {/* Predefined Colours */}
         <article id="predefined-colours" className="oyk-components-list-item">
           <OykHeading title={t("Predefined Colours")} ph={0} />
@@ -520,7 +521,7 @@ export default function Components() {
             ]}
           />
         </article>
-      </section>
+      </OykGrid>
     </section>
   );
 }

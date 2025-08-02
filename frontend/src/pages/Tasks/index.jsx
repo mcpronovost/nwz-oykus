@@ -9,7 +9,7 @@ import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
 import AppNotAuthorized from "@/components/core/AppNotAuthorized";
 import AppNotFound from "@/components/core/AppNotFound";
-import { OykButton, OykFeedback, OykHeading, OykLoading } from "@/components/common";
+import { OykButton, OykFeedback, OykGrid, OykHeading, OykLoading } from "@/components/common";
 
 import ModalStatusCreate from "./modals/ModalStatusCreate";
 import ModalTaskCreate from "./modals/ModalTaskCreate";
@@ -134,7 +134,7 @@ function Tasks() {
         }
       />
       {tasks.length > 0 ? (<DndProvider backend={HTML5Backend}>
-        <section className="oyk-tasks-status">
+        <OykGrid className="oyk-tasks-status">
           {tasks.map((status) => (
             <article key={status.name} className="oyk-tasks-status-item">
               <TaskStatus
@@ -164,11 +164,11 @@ function Tasks() {
               </TaskStatus>
             </article>
           ))}
-        </section>
+        </OykGrid>
       </DndProvider>) : isLoading ? (
         <OykLoading />
       ) : (
-        <section className="oyk-tasks-empty">
+        <OykGrid className="oyk-tasks-empty">
           <OykFeedback
             title={t("No tasks found")}
             message={t("Start by creating a new status before adding tasks")}
@@ -182,7 +182,7 @@ function Tasks() {
               {t("Create a new status")}
             </OykButton>
           </OykFeedback>
-        </section>
+        </OykGrid>
       )}
     </section>
   );

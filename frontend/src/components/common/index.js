@@ -6,6 +6,7 @@ export { default as Dropdown } from "./Dropdown.jsx";
 export { default as OykFeedback } from "./Feedback.jsx";
 export { default as OykForm } from "./Form.jsx";
 export { default as OykFormField } from "./FormField.jsx";
+export { default as OykGrid } from "./Grid.jsx";
 export { default as OykFormMessage } from "./FormMessage.jsx";
 export { default as OykHeading } from "./Heading.jsx";
 export { default as Link } from "./Link.jsx";
