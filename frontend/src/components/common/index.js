@@ -9,5 +9,6 @@ export { default as OykFormField } from "./FormField.jsx";
 export { default as OykFormMessage } from "./FormMessage.jsx";
 export { default as OykHeading } from "./Heading.jsx";
 export { default as Link } from "./Link.jsx";
+export { default as OykLoading } from "./Loading.jsx";
 export { default as Modal } from "./Modal.jsx";
 export { default as OykProgress } from "./Progress.jsx";

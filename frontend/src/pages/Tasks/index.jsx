@@ -9,7 +9,7 @@ import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
 import AppNotAuthorized from "@/components/core/AppNotAuthorized";
 import AppNotFound from "@/components/core/AppNotFound";
-import { OykButton, OykFeedback, OykHeading } from "@/components/common";
+import { OykButton, OykFeedback, OykHeading, OykLoading } from "@/components/common";
 
 import ModalStatusCreate from "./modals/ModalStatusCreate";
 import ModalTaskCreate from "./modals/ModalTaskCreate";
@@ -20,13 +20,16 @@ function Tasks() {
   const { currentUser, currentWorld } = useStore();
   const { t } = useTranslation();
 
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [statusOptions, setStatusOptions] = useState([]);
   const [isModalStatusCreateOpen, setIsModalStatusCreateOpen] = useState(false);
   const [isModalTaskCreateOpen, setIsModalTaskCreateOpen] = useState(false);
 
   const getTasks = async () => {
+    setIsLoading(true);
+    setHasError(null);
     try {
       const data = await api.getTasks(currentWorld.id);
       setTasks(data);
@@ -36,10 +39,12 @@ function Tasks() {
       })));
     } catch (error) {
       if (error?.status === 401) {
-        setError(401);
+        setHasError(401);
       } else {
-        setError(t("An error occurred while fetching tasks"));
+        setHasError(t("An error occurred while fetching tasks"));
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -93,7 +98,7 @@ function Tasks() {
     getTasks();
   }, []);
 
-  if (!currentUser || error === 401) {
+  if (!currentUser || hasError === 401) {
     return <AppNotAuthorized />;
   }
 
@@ -160,7 +165,9 @@ function Tasks() {
             </article>
           ))}
         </section>
-      </DndProvider>) : (
+      </DndProvider>) : isLoading ? (
+        <OykLoading />
+      ) : (
         <section className="oyk-tasks-empty">
           <OykFeedback
             title={t("No tasks found")}
