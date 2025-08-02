@@ -1,3 +1,9 @@
+enum WorldStaffRole {
+  OWNER
+  ADMINISTRATOR
+  MODERATOR
+}
+
 model World {
   id          Int    @id @default(autoincrement())
   name        String @unique @db.VarChar(64)
@@ -15,6 +21,7 @@ model World {
 
   // Relations
   themes       WorldTheme[]
+  staff        WorldStaff[]
   tasks        Task[]
   taskStatuses TaskStatus[]
   taskTags     TaskTag[]
@@ -64,4 +71,21 @@ model WorldTheme {
   // Important Dates
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model WorldStaff {
+  id      Int   @id @default(autoincrement())
+  worldId Int
+  world   World @relation(fields: [worldId], references: [id])
+
+  // Staff Identity
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  role   WorldStaffRole @default(MODERATOR)
+
+  // Important Dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([worldId, userId])
 }

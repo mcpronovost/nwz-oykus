@@ -1,6 +1,10 @@
-import { PrismaClient, TaskHistoryChangeType } from "@prisma/client";
+import {
+  PrismaClient,
+  WorldStaffRole,
+  TaskHistoryChangeType,
+} from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export default prisma;
-export { TaskHistoryChangeType };
+export { TaskHistoryChangeType, WorldStaffRole };

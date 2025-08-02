@@ -23,7 +23,7 @@ const OykDropdown = forwardRef(
     }));
 
     const handleToggle = () => {
-      if (disabled) return;
+      if (disabled || menu.length === 0) return;
       setIsOpen(!isOpen);
     };
 
@@ -53,7 +53,7 @@ const OykDropdown = forwardRef(
     return (
       <div ref={dropdownRef} className="oyk-dropdown">
         <div
-          className={`oyk-dropdown-toggle ${disabled ? "disabled" : ""}`}
+          className={`oyk-dropdown-toggle ${disabled || menu.length === 0 ? "disabled" : ""}`}
           onClick={() => handleToggle()}
         >
           {toggle}

@@ -38,7 +38,7 @@ export default function SidebarHeader() {
               </button>
             ),
           },
-          ...currentUser.worldsOwned.map((world) => ({
+          ...currentUser.worldsStaff.map((world) => ({
             label: world.name,
             element: (
               <button

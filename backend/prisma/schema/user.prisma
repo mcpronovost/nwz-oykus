@@ -20,6 +20,7 @@ model User {
 
   // Relations
   worldsOwned   World[]       @relation("WorldOwner")
+  worldsStaff   WorldStaff[]
   tasks         Task[]
   taskAssigned  Task[]        @relation("TaskAssignees")
   taskComments  TaskComment[]

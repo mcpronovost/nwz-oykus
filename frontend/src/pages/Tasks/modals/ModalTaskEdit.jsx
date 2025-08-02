@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Ellipsis, History, Trash2, X } from "lucide-react";
 
 import { api } from "@/services/api";
+import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
 import { oykDate } from "@/utils/formatters";
 import {
@@ -15,6 +16,7 @@ import {
 } from "@/components/common";
 
 export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
+  const { currentUser, currentWorld } = useStore();
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -38,10 +40,18 @@ export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
       if (res.id) {
         onClose(true);
       } else {
-        throw new Error("An error occurred while updating the task");
+        throw new Error("An error occurred while editing the task");
       }
     } catch (error) {
-      setHasError(error);
+      if ([401, 403].includes(error?.status)) {
+        setHasError({
+          message: t("You are not allowed to edit this task"),
+        });
+      } else {
+        setHasError({
+          message: t("An error occurred while editing the task"),
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -76,15 +86,17 @@ export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
                 icon: <History size={16} />,
                 onClick: () => onClickShowHistory(),
               },
-              {
-                divider: true,
-              },
-              {
-                label: t("Delete"),
-                icon: <Trash2 size={16} />,
-                color: "danger",
-                onClick: () => onClose(false, true),
-              },
+              ...(task.author?.id === currentUser?.id ||
+              ["OWNER", "ADMINISTRATOR"].includes(currentWorld.staff.role)
+                ? [
+                    {
+                      label: t("Delete"),
+                      icon: <Trash2 size={16} />,
+                      color: "danger",
+                      onClick: () => onClose(false, true),
+                    },
+                  ]
+                : []),
             ]}
           />
           <OykButton icon={X} action={onClose} plain />

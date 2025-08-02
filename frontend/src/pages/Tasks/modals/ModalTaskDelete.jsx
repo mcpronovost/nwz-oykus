@@ -29,7 +29,15 @@ export default function ModalTaskDelete({ isOpen, onClose, task }) {
         throw new Error("An error occurred while deleting the task");
       }
     } catch (error) {
-      setHasError(error);
+      if ([401, 403].includes(error?.status)) {
+        setHasError({
+          message: t("You are not allowed to delete this task"),
+        });
+      } else {
+        setHasError({
+          message: t("An error occurred while deleting the task"),
+        });
+      }
     } finally {
       setIsLoading(false);
     }

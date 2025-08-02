@@ -18,11 +18,24 @@ export const permissionsWorldStaff = async (req, res, next) => {
   const world = await prisma.world.findUnique({
     where: { id: Number(worldId) },
     include: {
-      owner: true,
+      owner: {
+        select: {
+          id: true,
+        },
+      },
+      staff: {
+        where: {
+          userId: req.user.id,
+        },
+        select: {
+          id: true,
+          role: true,
+        },
+      },
     },
   });
 
-  if (!world || world.owner.id !== req.user.id) {
+  if (!world || (world.owner.id !== req.user.id && !world.staff.length)) {
     return res
       .status(403)
       .json({ error: "You don't have permission to see this world" });

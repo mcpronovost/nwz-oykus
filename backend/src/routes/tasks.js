@@ -75,106 +75,147 @@ router.get("/", authenticateToken, permissionsWorldStaff, async (req, res) => {
  * @param {string[]} req.body.assigneeIds - The task assignee IDs
  * @param {string} req.body.statusId - The task status ID
  */
-router.post("/create", authenticateToken, permissionsWorldStaff, async (req, res) => {
-  const { worldId } = req.params;
-  const { title, content, authorId, assigneeIds, statusId, priority, tagIds } =
-    req.body;
-  const task = await prisma.task.create({
-    data: {
+router.post(
+  "/create",
+  authenticateToken,
+  permissionsWorldStaff,
+  async (req, res) => {
+    const { worldId } = req.params;
+    const {
       title,
       content,
-      world: { connect: { id: Number(worldId) } },
-      author: { connect: { id: authorId } },
-      assignees: { connect: assigneeIds?.map((id) => ({ id })) },
-      status: { connect: { id: Number(statusId) } },
-      priority: priority || undefined,
-      tags: { connect: tagIds?.map((id) => ({ id })) },
-    },
-    include: {
-      author: true,
-      assignees: true,
-      status: true,
-      tags: true,
-    },
-  });
-  res.status(201).json({ id: task.id });
-});
-
-router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (req, res) => {
-  const { worldId, taskId } = req.params;
-  const { title, content, priority, dueAt } = req.body;
-  const currentUser = req.user;
-
-  // First, get the current task to compare values
-  const currentTask = await prisma.task.findUnique({
-    where: { id: Number(taskId), worldId: Number(worldId) },
-  });
-
-  if (!currentTask) {
-    return res.status(404).json({ error: "Task not found" });
-  }
-
-  // Prepare history entries for changed fields
-  const historyEntries = [];
-  const newDueAt = dueAt ? new Date(dueAt + "T00:00:00") : null;
-
-  // Check if title changed
-  if (title !== undefined && title !== currentTask.title) {
-    historyEntries.push({
-      changedById: currentUser.id,
-      changeType: TaskHistoryChangeType.TITLE,
-      oldValue: currentTask.title,
-      newValue: title,
+      authorId,
+      assigneeIds,
+      statusId,
+      priority,
+      tagIds,
+    } = req.body;
+    const task = await prisma.task.create({
+      data: {
+        title,
+        content,
+        world: { connect: { id: Number(worldId) } },
+        author: { connect: { id: authorId } },
+        assignees: { connect: assigneeIds?.map((id) => ({ id })) },
+        status: { connect: { id: Number(statusId) } },
+        priority: priority || undefined,
+        tags: { connect: tagIds?.map((id) => ({ id })) },
+      },
+      include: {
+        author: true,
+        assignees: true,
+        status: true,
+        tags: true,
+      },
     });
+    res.status(201).json({ id: task.id });
   }
+);
 
-  // Check if content changed
-  if (content !== undefined && content !== currentTask.content) {
-    historyEntries.push({
-      changedById: currentUser.id,
-      changeType: TaskHistoryChangeType.CONTENT,
-      oldValue: currentTask.content,
-      newValue: content,
+router.patch(
+  "/:taskId/edit",
+  authenticateToken,
+  permissionsWorldStaff,
+  async (req, res) => {
+    const { worldId, taskId } = req.params;
+    const { title, content, priority, dueAt } = req.body;
+    const currentUser = req.user;
+    const currentWorld = req.world;
+
+    // First, get the current task to compare values
+    const currentTask = await prisma.task.findUnique({
+      where: { id: Number(taskId), worldId: Number(worldId) },
+      include: {
+        author: true,
+      },
     });
-  }
 
-  // Check if priority changed
-  if (priority !== undefined && priority !== currentTask.priority) {
-    historyEntries.push({
-      changedById: currentUser.id,
-      changeType: TaskHistoryChangeType.PRIORITY,
-      oldValue: currentTask.priority,
-      newValue: priority === "" ? null : priority,
+    if (!currentTask) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    // Check if user has permission to edit task
+    if (
+      currentTask.author.id !== currentUser.id &&
+      !["OWNER", "ADMINISTRATOR"].includes(currentWorld.staff[0]?.role)
+    ) {
+      return res
+        .status(403)
+        .json({ error: "You are not allowed to edit this task" });
+    }
+
+    // Prepare history entries for changed fields
+    const historyEntries = [];
+    const newDueAt = dueAt ? new Date(dueAt + "T00:00:00") : null;
+
+    // Check if title changed
+    if (title !== undefined && title !== currentTask.title) {
+      historyEntries.push({
+        changedById: currentUser.id,
+        changeType: TaskHistoryChangeType.TITLE,
+        oldValue: currentTask.title,
+        newValue: title,
+      });
+    }
+
+    // Check if content changed
+    if (content !== undefined && content !== currentTask.content) {
+      historyEntries.push({
+        changedById: currentUser.id,
+        changeType: TaskHistoryChangeType.CONTENT,
+        oldValue: currentTask.content,
+        newValue: content,
+      });
+    }
+
+    // Check if priority changed
+    if (priority !== undefined && priority !== currentTask.priority) {
+      historyEntries.push({
+        changedById: currentUser.id,
+        changeType: TaskHistoryChangeType.PRIORITY,
+        oldValue: currentTask.priority,
+        newValue: priority === "" ? null : priority,
+      });
+    }
+
+    // Check if dueAt changed
+    if (
+      dueAt !== undefined &&
+      newDueAt?.getTime() !== currentTask.dueAt?.getTime()
+    ) {
+      historyEntries.push({
+        changedById: currentUser.id,
+        changeType: TaskHistoryChangeType.DUE_AT,
+        oldValue: currentTask.dueAt
+          ? currentTask.dueAt.toISOString().split("T")[0]
+          : null,
+        newValue: dueAt,
+      });
+    }
+
+    // Update the task with new values and create history entries
+    const task = await prisma.task.update({
+      where: { id: Number(taskId), worldId: Number(worldId) },
+      data: {
+        title: title !== undefined ? title : currentTask.title,
+        content: content !== undefined ? content : currentTask.content,
+        priority:
+          priority !== undefined
+            ? priority === ""
+              ? null
+              : priority
+            : currentTask.priority,
+        dueAt: newDueAt,
+        ...(historyEntries.length > 0 && {
+          history: {
+            create: historyEntries,
+          },
+        }),
+      },
     });
+    res.json({ id: task.id });
   }
-
-  // Check if dueAt changed
-  if (dueAt !== undefined && newDueAt?.getTime() !== currentTask.dueAt?.getTime()) {
-    historyEntries.push({
-      changedById: currentUser.id,
-      changeType: TaskHistoryChangeType.DUE_AT,
-      oldValue: currentTask.dueAt ? currentTask.dueAt.toISOString().split("T")[0] : null,
-      newValue: dueAt,
-    });
-  }
-
-  // Update the task with new values and create history entries
-  const task = await prisma.task.update({
-    where: { id: Number(taskId), worldId: Number(worldId) },
-    data: {
-      title: title !== undefined ? title : currentTask.title,
-      content: content !== undefined ? content : currentTask.content,
-      priority: priority !== undefined ? (priority === "" ? null : priority) : currentTask.priority,
-      dueAt: newDueAt,
-      ...(historyEntries.length > 0 && {
-        history: {
-          create: historyEntries,
-        },
-      }),
-    },
-  });
-  res.json({ id: task.id });
-});
+);
 
 /**
  * Update the status of a task
@@ -183,58 +224,92 @@ router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (r
  *
  * @param {string} req.body.statusId - The task status ID
  */
-router.patch("/:taskId/status", authenticateToken, permissionsWorldStaff, async (req, res) => {
-  const { worldId, taskId } = req.params;
-  const { statusId, oldStatusName, newStatusName } = req.body;
-  const currentUser = req.user;
+router.patch(
+  "/:taskId/status",
+  authenticateToken,
+  permissionsWorldStaff,
+  async (req, res) => {
+    const { worldId, taskId } = req.params;
+    const { statusId, oldStatusName, newStatusName } = req.body;
+    const currentUser = req.user;
 
-  const task = await prisma.task.update({
-    where: { id: Number(taskId), worldId: Number(worldId) },
-    data: {
-      statusId,
-      history: {
-        create: {
-          changedById: currentUser.id,
-          changeType: TaskHistoryChangeType.STATUS,
-          oldValue: oldStatusName,
-          newValue: newStatusName,
+    const task = await prisma.task.update({
+      where: { id: Number(taskId), worldId: Number(worldId) },
+      data: {
+        statusId,
+        history: {
+          create: {
+            changedById: currentUser.id,
+            changeType: TaskHistoryChangeType.STATUS,
+            oldValue: oldStatusName,
+            newValue: newStatusName,
+          },
         },
       },
-    },
-  });
-  res.json({ id: task.id });
-});
+    });
+    res.json({ id: task.id });
+  }
+);
 
 /**
  * Delete a task
  * @param {string} req.params.worldId - The world ID
  * @param {string} req.params.taskId - The task ID
  */
-router.delete("/:taskId/delete", authenticateToken, permissionsWorldStaff, async (req, res) => {
-  const { worldId, taskId } = req.params;
-  await prisma.task.delete({
-    where: { id: Number(taskId), worldId: Number(worldId) },
-  });
-  res.status(204).json({ ok: true });
-});
+router.delete(
+  "/:taskId/delete",
+  authenticateToken,
+  permissionsWorldStaff,
+  async (req, res) => {
+    const { worldId, taskId } = req.params;
+    const currentUser = req.user;
+    const currentWorld = req.world;
+
+    const task = await prisma.task.findUnique({
+      where: { id: Number(taskId), worldId: Number(worldId) },
+      include: {
+        author: true,
+      },
+    });
+
+    if (
+      task.author.id !== currentUser.id &&
+      !["OWNER", "ADMINISTRATOR"].includes(currentWorld.staff[0]?.role)
+    ) {
+      return res
+        .status(403)
+        .json({ error: "You are not allowed to delete this task" });
+    }
+
+    await prisma.task.delete({
+      where: { id: Number(taskId), worldId: Number(worldId) },
+    });
+    res.status(204).json({ ok: true });
+  }
+);
 
 /**
  * Create a new status
  * @param {string} req.params.worldId - The world ID
  */
-router.post("/status/create", authenticateToken, permissionsWorldStaff, async (req, res) => {
-  const { worldId } = req.params;
-  const { name, color, sortOrder } = req.body;
-  const status = await prisma.taskStatus.create({
-    data: {
-      name,
-      color,
-      sortOrder: Number(sortOrder) || null,
-      world: { connect: { id: Number(worldId) } },
-    },
-  });
-  res.status(201).json(status);
-});
+router.post(
+  "/status/create",
+  authenticateToken,
+  permissionsWorldStaff,
+  async (req, res) => {
+    const { worldId } = req.params;
+    const { name, color, sortOrder } = req.body;
+    const status = await prisma.taskStatus.create({
+      data: {
+        name,
+        color,
+        sortOrder: Number(sortOrder) || null,
+        world: { connect: { id: Number(worldId) } },
+      },
+    });
+    res.status(201).json(status);
+  }
+);
 
 /**
  * Update a task status
@@ -245,16 +320,28 @@ router.post("/status/create", authenticateToken, permissionsWorldStaff, async (r
  * @param {string} req.body.color - The task status color
  * @param {number} req.body.sortOrder - The task status sort order
  */
-router.patch("/status/:statusId/edit", authenticateToken, permissionsWorldStaff, async (req, res) => {
-  const { worldId, statusId } = req.params;
-  const { name, color, sortOrder } = req.body;
-  // Update the status
-  const status = await prisma.taskStatus.update({
-    where: { id: Number(statusId), worldId: Number(worldId) },
-    data: { name, color, sortOrder },
-  });
-  res.json({ id: status.id });
-});
+router.patch(
+  "/status/:statusId/edit",
+  authenticateToken,
+  permissionsWorldStaff,
+  async (req, res) => {
+    const { worldId, statusId } = req.params;
+    const { name, color, sortOrder } = req.body;
+    const currentWorld = req.world;
+    // Check if user has permission to edit status
+    if (!["OWNER", "ADMINISTRATOR"].includes(currentWorld.staff[0]?.role)) {
+      return res
+        .status(403)
+        .json({ error: "You are not allowed to edit this status" });
+    }
+    // Update the status
+    const status = await prisma.taskStatus.update({
+      where: { id: Number(statusId), worldId: Number(worldId) },
+      data: { name, color, sortOrder: sortOrder ? Number(sortOrder) : null },
+    });
+    res.json({ id: status.id });
+  }
+);
 
 // --- STATUSES ---
 // Get all statuses for a world

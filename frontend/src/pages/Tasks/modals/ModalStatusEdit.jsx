@@ -24,13 +24,20 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
       const data = await api.updateTasksStatus(currentWorld.id, status.id, formData);
       if (!data.id) {
         throw new Error(
-          data.message || data.error || t("Failed to create status")
+          data.message || data.error || t("Failed to edit status")
         );
       }
       onClose(true);
     } catch (error) {
-      console.error(error);
-      setHasError(error.message || error.error || error || t("An error occurred"));
+      if ([401, 403].includes(error?.status)) {
+        setHasError({
+          message: t("You are not allowed to edit this status"),
+        });
+      } else {
+        setHasError({
+          message: t("An error occurred while editing the status"),
+        });
+      }
     } finally {
       setIsLoading(false);
     }

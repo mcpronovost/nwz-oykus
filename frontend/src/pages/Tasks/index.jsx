@@ -38,8 +38,8 @@ function Tasks() {
         value: s.id,
       })));
     } catch (error) {
-      if (error?.status === 401) {
-        setHasError(401);
+      if ([401, 403].includes(error?.status)) {
+        setHasError(error?.status);
       } else {
         setHasError(t("An error occurred while fetching tasks"));
       }
@@ -98,7 +98,7 @@ function Tasks() {
     getTasks();
   }, []);
 
-  if (!currentUser || hasError === 401) {
+  if (!currentUser || [401, 403].includes(hasError)) {
     return <AppNotAuthorized />;
   }
 

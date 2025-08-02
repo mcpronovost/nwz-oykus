@@ -103,27 +103,28 @@ export function StoreProvider({ children }) {
 
     if (currentWorld?.themes?.[0]) {
       const theme = currentWorld.themes[0];
+      console.log(theme);
       styleSheet.textContent = `
         :root {
-          --oyk-core-bg: ${theme.coreBg};
-          --oyk-core-fg: ${theme.coreFg}; 
-          --oyk-core-divider: ${theme.coreDivider};
-          --oyk-c-primary: ${theme.primary};
-          --oyk-c-primary-fg: ${theme.primaryFg};
-          --oyk-danger: ${theme.cDanger};
-          --oyk-warning: ${theme.cWarning};
-          --oyk-success: ${theme.cSuccess};
-          --oyk-app-bar-bg: ${theme.appBarBg};
-          --oyk-app-sidebar-bg: ${theme.appSidebarBg};
-          --oyk-popper-bg: ${theme.popperBg};
-          --oyk-popper-fg: ${theme.popperFg};
-          --oyk-popper-item-bg: ${theme.popperItemBg};
-          --oyk-popper-item-fg: ${theme.popperItemFg};
-          --oyk-card-bg: ${theme.cardBg};
-          --oyk-card-fg: ${theme.cardFg};
-          --oyk-card-item-bg: ${theme.cardItemBg};
-          --oyk-card-item-fg: ${theme.cardItemFg};
-          --oyk-radius: ${theme.radius}px;
+          ${theme.coreBg ? `--oyk-core-bg: ${theme.coreBg};` : ""}
+          ${theme.coreFg ? `--oyk-core-fg: ${theme.coreFg};` : ""}
+          ${theme.coreDivider ? `--oyk-core-divider: ${theme.coreDivider};` : ""}
+          ${theme.primary ? `--oyk-c-primary: ${theme.primary};` : ""}
+          ${theme.primaryFg ? `--oyk-c-primary-fg: ${theme.primaryFg};` : ""}
+          ${theme.cDanger ? `--oyk-danger: ${theme.cDanger};` : ""}
+          ${theme.cWarning ? `--oyk-warning: ${theme.cWarning};` : ""}
+          ${theme.cSuccess ? `--oyk-success: ${theme.cSuccess};` : ""}
+          ${theme.appBarBg ? `--oyk-app-bar-bg: ${theme.appBarBg};` : ""}
+          ${theme.appSidebarBg ? `--oyk-app-sidebar-bg: ${theme.appSidebarBg};` : ""}
+          ${theme.popperBg ? `--oyk-popper-bg: ${theme.popperBg};` : ""}
+          ${theme.popperFg ? `--oyk-popper-fg: ${theme.popperFg};` : ""}
+          ${theme.popperItemBg ? `--oyk-popper-item-bg: ${theme.popperItemBg};` : ""}
+          ${theme.popperItemFg ? `--oyk-popper-item-fg: ${theme.popperItemFg};` : ""}
+          ${theme.cardBg ? `--oyk-card-bg: ${theme.cardBg};` : ""}
+          ${theme.cardFg ? `--oyk-card-fg: ${theme.cardFg};` : ""}
+          ${theme.cardItemBg ? `--oyk-card-item-bg: ${theme.cardItemBg};` : ""}
+          ${theme.cardItemFg ? `--oyk-card-item-fg: ${theme.cardItemFg};` : ""}
+          ${theme.radius ? `--oyk-radius: ${theme.radius}px;` : ""}
         }
       `;
     }

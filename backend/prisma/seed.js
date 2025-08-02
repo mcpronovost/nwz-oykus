@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, WorldStaffRole } from "@prisma/client";
 import { hashPassword } from "../src/utils/auth.js";
 import { oykSlugify } from "../src/utils/formatters.js";
 
@@ -71,6 +71,29 @@ async function main() {
       isActive: true,
       primary: "#8d8305",
       primaryFg: "#ffffff",
+    },
+  });
+
+  // Delete all world staff
+  await prisma.worldStaff.deleteMany({});
+
+  // Create world staff
+  await prisma.worldStaff.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      worldId: 1,
+      userId: user.id,
+      role: WorldStaffRole.OWNER,
+    },
+  });
+  await prisma.worldStaff.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      worldId: 1,
+      userId: kamuy.id,
+      role: WorldStaffRole.MODERATOR,
     },
   });
 

@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { Plus, EllipsisVertical, Edit, Trash2 } from "lucide-react";
 
+import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
 import { OykDropdown, Modal } from "@/components/common";
 
 import ModalTaskCreate from "./modals/ModalTaskCreate";
 import ModalStatusEdit from "./modals/ModalStatusEdit";
 
-export default function TaskStatusHeader({ status, statusOptions = [], onTasksUpdate = () => {} }) {
+export default function TaskStatusHeader({
+  status,
+  statusOptions = [],
+  onTasksUpdate = () => {},
+}) {
+  const { currentWorld } = useStore();
   const { t } = useTranslation();
 
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
@@ -83,7 +89,10 @@ export default function TaskStatusHeader({ status, statusOptions = [], onTasksUp
           </span>
         </h2>
         <div className="oyk-tasks-status-item-header-actions">
-          <button className="oyk-tasks-status-item-header-actions-btn" onClick={handleCreateClick}>
+          <button
+            className="oyk-tasks-status-item-header-actions-btn"
+            onClick={handleCreateClick}
+          >
             <Plus size={16} />
           </button>
           <OykDropdown
@@ -93,16 +102,20 @@ export default function TaskStatusHeader({ status, statusOptions = [], onTasksUp
               </button>
             }
             menu={[
-              {
-                label: t("Edit"),
-                icon: <Edit size={16} />,
-                onClick: handleEditClick,
-              },
-              {
-                label: t("Delete"),
-                icon: <Trash2 size={16} />,
-                onClick: handleDeleteClick,
-              },
+              ...(["OWNER", "ADMINISTRATOR"].includes(currentWorld.staff.role)
+                ? [
+                    {
+                      label: t("Edit"),
+                      icon: <Edit size={16} />,
+                      onClick: handleEditClick,
+                    },
+                    {
+                      label: t("Delete"),
+                      icon: <Trash2 size={16} />,
+                      onClick: handleDeleteClick,
+                    },
+                  ]
+                : []),
             ]}
           />
         </div>

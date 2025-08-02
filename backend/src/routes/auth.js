@@ -15,31 +15,31 @@ import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-const USER_INCLUDES = {
-  worldsOwned: {
+const WORLD_WHERE = {
+  isActive: true,
+};
+
+const WORLD_SELECT = {
+  id: true,
+  name: true,
+  abbr: true,
+  slug: true,
+  themes: {
     where: {
       isActive: true,
     },
     select: {
-      id: true,
-      name: true,
-      abbr: true,
-      slug: true,
-      themes: {
-        where: {
-          isActive: true,
-        },
-      },
+      primary: true,
+      primaryFg: true,
     },
   },
-}
+};
 
 const USER_SELECT = {
   select: {
     id: true,
     playerName: true,
     abbr: true,
-    ...USER_INCLUDES,
   },
 }
 
@@ -165,7 +165,6 @@ router.post("/login", async (req, res) => {
     // Find user by username
     const user = await prisma.user.findUnique({
       where: { username },
-      include: USER_INCLUDES,
     });
 
     if (!user) {
@@ -185,12 +184,37 @@ router.post("/login", async (req, res) => {
     // Generate token
     const token = generateToken(user.id);
 
+    // Get user worlds staff
+    const worldsStaff = await prisma.world.findMany({
+      where: {
+        ...WORLD_WHERE,
+        staff: {
+          some: { userId: user.id },
+        },
+      },
+      select: {
+        ...WORLD_SELECT,
+        staff: {
+          where: {
+            userId: user.id
+          },
+          select: {
+            role: true
+          },
+          take: 1
+        }
+      },
+    });
+
     // Return user data (excluding password)
     const userData = {
       id: user.id,
       playerName: user.playerName,
       abbr: user.abbr,
-      worldsOwned: user.worldsOwned,
+      worldsStaff: worldsStaff.map(world => ({
+        ...world,
+        staff: world.staff[0]
+      }))
     };
 
     logger.info(`User logged in: ${user.playerName}`);
@@ -218,13 +242,40 @@ router.get("/profile", authenticateToken, async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    if (user.totalWorlds !== user.worldsOwned.length) {
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { totalWorlds: user.worldsOwned.length },
-      });
-      user.totalWorlds = user.worldsOwned.length;
-    }
+    // if (user.totalWorlds !== user.worldsOwned.length) {
+    //   await prisma.user.update({
+    //     where: { id: user.id },
+    //     data: { totalWorlds: user.worldsOwned.length },
+    //   });
+    //   user.totalWorlds = user.worldsOwned.length;
+    // }
+
+    // Get user worlds staff
+    const worldsStaff = await prisma.world.findMany({
+      where: {
+        ...WORLD_WHERE,
+        staff: {
+          some: { userId: user.id },
+        },
+      },
+      select: {
+        ...WORLD_SELECT,
+        staff: {
+          where: {
+            userId: user.id
+          },
+          select: {
+            role: true
+          },
+          take: 1
+        }
+      },
+    });
+
+    user.worldsStaff = worldsStaff.map(world => ({
+      ...world,
+      staff: world.staff[0]
+    }));
 
     res.json({
       user: user,
