@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useRouter } from "@/services/router";
 import { api } from "@/services/api";
-import { Link } from "@/components/common";
+import { OykButton, Link } from "@/components/common";
 
 export default function Register() {
   const { n } = useRouter();
@@ -243,13 +243,14 @@ export default function Register() {
             )}
           </div>
 
-          <button
+          <OykButton
             type="submit"
+            color="primary"
             disabled={isLoading}
-            className="oyk-auth-button"
+            block
           >
             {isLoading ? "Creating account..." : "Create account"}
-          </button>
+          </OykButton>
         </form>
       </div>
     </section>

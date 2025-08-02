@@ -16,7 +16,7 @@ import TaskStatus from "./TaskStatus";
 import TaskCard from "./TaskCard";
 
 function Tasks() {
-  const { currentWorld } = useStore();
+  const { currentUser, currentWorld } = useStore();
   const { t } = useTranslation();
 
   const [error, setError] = useState(null);
@@ -80,7 +80,7 @@ function Tasks() {
     getTasks();
   }, []);
 
-  if (error === 401) {
+  if (!currentUser || error === 401) {
     return <AppNotAuthorized />;
   }
 

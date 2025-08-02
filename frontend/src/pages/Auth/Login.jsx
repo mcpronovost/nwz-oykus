@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useRouter } from "@/services/router";
 import { api } from "@/services/api";
-import { Link } from "@/components/common";
+import { OykButton, Link } from "@/components/common";
 
 export default function Login() {
   const { n } = useRouter();
@@ -137,13 +137,14 @@ export default function Login() {
             )}
           </div>
 
-          <button
+          <OykButton
             type="submit"
+            color="primary"
             disabled={isLoading}
-            className="oyk-auth-button"
+            block
           >
             {isLoading ? "Signing in..." : "Sign in"}
-          </button>
+          </OykButton>
         </form>
       </div>
     </section>

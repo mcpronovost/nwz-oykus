@@ -10,6 +10,7 @@ export default function OykButton({
   disabled = false,
   color = "default",
   outline = false,
+  block = false,
 }) {
   const { n, lang } = useRouter();
 
@@ -31,7 +32,9 @@ export default function OykButton({
       disabled={disabled}
       className={`oyk-button ${color ? `oyk-button-${color}` : ""} ${
         outline ? "oyk-button-outline" : ""
-      } ${IconComponent && !children ? "oyk-button-icon" : ""}`}
+      } ${block ? "oyk-button-block" : ""} ${
+        IconComponent && !children ? "oyk-button-icon" : ""
+      }`}
       style={
         color?.startsWith("#")
           ? {

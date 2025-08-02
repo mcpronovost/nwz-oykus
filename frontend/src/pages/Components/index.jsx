@@ -275,6 +275,12 @@ export default function Components() {
                 type: "boolean",
                 defaultValue: "false",
               },
+              {
+                name: "block",
+                description: "Make button full width",
+                type: "boolean",
+                defaultValue: "false",
+              },
             ]}
           />
         </article>
