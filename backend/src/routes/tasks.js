@@ -1,5 +1,5 @@
 import express from "express";
-import prisma from "../../prisma/client.js";
+import prisma, { TaskHistoryChangeType } from "../../prisma/client.js";
 import { authenticateToken } from "../middleware/auth.js";
 import { permissionsWorldStaff } from "../middleware/world.js";
 
@@ -105,7 +105,7 @@ router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (r
   if (title !== undefined && title !== currentTask.title) {
     historyEntries.push({
       changedById: currentUser.id,
-      changeType: "TITLE",
+      changeType: TaskHistoryChangeType.TITLE,
       oldValue: currentTask.title,
       newValue: title,
     });
@@ -115,7 +115,7 @@ router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (r
   if (content !== undefined && content !== currentTask.content) {
     historyEntries.push({
       changedById: currentUser.id,
-      changeType: "CONTENT",
+      changeType: TaskHistoryChangeType.CONTENT,
       oldValue: currentTask.content,
       newValue: content,
     });
@@ -125,7 +125,7 @@ router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (r
   if (priority !== undefined && priority !== currentTask.priority) {
     historyEntries.push({
       changedById: currentUser.id,
-      changeType: "PRIORITY",
+      changeType: TaskHistoryChangeType.PRIORITY,
       oldValue: currentTask.priority,
       newValue: priority,
     });
@@ -135,7 +135,7 @@ router.patch("/:taskId/edit", authenticateToken, permissionsWorldStaff, async (r
   if (dueAt !== undefined && newDueAt?.getTime() !== currentTask.dueAt?.getTime()) {
     historyEntries.push({
       changedById: currentUser.id,
-      changeType: "DUE_AT",
+      changeType: TaskHistoryChangeType.DUE_AT,
       oldValue: currentTask.dueAt ? currentTask.dueAt.toISOString().split("T")[0] : null,
       newValue: dueAt,
     });
@@ -178,7 +178,7 @@ router.patch("/:taskId/status", authenticateToken, permissionsWorldStaff, async 
       history: {
         create: {
           changedById: currentUser.id,
-          changeType: "STATUS",
+          changeType: TaskHistoryChangeType.STATUS,
           oldValue: oldStatusName,
           newValue: newStatusName,
         },

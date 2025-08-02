@@ -1,11 +1,11 @@
 .oyk-form {
-  &-group {
+  &-field {
     display: flex;
     flex-direction: row;
     gap: 8px;
     margin-bottom: 16px;
 
-    label {
+    &-label {
       color: var(--oyk-card-fg);
       font-size: 0.875rem;
       font-weight: 500;
@@ -14,52 +14,89 @@
       width: 120px;
       padding: 12px 0;
 
-      .oyk-form-group-required {
+      .oyk-form-field-required {
         color: var(--oyk-c-danger);
         display: inline-block;
         margin-left: 4px;
       }
-    }
 
-    input, textarea, select {
-      background-color: var(--oyk-card-item-bg);
-      border: 1px solid var(--oyk-card-item-bg);
-      border-radius: var(--oyk-radius);
-      color: var(--oyk-card-fg);
-      font-size: 0.875rem;
-      width: 100%;
-      padding: 12px;
-      transition: border-color 0.2s ease;
-
-      &:focus {
-        border-color: var(--oyk-c-primary);
-        outline: none;
-      }
-
-      &--error {
-        border-color: var(--oyk-c-danger);
-      }
-
-      &::placeholder {
-        color: var(--oyk-core-fg);
-        opacity: 0.6;
-      }
-    }
-
-    input[type="color"] {
-      max-width: 45px;
-      height: 45px;
-      padding: 1px 4px;
-    }
-
-    @media (max-width: 768px) {
-      flex-direction: column;
-
-      label {
+      @media (max-width: 768px) {
         flex: 0 0 auto;
         width: 100%;
         padding: 0;
       }
+    }
+
+    &-input {
+      width: 100%;
+
+      input, textarea, select {
+        background-color: var(--oyk-card-item-bg);
+        border: 1px solid var(--oyk-card-item-bg);
+        border-radius: var(--oyk-radius);
+        color: var(--oyk-card-fg);
+        font-size: 0.875rem;
+        width: 100%;
+        padding: 12px;
+        transition: border-color 0.2s ease;
+  
+        &:focus {
+          border-color: var(--oyk-c-primary);
+          outline: none;
+        }
+  
+        &--error {
+          border-color: var(--oyk-c-danger);
+        }
+  
+        &::placeholder {
+          color: var(--oyk-core-fg);
+          opacity: 0.6;
+        }
+      }
+  
+      input[type="color"] {
+        max-width: 45px;
+        height: 45px;
+        padding: 1px 4px;
+      }
+
+      &-radio {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        height: 100%;
+
+        input[type="radio"] {
+          display: none;
+        }
+
+        &-label {
+          display: flex;
+
+          input[type="radio"]:checked + &-btn {
+            background-color: color-mix(in srgb, var(--oyk-c-primary) 20%, transparent);
+            border-color: color-mix(in srgb, var(--oyk-c-primary) 40%, transparent);
+            color: var(--oyk-c-primary-fg);
+          }
+
+          &-btn {
+            background-color: var(--oyk-card-item-bg);
+            border: 1px solid var(--oyk-card-item-bg);
+            border-radius: var(--oyk-radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 6px 12px;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
     }
   }
 

@@ -47,14 +47,14 @@ model WorldTheme {
   appSidebarBg String? @default("#0E0F12") @db.VarChar(7)
 
   popperBg     String? @default("#0E0F12") @db.VarChar(7)
-  popperFg     String? @default("#838489") @db.VarChar(7)
+  popperFg     String? @default("#aeafb7") @db.VarChar(7)
   popperItemBg String? @default("#14161a") @db.VarChar(7)
   popperItemFg String? @default("#a9acb6") @db.VarChar(7)
 
   cardBg     String? @default("#121317") @db.VarChar(7)
   cardFg     String? @default("#aeafb7") @db.VarChar(7)
   cardItemBg String? @default("#1C1D23") @db.VarChar(7)
-  cardItemFg String? @default("#838489") @db.VarChar(7)
+  cardItemFg String? @default("#aeafb7") @db.VarChar(7)
 
   radius Int? @default(6)
 

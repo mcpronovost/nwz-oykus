@@ -20,25 +20,25 @@ export default function TaskCard({ task, isCompleted, statusId, statusName, onCl
     }),
   });
   
-  const handleEditTaskClose = (showDelete = false) => {
+  const handleEditTaskClose = (doRefresh = false, showDelete = false) => {
     setIsModalTaskEditOpen(false);
     if (showDelete) {
       setIsModalTaskDeleteOpen(true);
-    } else if (onCloseRefresh) {
+    } else if (doRefresh && onCloseRefresh) {
       onCloseRefresh();
     }
   };
 
-  const handleDeleteTaskClose = () => {
+  const handleDeleteTaskClose = (doRefresh = false) => {
     setIsModalTaskDeleteOpen(false);
-    if (onCloseRefresh) {
+    if (doRefresh && onCloseRefresh) {
       onCloseRefresh();
     }
   };
 
   return (
     <>
-      <ModalTaskEdit isOpen={isModalTaskEditOpen} onClose={handleEditTaskClose} task={task} />
+      <ModalTaskEdit isOpen={isModalTaskEditOpen} onClose={handleEditTaskClose} task={task} statusName={statusName} />
       <ModalTaskDelete isOpen={isModalTaskDeleteOpen} onClose={handleDeleteTaskClose} task={task} />
       <article
         ref={drag}

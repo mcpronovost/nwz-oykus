@@ -12,7 +12,7 @@ import {
   Modal,
 } from "@/components/common";
 
-export default function ModalTaskEdit({ isOpen, onClose, task }) {
+export default function ModalTaskEdit({ isOpen, onClose, task, statusName }) {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +33,7 @@ export default function ModalTaskEdit({ isOpen, onClose, task }) {
     try {
       const res = await api.updateTask(task.worldId, task.id, formData);
       if (res.id) {
-        onClose();
+        onClose(true);
       } else {
         throw new Error("An error occurred while updating the task");
       }
@@ -55,7 +55,7 @@ export default function ModalTaskEdit({ isOpen, onClose, task }) {
 
   return (
     <Modal
-      title={t("Edit Task")}
+      title={statusName}
       isOpen={isOpen}
       onClose={onClose}
       actions={
@@ -64,15 +64,10 @@ export default function ModalTaskEdit({ isOpen, onClose, task }) {
             toggle={<OykButton icon={Ellipsis} plain />}
             menu={[
               {
-                label: t("Edit"),
-                icon: <Edit size={16} />,
-                onClick: () => onClose(true),
-              },
-              {
                 label: t("Delete"),
                 icon: <Trash2 size={16} />,
                 color: "danger",
-                onClick: () => onClose(true),
+                onClick: () => onClose(false, true),
               },
             ]}
           />
@@ -96,6 +91,12 @@ export default function ModalTaskEdit({ isOpen, onClose, task }) {
         <OykFormField
           label={t("Priority")}
           name="priority"
+          type="radio"
+          options={[
+            { label: t("Low"), value: "LOW" },
+            { label: t("Medium"), value: "MEDIUM" },
+            { label: t("High"), value: "HIGH" },
+          ]}
           defaultValue={formData.priority}
           onChange={handleChange}
         />

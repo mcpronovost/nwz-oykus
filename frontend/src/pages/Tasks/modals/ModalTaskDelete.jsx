@@ -24,7 +24,7 @@ export default function ModalTaskDelete({ isOpen, onClose, task }) {
     try {
       const res = await api.deleteTask(task.worldId, task.id);
       if (res.status === 204) {
-        onClose();
+        onClose(true);
       } else {
         throw new Error("An error occurred while deleting the task");
       }
