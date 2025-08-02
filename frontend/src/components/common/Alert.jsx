@@ -6,19 +6,23 @@ export default function OykAlert({
   message,
   variant = "default",
   showIcon = true,
+  icon: IconComponent,
+  iconSize = 24,
 }) {
   return (
     <div className={`oyk-alert oyk-alert-variant-${variant}`}>
       {showIcon && (
         <div className="oyk-alert-icon">
-          {variant === "danger" ? (
-            <CircleX size={24} />
+          {IconComponent ? (
+            <IconComponent size={iconSize} />
+          ) : variant === "danger" ? (
+            <CircleX size={iconSize} />
           ) : variant === "warning" ? (
-            <ShieldAlert size={24} />
+            <ShieldAlert size={iconSize} />
           ) : variant === "success" ? (
-            <CircleCheck size={24} />
+            <CircleCheck size={iconSize} />
           ) : (
-            <Info size={24} />
+            <Info size={iconSize} />
           )}
         </div>
       )}
