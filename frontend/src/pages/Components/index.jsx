@@ -1,10 +1,13 @@
 import "@/styles/page/_components.scss";
+import { Orbit } from "lucide-react";
+
 import { useTranslation } from "@/services/translation";
 import {
   OykAlert,
   OykAvatar,
   OykButton,
   OykChip,
+  OykFeedback,
   OykHeading,
 } from "@/components/common";
 import ComponentApiTable from "./ComponentApiTable";
@@ -112,6 +115,18 @@ export default function Components() {
                 type: "boolean",
                 defaultValue: "true",
               },
+              {
+                name: "icon",
+                description: "Icon",
+                type: "component",
+                defaultValue: "-",
+              },
+              {
+                name: "iconSize",
+                description: "Icon size",
+                type: "number",
+                defaultValue: "24",
+              },
             ]}
           />
         </article>
@@ -209,17 +224,33 @@ export default function Components() {
             </div>
             <div>
               <OykButton disabled>Default Button</OykButton>{" "}
-              <OykButton disabled color="primary">Primary Button</OykButton>{" "}
-              <OykButton disabled color="danger">Danger Button</OykButton>{" "}
-              <OykButton disabled color="warning">Warning Button</OykButton>{" "}
-              <OykButton disabled color="success">Success Button</OykButton>
+              <OykButton disabled color="primary">
+                Primary Button
+              </OykButton>{" "}
+              <OykButton disabled color="danger">
+                Danger Button
+              </OykButton>{" "}
+              <OykButton disabled color="warning">
+                Warning Button
+              </OykButton>{" "}
+              <OykButton disabled color="success">
+                Success Button
+              </OykButton>
             </div>
             <div>
               <OykButton outline>Default Button</OykButton>{" "}
-              <OykButton outline color="primary">Primary Button</OykButton>{" "}
-              <OykButton outline color="danger">Danger Button</OykButton>{" "}
-              <OykButton outline color="warning">Warning Button</OykButton>{" "}
-              <OykButton outline color="success">Success Button</OykButton>
+              <OykButton outline color="primary">
+                Primary Button
+              </OykButton>{" "}
+              <OykButton outline color="danger">
+                Danger Button
+              </OykButton>{" "}
+              <OykButton outline color="warning">
+                Warning Button
+              </OykButton>{" "}
+              <OykButton outline color="success">
+                Success Button
+              </OykButton>
             </div>
           </div>
           <code className="full">{`<OykButton>Default Button</OykButton>`}</code>
@@ -329,6 +360,126 @@ export default function Components() {
               {
                 name: "outline",
                 description: "Show chip with border and without background",
+                type: "boolean",
+                defaultValue: "false",
+              },
+            ]}
+          />
+        </article>
+
+        {/* Feedback */}
+        <article id="feedback" className="oyk-components-list-item">
+          <OykHeading title={t("Feedback")} ph={0} />
+          <div className="oyk-components-list-item-example" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+            <OykFeedback title="Default Feedback" message="Message here" />
+            <OykFeedback
+              title="Default Feedback"
+              message="Ghost variant"
+              ghost
+            />
+            <OykFeedback title="Default Feedback" message="With custom icon" icon={Orbit} />
+            <OykFeedback
+              title="Default Feedback"
+              message="Ghost variant with custom icon"
+              icon={Orbit}
+              ghost
+            />
+            <OykFeedback
+              title="Primary Feedback"
+              message="Message here"
+              variant="primary"
+            />
+            <OykFeedback
+              title="Primary Feedback"
+              message="Ghost variant"
+              variant="primary"
+              ghost
+            />
+            <OykFeedback
+              title="Danger Feedback"
+              message="Message here"
+              variant="danger"
+            />
+            <OykFeedback
+              title="Danger Feedback"
+              message="Ghost variant"
+              variant="danger"
+              ghost
+            />
+            <OykFeedback
+              title="Warning Feedback"
+              message="Message here"
+              variant="warning"
+            />
+            <OykFeedback
+              title="Warning Feedback"
+              message="Ghost variant"
+              variant="warning"
+              ghost
+            />
+            <OykFeedback
+              title="Success Feedback"
+              message="Message here"
+              variant="success"
+            />
+            <OykFeedback
+              title="Success Feedback"
+              message="Ghost variant"
+              variant="success"
+              ghost
+            />
+          </div>
+          <code className="full">
+            {`<OykFeedback title="Title Here" message="Message here" variant="primary" ghost />`}
+          </code>
+          <ComponentApiTable
+            items={[
+              {
+                name: "title",
+                description: "Title",
+                type: "string",
+                defaultValue: "-",
+              },
+              {
+                name: "message",
+                description: "Message",
+                type: "string",
+                defaultValue: "-",
+              },
+              {
+                name: "variant",
+                description: "Variant",
+                type: "string",
+                defaultValue: "default",
+                enumValue: [
+                  "default",
+                  "primary",
+                  "danger",
+                  "warning",
+                  "success",
+                ],
+              },
+              {
+                name: "showIcon",
+                description: "Show icon",
+                type: "boolean",
+                defaultValue: "true",
+              },
+              {
+                name: "icon",
+                description: "Icon",
+                type: "component",
+                defaultValue: "-",
+              },
+              {
+                name: "iconSize",
+                description: "Icon size",
+                type: "number",
+                defaultValue: "64",
+              },
+              {
+                name: "ghost",
+                description: "Show feedback with border and without background",
                 type: "boolean",
                 defaultValue: "false",
               },

@@ -3,6 +3,7 @@ export { default as OykAvatar } from "./Avatar.jsx";
 export { default as OykButton } from "./Button.jsx";
 export { default as OykChip } from "./Chip.jsx";
 export { default as Dropdown } from "./Dropdown.jsx";
+export { default as OykFeedback } from "./Feedback.jsx";
 export { default as OykForm } from "./Form.jsx";
 export { default as OykFormField } from "./FormField.jsx";
 export { default as OykFormMessage } from "./FormMessage.jsx";

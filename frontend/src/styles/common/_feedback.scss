@@ -1,0 +1,98 @@
+.oyk-feedback {
+  background-color: transparent;
+  border: 0 solid color-mix(in srgb, var(--oyk-card-fg) 10%, transparent);
+  border-radius: var(--oyk-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 32px 16px;
+
+  &-ghost {
+    background-color: color-mix(in srgb, var(--oyk-card-bg) 10%, transparent);
+    border-style: dashed;
+    border-width: 2px;
+  }
+
+  &-variant-default {
+    border-color: color-mix(in srgb, var(--oyk-core-fg) 20%, transparent);
+    color: var(--oyk-core-fg);
+
+    &.oyk-feedback-ghost {
+      background-color: color-mix(in srgb, var(--oyk-card-bg) 10%, transparent);
+    }
+  }
+
+  &-variant-primary {
+    border-color: color-mix(in srgb, var(--oyk-primary) 20%, transparent);
+    color: var(--oyk-primary);
+
+    &.oyk-feedback-ghost {
+      background-color: color-mix(in srgb, var(--oyk-primary) 3%, transparent);
+    }
+  }
+
+  &-variant-danger {
+    border-color: color-mix(in srgb, var(--oyk-c-danger) 20%, transparent);
+    color: var(--oyk-c-danger);
+
+    &.oyk-feedback-ghost {
+      background-color: color-mix(in srgb, var(--oyk-c-danger) 3%, transparent);
+    }
+  }
+
+  &-variant-warning {
+    border-color: color-mix(in srgb, var(--oyk-c-warning) 20%, transparent);
+    color: var(--oyk-c-warning);
+
+    &.oyk-feedback-ghost {
+      background-color: color-mix(in srgb, var(--oyk-c-warning) 3%, transparent);
+    }
+  }
+
+  &-variant-success {
+    border-color: color-mix(in srgb, var(--oyk-c-success) 20%, transparent);
+    color: var(--oyk-c-success);
+
+    &.oyk-feedback-ghost {
+      background-color: color-mix(in srgb, var(--oyk-c-success) 3%, transparent);
+    }
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    &-title {
+      font-family: "Quicksand", sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    &-message {
+      font-size: 0.9rem;
+      font-weight: 400;
+      max-width: 400px;
+      opacity: 0.9;
+      margin: 0;
+    }
+
+    &-children {
+      display: block;
+      width: 100%;
+      margin: 12px 0 0;
+    }
+  }
+}
