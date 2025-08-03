@@ -1,11 +1,14 @@
-FROM node:24
+FROM python:3.12-slim
+
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-RUN npx prisma generate
 
-EXPOSE 3000
-CMD ["npm", "start"] 
+EXPOSE 5000
+CMD ["python", "hello.py"]

@@ -1,26 +1,34 @@
 services:
   db:
-    image: postgres:15
+    image: mysql:8.0
     container_name: oykus-db
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
     environment:
       TZ: ${TZ}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+      start_period: 30s
 
   backend:
     build: ./backend
     container_name: oykus-backend
-    command: sh -c "npx prisma generate && npx prisma migrate deploy && npm run dev"
+    command: sh -c "flask --app hello run --host=0.0.0.0 --port=5000 --debug"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
-      - "3000:3000"
+      - "5000:5000"
     volumes:
       - /app/node_modules
       - ./backend:/app
