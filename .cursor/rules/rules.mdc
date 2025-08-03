@@ -4,7 +4,7 @@ globs:
 alwaysApply: true
 ---
 
-Always read all files inside .docs/ folder before each requests and follow context, specs, etc.
+Always read all files inside .docs/ folder (not recursively) before each requests and follow context, specs, etc.
 
 Always use context and check files.
 
