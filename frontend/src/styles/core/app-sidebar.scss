@@ -152,7 +152,7 @@
 
       &-link {
         background-color: transparent;
-        border-radius: 6px;
+        border-radius: var(--oyk-radius);
         display: flex;
         align-items: center;
         justify-content: flex-start;
