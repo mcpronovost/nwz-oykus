@@ -31,6 +31,15 @@ const WORLD_SELECT = {
     select: {
       primary: true,
       primaryFg: true,
+      coreBg: true,
+      coreFg: true,
+      coreDivider: true,
+      appBarBg: true,
+      appSidebarBg: true,
+      cardBg: true,
+      cardFg: true,
+      cardItemBg: true,
+      cardItemFg: true,
     },
   },
 };

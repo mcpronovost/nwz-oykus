@@ -18,7 +18,7 @@
     padding: 3px 6px;
 
     .oyk-chip-content {
-      filter: brightness(1);
+      // filter: brightness(1);
     }
   }
 
@@ -28,11 +28,11 @@
     overflow: hidden;
     display: inline-block;
     max-width: 100%;
-    filter: brightness(1.8);
+    // filter: brightness(1.8);
   }
 
   &.oyk-chip-default {
-    background-color: color-mix(in srgb, var(--oyk-core-fg) 30%, transparent);
+    background-color: color-mix(in srgb, var(--oyk-core-fg) 20%, transparent);
     border-color: color-mix(in srgb, var(--oyk-core-fg) 30%, transparent);
 
     .oyk-chip-content {
@@ -41,7 +41,7 @@
   }
 
   &.oyk-chip-primary {
-    background-color: color-mix(in srgb, var(--oyk-c-primary) 30%, transparent);
+    background-color: color-mix(in srgb, var(--oyk-c-primary) 20%, transparent);
     border-color: color-mix(in srgb, var(--oyk-c-primary) 50%, transparent);
 
     .oyk-chip-content {
@@ -50,7 +50,7 @@
   }
 
   &.oyk-chip-danger {
-    background-color: color-mix(in srgb, var(--oyk-c-danger) 30%, transparent);
+    background-color: color-mix(in srgb, var(--oyk-c-danger) 20%, transparent);
     border-color: color-mix(in srgb, var(--oyk-c-danger) 50%, transparent);
 
     .oyk-chip-content {
@@ -59,7 +59,7 @@
   }
 
   &.oyk-chip-warning {
-    background-color: color-mix(in srgb, var(--oyk-c-warning) 30%, transparent);
+    background-color: color-mix(in srgb, var(--oyk-c-warning) 20%, transparent);
     border-color: color-mix(in srgb, var(--oyk-c-warning) 50%, transparent);
 
     .oyk-chip-content {
@@ -68,7 +68,7 @@
   }
 
   &.oyk-chip-success {
-    background-color: color-mix(in srgb, var(--oyk-c-success) 30%, transparent);
+    background-color: color-mix(in srgb, var(--oyk-c-success) 20%, transparent);
     border-color: color-mix(in srgb, var(--oyk-c-success) 50%, transparent);
 
     .oyk-chip-content {

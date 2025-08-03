@@ -1,5 +1,6 @@
 .oyk-app-bar {
   background-color: var(--oyk-app-bar-bg);
+  color: var(--oyk-app-bar-fg);
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -34,23 +35,39 @@
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;
+    display: flex;
     flex: 1 1 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    height: 100%;
 
     &-nav {
+      display: flex;
       flex: 1;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100%;
 
       &-list {
         display: flex;
         flex-direction: row;
         gap: 24px;
+        height: 100%;
       }
 
       &-item {
         display: flex;
 
         &-link {
-          opacity: 0.7;
-          transition: opacity 0.2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: row;
+          gap: 4px;
+          opacity: 0.8;
+          transition: opacity 0.1s;
 
           &:hover {
             opacity: 1;

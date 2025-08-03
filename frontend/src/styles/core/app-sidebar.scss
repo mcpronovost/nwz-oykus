@@ -1,5 +1,6 @@
 .oyk-app-sidebar {
   background-color: var(--oyk-app-sidebar-bg);
+  color: var(--oyk-app-sidebar-fg);
   flex: 0 1 var(--oyk-app-sidebar-width);
   display: flex;
   flex-direction: column;
@@ -39,6 +40,8 @@
   }
 
   &-header {
+    background-color: var(--oyk-app-bar-bg);
+    color: var(--oyk-app-bar-fg);
     display: flex;
     align-items: center;
     flex-direction: row;

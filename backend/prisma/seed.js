@@ -61,6 +61,8 @@ async function main() {
     },
   });
 
+  await prisma.worldTheme.deleteMany({});
+
   // Create world theme
   await prisma.worldTheme.upsert({
     where: { id: 1 },
@@ -69,8 +71,17 @@ async function main() {
       worldId: 1,
       name: "Qalatlán Default",
       isActive: true,
-      primary: "#8d8305",
-      primaryFg: "#ffffff",
+      coreBg: "#c9cfd1",
+      coreFg: "#435259",
+      coreDivider: "#bec5c8",
+      primary: "#435259",
+      primaryFg: "#c9cfd1",
+      appBarBg: "#435259",
+      appSidebarBg: "#dbe0e2",
+      cardBg: "#dbe0e2",
+      cardFg: "#435259",
+      cardItemBg: "#e7eaeb",
+      cardItemFg: "#435259",
     },
   });
 

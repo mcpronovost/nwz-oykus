@@ -19,14 +19,12 @@ export default function Components() {
   return (
     <section className="oyk-page oyk-components">
       <OykGrid className="oyk-components-list">
-        {/* Predefined Colours */}
         <article id="predefined-colours" className="oyk-components-list-item">
           <OykHeading title={t("Predefined Colours")} ph={0} />
           <div className="oyk-components-list-item-example">
             <span style={{ color: "var(--oyk-core-fg)" }}>Default text</span>
             <span style={{ color: "var(--oyk-c-primary)" }}>Primary</span>
             <span style={{ color: "var(--oyk-c-danger)" }}>Danger</span>
-            <span style={{ color: "var(--oyk-c-warning)" }}>Warning</span>
             <span style={{ color: "var(--oyk-c-success)" }}>Success</span>
             <div
               style={{
@@ -44,13 +42,11 @@ export default function Components() {
               </span>
               <span style={{ color: "var(--oyk-c-primary)" }}>Primary</span>
               <span style={{ color: "var(--oyk-c-danger)" }}>Danger</span>
-              <span style={{ color: "var(--oyk-c-warning)" }}>Warning</span>
               <span style={{ color: "var(--oyk-c-success)" }}>Success</span>
             </div>
           </div>
         </article>
 
-        {/* Alert */}
         <article id="alert" className="oyk-components-list-item">
           <OykHeading title={t("Alert")} ph={0} />
           <div className="oyk-components-list-item-example column">
@@ -66,12 +62,6 @@ export default function Components() {
               title="Danger Alert"
               message="Message here"
               variant="danger"
-            />
-            <br />
-            <OykAlert
-              title="Warning Alert"
-              message="Message here"
-              variant="warning"
             />
             <br />
             <OykAlert
@@ -132,7 +122,6 @@ export default function Components() {
           />
         </article>
 
-        {/* Avatar */}
         <article id="avatar" className="oyk-components-list-item">
           <OykHeading title={t("Avatar")} ph={0} />
           <div className="oyk-components-list-item-example">
@@ -212,7 +201,6 @@ export default function Components() {
           />
         </article>
 
-        {/* Button */}
         <article id="button" className="oyk-components-list-item">
           <OykHeading title={t("Button")} ph={0} />
           <div className="oyk-components-list-item-example">
@@ -220,23 +208,7 @@ export default function Components() {
               <OykButton>Default Button</OykButton>{" "}
               <OykButton color="primary">Primary Button</OykButton>{" "}
               <OykButton color="danger">Danger Button</OykButton>{" "}
-              <OykButton color="warning">Warning Button</OykButton>{" "}
               <OykButton color="success">Success Button</OykButton>
-            </div>
-            <div>
-              <OykButton disabled>Default Button</OykButton>{" "}
-              <OykButton disabled color="primary">
-                Primary Button
-              </OykButton>{" "}
-              <OykButton disabled color="danger">
-                Danger Button
-              </OykButton>{" "}
-              <OykButton disabled color="warning">
-                Warning Button
-              </OykButton>{" "}
-              <OykButton disabled color="success">
-                Success Button
-              </OykButton>
             </div>
             <div>
               <OykButton outline>Default Button</OykButton>{" "}
@@ -246,10 +218,19 @@ export default function Components() {
               <OykButton outline color="danger">
                 Danger Button
               </OykButton>{" "}
-              <OykButton outline color="warning">
-                Warning Button
-              </OykButton>{" "}
               <OykButton outline color="success">
+                Success Button
+              </OykButton>
+            </div>
+            <div>
+              <OykButton disabled>Default Button</OykButton>{" "}
+              <OykButton disabled color="primary">
+                Primary Button
+              </OykButton>{" "}
+              <OykButton disabled color="danger">
+                Danger Button
+              </OykButton>{" "}
+              <OykButton disabled color="success">
                 Success Button
               </OykButton>
             </div>
@@ -317,14 +298,12 @@ export default function Components() {
           />
         </article>
 
-        {/* Chip */}
         <article id="chip" className="oyk-components-list-item">
           <OykHeading title={t("Chip")} ph={0} />
           <div className="oyk-components-list-item-example column">
             <OykChip>Default Chip</OykChip>{" "}
             <OykChip color="primary">Primary Chip</OykChip>{" "}
             <OykChip color="danger">Danger Chip</OykChip>{" "}
-            <OykChip color="warning">Warning Chip</OykChip>{" "}
             <OykChip color="success">Success Chip</OykChip>
             <br />
             <OykChip outline>Default Chip</OykChip>{" "}
@@ -333,9 +312,6 @@ export default function Components() {
             </OykChip>{" "}
             <OykChip outline color="danger">
               Danger Chip
-            </OykChip>{" "}
-            <OykChip outline color="warning">
-              Warning Chip
             </OykChip>{" "}
             <OykChip outline color="success">
               Success Chip
@@ -368,7 +344,6 @@ export default function Components() {
           />
         </article>
 
-        {/* Feedback */}
         <article id="feedback" className="oyk-components-list-item">
           <OykHeading title={t("Feedback")} ph={0} />
           <div className="oyk-components-list-item-example" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
@@ -378,13 +353,6 @@ export default function Components() {
               message="Ghost variant"
               ghost
             />
-            <OykFeedback title="Default Feedback" message="With custom icon" icon={Orbit} />
-            <OykFeedback
-              title="Default Feedback"
-              message="Ghost variant with custom icon"
-              icon={Orbit}
-              ghost
-            />
             <OykFeedback
               title="Primary Feedback"
               message="Message here"
@@ -405,17 +373,6 @@ export default function Components() {
               title="Danger Feedback"
               message="Ghost variant"
               variant="danger"
-              ghost
-            />
-            <OykFeedback
-              title="Warning Feedback"
-              message="Message here"
-              variant="warning"
-            />
-            <OykFeedback
-              title="Warning Feedback"
-              message="Ghost variant"
-              variant="warning"
               ghost
             />
             <OykFeedback
@@ -488,7 +445,6 @@ export default function Components() {
           />
         </article>
 
-        {/* Heading */}
         <article className="oyk-components-list-item">
           <OykHeading title={t("Heading")} ph={0} />
           <code className="full">{`<OykHeading title={t("Components")} />`}</code>
