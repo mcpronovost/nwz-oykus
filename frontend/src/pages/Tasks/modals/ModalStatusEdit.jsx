@@ -48,7 +48,7 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal title={t("Edit Status")} isOpen={isOpen} onClose={onClose}>
       <OykForm onSubmit={handleSubmit} isLoading={isLoading}>
         <OykFormField
           label={t("Name")}
@@ -57,7 +57,7 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
           onChange={handleChange}
         />
         <OykFormField
-          label={t("Color")}
+          label={t("Colour")}
           name="color"
           type="color"
           defaultValue={formData.color}
