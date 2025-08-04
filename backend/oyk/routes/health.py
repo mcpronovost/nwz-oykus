@@ -1,12 +1,12 @@
 from datetime import datetime
 from sqlalchemy import text
 
-from oyk.decorators import dev_only
+from oyk.decorators import require_dev
 from oyk.routes import health_bp
 
 
 @health_bp.route("/")
-@dev_only
+@require_dev
 def health_check():
     """Health check endpoint - only available in debug mode"""
     try:

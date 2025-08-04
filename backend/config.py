@@ -8,6 +8,7 @@ class Config:
     FLASK_ENV = "production"
     DEBUG = False
     SECRET_KEY = os.environ.get("SECRET_KEY") or "dev-secret-key"
+    JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY") or "jwt-secret-key"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # MySQL optimizations
@@ -28,7 +29,8 @@ class DevelopmentConfig(Config):
     FLASK_ENV = "development"
     DEBUG = os.environ.get("FLASK_DEBUG") == "1"
     SQLALCHEMY_DATABASE_URI = (
-        os.environ.get("DATABASE_URL") or "mysql+pymysql://username:password@localhost/oykus_dev"
+        os.environ.get("DATABASE_URL")
+        or "mysql+pymysql://username:password@localhost/oykus_dev"
     )
 
 

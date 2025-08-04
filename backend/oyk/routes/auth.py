@@ -1,10 +1,10 @@
-import os
 import jwt
 import bcrypt
 from datetime import datetime, timedelta
-from flask import request, jsonify
+from flask import request, jsonify, current_app, g
 from werkzeug.exceptions import BadRequest, Unauthorized
 
+from oyk.decorators import require_auth
 from oyk.models.user import User
 from oyk.routes import auth_bp
 
@@ -17,7 +17,7 @@ def generate_jwt_token(user_id):
         "iat": datetime.utcnow(),
     }
 
-    secret_key = os.environ.get("JWT_SECRET_KEY") or "jwt-secret-key"
+    secret_key = current_app.config["JWT_SECRET_KEY"]
     token = jwt.encode(payload, secret_key, algorithm="HS256")
     return token
 
@@ -25,71 +25,13 @@ def generate_jwt_token(user_id):
 def verify_jwt_token(token):
     """Verify and decode a JWT token."""
     try:
-        secret_key = os.environ.get("JWT_SECRET_KEY") or "jwt-secret-key"
+        secret_key = current_app.config["JWT_SECRET_KEY"]
         payload = jwt.decode(token, secret_key, algorithms=["HS256"])
         return payload
     except jwt.ExpiredSignatureError:
         raise Unauthorized("Token has expired")
     except jwt.InvalidTokenError:
         raise Unauthorized("Invalid token")
-
-
-@auth_bp.route("/login", methods=["POST"])
-def login():
-    """Login route that validates credentials and returns a JWT token."""
-    try:
-        data = request.get_json()
-
-        if not data:
-            raise BadRequest("No data provided")
-
-        username = data.get("username")
-        password = data.get("password")
-
-        if not username or not password:
-            raise BadRequest("Username and password are required")
-
-        # Find user by username
-        user = User.query.filter_by(username=username).first()
-
-        if not user:
-            raise Unauthorized("Invalid username or password")
-
-        # Check if user is active
-        if not user.is_active:
-            raise Unauthorized("Account is deactivated")
-
-        # Verify password
-        if not bcrypt.checkpw(
-            password.encode("utf-8"), user.password.encode("utf-8")
-        ):
-            raise Unauthorized("Invalid username or password")
-
-        # Generate JWT token
-        token = generate_jwt_token(user.id)
-
-        return (
-            jsonify(
-                {
-                    "success": True,
-                    "message": "Login successful",
-                    "token": token,
-                    "user": user.to_dict(),
-                }
-            ),
-            200,
-        )
-
-    except BadRequest as e:
-        return jsonify({"success": False, "message": str(e)}), 400
-    except Unauthorized as e:
-        return jsonify({"success": False, "message": str(e)}), 401
-    except Exception as e:
-        print(e)
-        return (
-            jsonify({"success": False, "message": "Internal server error"}),
-            500,
-        )
 
 
 @auth_bp.route("/register", methods=["POST"])
@@ -165,6 +107,78 @@ def register():
         )
 
 
+@auth_bp.route("/login", methods=["POST"])
+def login():
+    """Login route that validates credentials and returns a JWT token."""
+    try:
+        data = request.get_json()
+
+        if not data:
+            raise BadRequest("No data provided")
+
+        username = data.get("username")
+        password = data.get("password")
+
+        if not username or not password:
+            raise BadRequest("Username and password are required")
+
+        # Find user by username
+        user = User.query.filter_by(username=username).first()
+
+        if not user:
+            raise Unauthorized("Invalid username or password")
+
+        # Check if user is active
+        if not user.is_active:
+            raise Unauthorized("Account is deactivated")
+
+        # Verify password
+        if not bcrypt.checkpw(
+            password.encode("utf-8"), user.password.encode("utf-8")
+        ):
+            raise Unauthorized("Invalid username or password")
+
+        # Generate JWT token
+        token = generate_jwt_token(user.id)
+
+        return (
+            jsonify(
+                {
+                    "success": True,
+                    "message": "Login successful",
+                    "token": token,
+                    "user": user.to_dict(),
+                }
+            ),
+            200,
+        )
+
+    except BadRequest as e:
+        return jsonify({"success": False, "message": str(e)}), 400
+    except Unauthorized as e:
+        return jsonify({"success": False, "message": str(e)}), 401
+    except Exception as e:
+        print(e)
+        return (
+            jsonify({"success": False, "message": "Internal server error"}),
+            500,
+        )
+
+
+@auth_bp.route("/logout", methods=["POST"])
+@require_auth
+def logout():
+    """Logout the current user."""
+    return jsonify({"success": True, "message": "Logout successful"}), 200
+
+
+@auth_bp.route("/me", methods=["GET"])
+@require_auth
+def me():
+    """Get the current user's information."""
+    return jsonify({"success": True, "user": g.current_user.to_dict()}), 200
+
+
 @auth_bp.route("/verify", methods=["POST"])
 def verify_token():
     """Verify a JWT token and return user information."""
@@ -204,7 +218,7 @@ def verify_token():
         return jsonify({"success": False, "message": str(e)}), 400
     except Unauthorized as e:
         return jsonify({"success": False, "message": str(e)}), 401
-    except Exception as e:
+    except Exception:
         return (
             jsonify({"success": False, "message": "Internal server error"}),
             500,

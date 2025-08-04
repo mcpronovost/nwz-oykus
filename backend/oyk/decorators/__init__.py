@@ -4,9 +4,12 @@ Decorators module for the Oykus application.
 This module contains all custom decorators used throughout the application.
 """
 
-from .debug import debug_only, dev_only
+from .auth import require_auth, optional_auth
+from .debug import require_debug, require_dev
 
 __all__ = [
-    "debug_only",
-    "dev_only",
+    "require_auth",
+    "optional_auth",
+    "require_debug",
+    "require_dev",
 ]

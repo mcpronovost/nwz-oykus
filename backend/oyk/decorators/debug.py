@@ -6,7 +6,7 @@ from functools import wraps
 from flask import current_app, abort
 
 
-def debug_only(f):
+def require_debug(f):
     """
     Decorator to make routes available only in debug mode.
 
@@ -26,7 +26,7 @@ def debug_only(f):
     return decorated_function
 
 
-def dev_only(f):
+def require_dev(f):
     """
     Decorator to make routes available only in development environment.
 
