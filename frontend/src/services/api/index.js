@@ -1,14 +1,39 @@
 import { authStore } from "../store/stores/auth";
+import { ApiModuleLoader } from "./moduleLoader";
 import health from "./health";
+import tasks from "./tasks";
+import auth from "./auth";
 
 class ApiService {
   constructor(baseURL = import.meta.env.VITE_API_URL) {
     this.baseURL = baseURL;
+    this.authStore = authStore; // Make authStore accessible to modules
+
+    // Initialize module loader
+    this.moduleLoader = new ApiModuleLoader(this);
+
+    // Load API modules
+    this.moduleLoader.loadModules({
+      health,
+      tasks,
+      auth,
+    });
+  }
+
+  // Utility method to bind any module's methods to this instance
+  bindModule(module) {
+    Object.keys(module).forEach((methodName) => {
+      this[methodName] = async (...args) => {
+        return await module[methodName](this, ...args);
+      };
+    });
   }
 
   async request(endpoint, options = {}) {
     // In development, use relative URLs for proxy
-    const url = import.meta.env.DEV ? `/api${endpoint}` : `${this.baseURL}${endpoint}`;
+    const url = import.meta.env.DEV
+      ? `/api${endpoint}`
+      : `${this.baseURL}${endpoint}`;
 
     // Get auth token if available
     const token = authStore.getToken();
@@ -68,50 +93,11 @@ class ApiService {
         throw {
           status: error.status,
           error: await error.json(),
-        }
+        };
       } else {
         throw error;
       }
     }
-  }
-
-  // Authentication methods
-  async login(credentials) {
-    const response = await this.request("/auth/login", {
-      method: "POST",
-      body: JSON.stringify(credentials),
-    });
-
-    // Store token and user data
-    if (response.token) {
-      authStore.setToken(response.token);
-      authStore.setUser(response.user);
-    }
-
-    return response;
-  }
-
-  async logout() {
-    try {
-      await this.request("/auth/logout", { method: "POST" });
-    } finally {
-      authStore.logout();
-    }
-  }
-
-  async register(userData) {
-    const response = await this.request("/auth/register", {
-      method: "POST",
-      body: JSON.stringify(userData),
-    });
-
-    // Auto-login after registration if token is provided
-    if (response.token) {
-      authStore.setToken(response.token);
-      authStore.setUser(response.user);
-    }
-
-    return response;
   }
 
   // Check if user is authenticated
@@ -122,95 +108,6 @@ class ApiService {
   // Get current user
   getCurrentUser() {
     return authStore.getUser();
-  }
-
-  // Health methods
-  async getHealth() {
-    return await health.getHealth(this);
-  }
-
-  // Fetch current user profile from server
-  async getUserProfile() {
-    try {
-      const response = await this.request("/auth/profile");
-      if (response.user) {
-        authStore.setUser(response.user);
-      }
-      return response.user;
-    } catch (error) {
-      // If profile fetch fails due to auth issues, logout
-      if (error.status === 401) {
-        authStore.logout();
-      }
-      throw error;
-    }
-  }
-
-  // Task-specific methods with proper error handling
-  async getTasks(worldId) {
-    if (!worldId) {
-      throw new Error("World ID is required");
-    }
-    return await this.request(`/world/${worldId}/tasks`);
-  }
-
-  async createTask(worldId, data) {
-    if (!worldId || !data) {
-      throw new Error("World ID and data are required");
-    }
-    return await this.request(`/world/${worldId}/tasks/create`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-  }
-
-  async updateTask(worldId, taskId, data) {
-    if (!worldId || !taskId || !data) {
-      throw new Error("World ID, Task ID, and data are required");
-    }
-    return await this.request(`/world/${worldId}/tasks/${taskId}/edit`, {
-      method: "PATCH",
-      body: JSON.stringify(data),
-    });
-  }
-
-  async updateTaskStatus(worldId, taskId, statusId, oldStatusName, newStatusName) {
-    if (!worldId || !taskId || !statusId) {
-      throw new Error("World ID, Task ID, and Status ID are required");
-    }
-    return await this.request(`/world/${worldId}/tasks/${taskId}/status`, {
-      method: "PATCH",
-      body: JSON.stringify({ statusId, oldStatusName, newStatusName }),
-    });
-  }
-
-  async deleteTask(worldId, taskId) {
-    if (!worldId || !taskId) {
-      throw new Error("World ID and Task ID are required");
-    }
-    return await this.request(`/world/${worldId}/tasks/${taskId}/delete`, {
-      method: "DELETE",
-    });
-  }
-
-  async createTasksStatus(worldId, data) {
-    if (!worldId || !data) {
-      throw new Error("World ID and data are required");
-    }
-    return await this.request(`/world/${worldId}/tasks/status/create`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-  }
-
-  async updateTasksStatus(worldId, statusId, data) {
-    if (!worldId || !statusId || !data) {
-      throw new Error("World ID, Status ID, and data are required");
-    }
-    return await this.request(`/world/${worldId}/tasks/status/${statusId}/edit`, {
-      method: "PATCH",
-      body: JSON.stringify(data),
-    });
   }
 }
 
