@@ -1,5 +1,5 @@
 import os
-from backend.hello import app
+from hello import app
 
 # Configure static folder for the built frontend
 frontend_dist_path = os.path.join(os.path.dirname(__file__), "frontend", "dist")

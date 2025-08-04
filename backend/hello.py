@@ -20,7 +20,7 @@ def hello_world():
 
 @app.route("/api/auth/profile")
 def test_profile():
-    return {"user": {"id": 1, "playerName": "John Johnson", "worldsStaff": []}}
+    return {"user": {"id": 2, "playerName": "John Johnson", "worldsStaff": []}}
 
 
 @app.route("/api/health")

@@ -20,12 +20,36 @@ services:
       interval: 10s
       start_period: 30s
 
+  backend:
+    build: ./backend
+    container_name: oykus-backend
+    command: sh -c "flask run --host=0.0.0.0 --port=8000 --reload"
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      TZ: ${TZ}
+      FLASK_APP: app.py
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      DATABASE_URL: ${DATABASE_URL}
+
   frontend:
     build: ./frontend
     container_name: oykus-frontend
     command: sh -c "npm run dev"
     depends_on:
       - db
+      - backend
     ports:
       - "5173:5173"
     volumes:
