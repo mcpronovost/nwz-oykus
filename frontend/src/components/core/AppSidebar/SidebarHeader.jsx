@@ -20,7 +20,7 @@ export default function SidebarHeader() {
   };
 
   const worldsMenu = useMemo(() => {
-    return currentUser
+    return currentUser?.worldsStaff?.length > 0
       ? [
           {
             label: "Oykus",

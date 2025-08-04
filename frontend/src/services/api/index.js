@@ -63,7 +63,15 @@ class ApiService {
         return await response.text();
       }
     } catch (error) {
-      throw error;
+      const contentType = error.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        throw {
+          status: error.status,
+          error: await error.json(),
+        }
+      } else {
+        throw error;
+      }
     }
   }
 

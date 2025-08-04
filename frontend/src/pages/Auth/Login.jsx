@@ -63,8 +63,9 @@ export default function Login() {
     try {
       await api.login(formData);
       n("home"); // Redirect to home page after successful login
-    } catch (error) {
-      setGeneralError(error.message || "Login failed. Please try again.");
+    } catch (e) {
+      console.log(e.error);
+      setGeneralError(e.error.message || "Login failed. Please try again.");
     } finally {
       setIsLoading(false);
     }

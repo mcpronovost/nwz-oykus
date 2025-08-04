@@ -5,7 +5,7 @@ from oyk.decorators import dev_only
 from oyk.routes import health_bp
 
 
-@health_bp.route("/health")
+@health_bp.route("/")
 @dev_only
 def health_check():
     """Health check endpoint - only available in debug mode"""

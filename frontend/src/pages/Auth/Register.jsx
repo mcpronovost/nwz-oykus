@@ -11,7 +11,7 @@ export default function Register() {
     username: "",
     password: "",
     confirmPassword: "",
-    playerName: "",
+    playername: "",
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -76,10 +76,10 @@ export default function Register() {
     }
 
     // Player name validation
-    if (!formData.playerName.trim()) {
-      newErrors.playerName = "Player name is required";
-    } else if (!/^[a-zA-Z0-9\s\-']{2,50}$/.test(formData.playerName)) {
-      newErrors.playerName =
+    if (!formData.playername.trim()) {
+      newErrors.playername = "Player name is required";
+    } else if (!/^[a-zA-Z0-9\s\-']{2,50}$/.test(formData.playername)) {
+      newErrors.playername =
         "Player name must be 2-50 characters, letters, numbers, spaces, hyphens, apostrophes only";
     }
 
@@ -101,9 +101,9 @@ export default function Register() {
       const { confirmPassword, ...registrationData } = formData;
       await api.register(registrationData);
       n("home"); // Redirect to home page after successful registration
-    } catch (error) {
+    } catch (e) {
       setGeneralError(
-        error.message || "Registration failed. Please try again."
+        e.error.message || "Registration failed. Please try again."
       );
     } finally {
       setIsLoading(false);
@@ -178,24 +178,24 @@ export default function Register() {
           </div>
 
           <div className="oyk-auth-field">
-            <label htmlFor="playerName" className="oyk-auth-field-label">
+            <label htmlFor="playername" className="oyk-auth-field-label">
               Player Name
             </label>
             <input
-              id="playerName"
-              name="playerName"
+              id="playername"
+              name="playername"
               type="text"
               autoComplete="name"
               required
-              value={formData.playerName}
+              value={formData.playername}
               onChange={handleChange}
               className={`oyk-auth-field-input ${
-                errors.playerName ? "oyk-auth-field-input--error" : ""
+                errors.playername ? "oyk-auth-field-input--error" : ""
               }`}
               placeholder="Enter your player name"
             />
-            {errors.playerName && (
-              <p className="oyk-auth-field-error">{errors.playerName}</p>
+            {errors.playername && (
+              <p className="oyk-auth-field-error">{errors.playername}</p>
             )}
           </div>
 
