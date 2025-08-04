@@ -1,12 +1,17 @@
 import { ArrowLeftFromLine, ArrowRightFromLine, User } from "lucide-react";
 
+import { useRouter } from "@/services/router";
 import { useStore } from "@/services/store";
+import { useTranslation } from "@/services/translation";
+import { OykButton } from "@/components/common";
 
 import AppBarMenu from "./Menu";
 import AppBarNotifications from "./Notifications";
 import AppBarUser from "./User";
 
 export default function AppBar() {
+  const { n } = useRouter();
+  const { t } = useTranslation();
   const { storeAppSidebarOpen, setStoreAppSidebarOpen, currentUser } = useStore();
 
   const handleToggleSidebar = () => {
@@ -26,15 +31,19 @@ export default function AppBar() {
         {currentUser ? (
           <AppBarUser />
         ) : (
-          <button 
+          <OykButton 
             className="oyk-app-bar-user-button"
-            onClick={() => window.location.href = "/en/login"}
+            action={() => n("login")}
+            plain
+            style={{
+              padding: "0",
+            }}
           >
-            <span className="oyk-app-bar-user-button-name">Sign In</span>
+            <span className="oyk-app-bar-user-button-name">{t("Sign In")}</span>
             <span className="oyk-app-bar-user-button-avatar">
               <User size={18} color="var(--oyk-c-primary-fg)" />
             </span>
-          </button>
+          </OykButton>
         )}
       </section>
     </header>

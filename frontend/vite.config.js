@@ -13,6 +13,9 @@ export default defineConfig(({ mode }) => {
       watch: { usePolling: watchUsePolling },
     },
     plugins: [react()],
+    build: {
+      outDir: "dist",
+    },
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),

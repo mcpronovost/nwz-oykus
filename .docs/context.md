@@ -11,9 +11,9 @@ This project is under construction.
 
 ### Backend
 
-- **Framework**: Express v5.1
-- **ORM**: Prisma v6.12
-- **Database**: PostgreSQL v15
+- **Framework**: Flask
+- **ORM**: SQLAlchemy
+- **Database**: MySQL 8.0
 - **API**: REST
 
 ### Frontend

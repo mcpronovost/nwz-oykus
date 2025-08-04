@@ -12,6 +12,8 @@ export default function OykButton({
   plain = false,
   outline = false,
   block = false,
+  className = "",
+  style = {},
 }) {
   const { n, lang } = useRouter();
 
@@ -33,19 +35,16 @@ export default function OykButton({
       disabled={disabled}
       className={`oyk-button ${color ? `oyk-button-${color}` : ""} ${
         plain ? "oyk-button-plain" : ""
-      } ${
-        outline ? "oyk-button-outline" : ""
-      } ${block ? "oyk-button-block" : ""} ${
-        IconComponent && !children ? "oyk-button-icon" : ""
-      }`}
-      style={
-        color?.startsWith("#")
-          ? {
-              backgroundColor: `color-mix(in srgb, ${color} 10%, transparent)`,
-              borderColor: color,
-            }
-          : {}
-      }
+      } ${outline ? "oyk-button-outline" : ""} ${
+        block ? "oyk-button-block" : ""
+      } ${IconComponent && !children ? "oyk-button-icon" : ""} ${className}`}
+      style={{
+        ...style,
+        ...(color?.startsWith("#") && {
+          backgroundColor: `color-mix(in srgb, ${color} 10%, transparent)`,
+          borderColor: color
+        })
+      }}
     >
       <span
         className="oyk-button-content"
