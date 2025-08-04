@@ -3,7 +3,7 @@ from flask import Flask
 from flask_cors import CORS
 
 from config import config
-from database import init_db
+from oyk.extensions import db, migrate
 
 from oyk.routes import health_bp
 
@@ -29,7 +29,8 @@ def create_app(config_name="default"):
         )
 
     # Initialize database
-    init_db(app)
+    db.init_app(app)
+    migrate.init_app(app, db)
 
     # Register blueprints
     app.register_blueprint(health_bp)
