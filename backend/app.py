@@ -54,13 +54,9 @@ if os.path.exists(frontend_dist_path):
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve_frontend(path):
-    # Don't serve frontend for API routes
     if path.startswith("api/"):
-        return app.send_static_file("index.html")
-
-    # Try to serve the requested file
+        return {"error": "API route not found"}, 404
     try:
         return app.send_static_file(path)
     except Exception:
-        # If file doesn't exist, serve index.html (for SPA routing)
         return app.send_static_file("index.html")

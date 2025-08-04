@@ -1,1 +1,0 @@
-import{d as s,u as t,j as o}from"./index-D_DsbWCf.js";import{O as r}from"./Heading-D2hqHKJW.js";function i(){const{currentWorld:a}=s(),{t:e}=t();return o.jsx("section",{className:"oyk-page oyk-rulebook",children:o.jsx(r,{title:e("Rulebook")})})}export{i as default};

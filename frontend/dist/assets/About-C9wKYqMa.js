@@ -1,1 +1,0 @@
-import{u as s,j as t}from"./index-D_DsbWCf.js";import{O as a}from"./Heading-D2hqHKJW.js";function r(){const{t:o}=s();return t.jsx("section",{className:"oyk-page oyk-about",children:t.jsx(a,{title:o("About")})})}export{r as default};
