@@ -81,8 +81,8 @@ export function StoreProvider({ children }) {
     const fetchProfile = async () => {
       try {
         await api.getUserProfile();
-      } catch (error) {
-        console.warn("Failed to fetch user profile:", error);
+      } catch {
+        // Fail silently
       }
     };
 
@@ -103,7 +103,6 @@ export function StoreProvider({ children }) {
 
     if (currentWorld?.themes?.[0]) {
       const theme = currentWorld.themes[0];
-      console.log(theme);
       styleSheet.textContent = `
         :root {
           ${theme.coreBg ? `--oyk-core-bg: ${theme.coreBg};` : ""}
