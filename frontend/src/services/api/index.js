@@ -1,12 +1,14 @@
 import { authStore } from "../store/stores/auth";
+import health from "./health";
 
 class ApiService {
-  constructor(baseURL = "/api") {
+  constructor(baseURL = import.meta.env.VITE_API_URL) {
     this.baseURL = baseURL;
   }
 
   async request(endpoint, options = {}) {
-    const url = `${this.baseURL}${endpoint}`;
+    // In development, use relative URLs for proxy
+    const url = import.meta.env.DEV ? `/api${endpoint}` : `${this.baseURL}${endpoint}`;
 
     // Get auth token if available
     const token = authStore.getToken();
@@ -112,6 +114,11 @@ class ApiService {
   // Get current user
   getCurrentUser() {
     return authStore.getUser();
+  }
+
+  // Health methods
+  async getHealth() {
+    return await health.getHealth(this);
   }
 
   // Fetch current user profile from server

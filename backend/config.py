@@ -5,6 +5,8 @@ load_dotenv()
 
 
 class Config:
+    FLASK_ENV = "production"
+    DEBUG = False
     SECRET_KEY = os.environ.get("SECRET_KEY") or "dev-secret-key"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -23,14 +25,16 @@ class Config:
 
 
 class DevelopmentConfig(Config):
-    DEBUG = True
+    FLASK_ENV = "development"
+    DEBUG = os.environ.get("FLASK_DEBUG") == "1"
     SQLALCHEMY_DATABASE_URI = (
         os.environ.get("DATABASE_URL") or "mysql+pymysql://username:password@localhost/oykus_dev"
     )
 
 
 class ProductionConfig(Config):
-    DEBUG = False
+    FLASK_ENV = "production"
+    DEBUG = os.environ.get("FLASK_DEBUG") == "1"
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
 

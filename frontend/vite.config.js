@@ -11,6 +11,13 @@ export default defineConfig(({ mode }) => {
       port: 5173,
       host: true,
       watch: { usePolling: watchUsePolling },
+      proxy: {
+        "/api": {
+          target: "http://backend:8000",
+          changeOrigin: true,
+          secure: false,
+        },
+      },
     },
     plugins: [react()],
     build: {
