@@ -8,15 +8,20 @@ from oyk.models.user import User
 from oyk.routes import auth_bp
 
 
+def get_jwt_secret_key():
+    """Get the JWT secret key from Flask config."""
+    return current_app.config["JWT_SECRET_KEY"]
+
+
 def generate_jwt_token(user_id):
     """Generate a JWT token for the user."""
     payload = {
         "user_id": user_id,
-        "exp": datetime.utcnow() + timedelta(hours=24),
-        "iat": datetime.utcnow(),
+        "exp": datetime.now() + timedelta(hours=24),
+        "iat": datetime.now(),
     }
 
-    secret_key = current_app.config["JWT_SECRET_KEY"]
+    secret_key = get_jwt_secret_key()
     token = jwt.encode(payload, secret_key, algorithm="HS256")
     return token
 
@@ -24,7 +29,7 @@ def generate_jwt_token(user_id):
 def verify_jwt_token(token):
     """Verify and decode a JWT token."""
     try:
-        secret_key = current_app.config["JWT_SECRET_KEY"]
+        secret_key = get_jwt_secret_key()
         payload = jwt.decode(token, secret_key, algorithms=["HS256"])
         return payload
     except jwt.ExpiredSignatureError:
@@ -40,7 +45,10 @@ def register():
         data = request.get_json()
 
         if not data:
-            return jsonify({"success": False, "message": "No data provided"}), 400
+            return (
+                jsonify({"success": False, "message": "No data provided"}),
+                400,
+            )
 
         email = data.get("email")
         username = data.get("username")
@@ -50,7 +58,30 @@ def register():
         if not all([email, username, password, playername]):
             return (
                 jsonify(
-                    {"success": False, "message": "Email, username, password, and playername are required"}
+                    {
+                        "success": False,
+                        "message": "Please fill in all fields",
+                        "fields": {
+                            "username": (
+                                "Username is required"
+                                if not username
+                                else None
+                            ),
+                            "password": (
+                                "Password is required"
+                                if not password
+                                else None
+                            ),
+                            "email": (
+                                "Email is required" if not email else None
+                            ),
+                            "playername": (
+                                "Playername is required"
+                                if not playername
+                                else None
+                            ),
+                        },
+                    }
                 ),
                 400,
             )
@@ -65,7 +96,10 @@ def register():
         if existing_user:
             return (
                 jsonify(
-                    {"success": False, "message": "User with this email, username, or playername already exists"}
+                    {
+                        "success": False,
+                        "message": "User with this email, username, or playername already exists",
+                    }
                 ),
                 400,
             )
@@ -115,29 +149,61 @@ def login():
         data = request.get_json()
 
         if not data:
-            return jsonify({"success": False, "message": "No data provided"}), 400
+            return (
+                jsonify({"success": False, "message": "No data provided"}),
+                400,
+            )
 
         username = data.get("username")
         password = data.get("password")
 
         if not username or not password:
-            return jsonify({"success": False, "message": "Username and password are required"}), 400
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "message": "Username and password are required",
+                    }
+                ),
+                400,
+            )
 
         # Find user by username
         user = User.query.filter_by(username=username).first()
 
         if not user:
-            return jsonify({"success": False, "message": "Invalid username or password"}), 401
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "message": "Invalid username or password",
+                    }
+                ),
+                401,
+            )
 
         # Check if user is active
         if not user.is_active:
-            return jsonify({"success": False, "message": "Account is deactivated"}), 401
+            return (
+                jsonify(
+                    {"success": False, "message": "Account is deactivated"}
+                ),
+                401,
+            )
 
         # Verify password
         if not bcrypt.checkpw(
             password.encode("utf-8"), user.password.encode("utf-8")
         ):
-            return jsonify({"success": False, "message": "Invalid username or password"}), 401
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "message": "Invalid username or password",
+                    }
+                ),
+                401,
+            )
 
         # Generate JWT token
         token = generate_jwt_token(user.id)
@@ -181,12 +247,18 @@ def verify_token():
         data = request.get_json()
 
         if not data:
-            return jsonify({"success": False, "message": "No data provided"}), 400
+            return (
+                jsonify({"success": False, "message": "No data provided"}),
+                400,
+            )
 
         token = data.get("token")
 
         if not token:
-            return jsonify({"success": False, "message": "Token is required"}), 400
+            return (
+                jsonify({"success": False, "message": "Token is required"}),
+                400,
+            )
 
         # Verify token
         payload = verify_jwt_token(token)
@@ -196,7 +268,12 @@ def verify_token():
         user = User.query.get(user_id)
 
         if not user or not user.is_active:
-            return jsonify({"success": False, "message": "Invalid or inactive user"}), 401
+            return (
+                jsonify(
+                    {"success": False, "message": "Invalid or inactive user"}
+                ),
+                401,
+            )
 
         return (
             jsonify(
