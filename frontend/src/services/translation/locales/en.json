@@ -1,4 +1,6 @@
 {
+  "An error occurred": "An error occurred",
+  "Sign In": "Sign In",
   "Home": "Home",
   "About": "About",
   "Privacy Policy": "Privacy Policy",
@@ -38,5 +40,12 @@
   "Due At": "Due At",
   "History": "History",
   "Show history": "Show history",
-  "Hide history": "Hide history"
+  "Hide history": "Hide history",
+  "Email": "Email",
+  "Username": "Username",
+  "Playername": "Playername",
+  "Password": "Password",
+  "Confirm Password": "Confirm Password",
+  "Create account": "Create account",
+  "Creating account...": "Creating account..."
 }

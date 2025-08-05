@@ -1,4 +1,6 @@
 {
+  "An error occurred": "Une erreur est survenue",
+  "Sign In": "Connexion",
   "Home": "Accueil",
   "About": "À propos",
   "Privacy Policy": "Politique de confidentialité",
@@ -38,5 +40,12 @@
   "Due At": "Date d'échéance",
   "History": "Historique",
   "Show history": "Afficher l'historique",
-  "Hide history": "Masquer l'historique"
+  "Hide history": "Masquer l'historique",
+  "Email": "Courriel",
+  "Username": "Nom d'utilisateur",
+  "Playername": "Nom de joueur",
+  "Password": "Mot de passe",
+  "Confirm Password": "Confirmer le mot de passe",
+  "Create account": "Créer un compte",
+  "Creating account...": "Création de compte..."
 }
