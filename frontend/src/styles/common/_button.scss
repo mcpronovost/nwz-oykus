@@ -75,6 +75,10 @@
     .oyk-button-content {
       color: var(--oyk-core-fg);
     }
+
+    &.oyk-button-plain .oyk-button-content {
+      color: inherit;
+    }
   }
 
   &-card {
