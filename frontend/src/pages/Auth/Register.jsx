@@ -100,7 +100,7 @@ export default function Register() {
     try {
       const { confirmPassword, ...registrationData } = formData;
       await api.register(registrationData);
-      n("home"); // Redirect to home page after successful registration
+      n("home");
     } catch (e) {
       setGeneralError(
         e.error.message || "Registration failed. Please try again."
@@ -114,14 +114,14 @@ export default function Register() {
     <section className="oyk-page oyk-auth">
       <div className="oyk-auth-container">
         <div className="oyk-auth-header">
-          <h1 className="oyk-auth-header-title">Create your account</h1>
+          <h1 className="oyk-auth-header-title">Create an account</h1>
           <p className="oyk-auth-header-subtitle">
             Or{" "}
             <Link
               routeName="login"
               className="oyk-auth-header-subtitle"
             >
-              sign in to your existing account
+              sign in to an existing account
             </Link>
           </p>
         </div>
