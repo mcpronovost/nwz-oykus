@@ -1,18 +1,41 @@
 import { useState } from "react";
 
-import { useRouter } from "@/services/router";
 import { api } from "@/services/api";
-import { OykButton, Link } from "@/components/common";
+import { useRouter } from "@/services/router";
+import { useTranslation } from "@/services/translation";
+import { validateUsername, validatePassword } from "@/utils";
+import {
+  OykButton,
+  OykForm,
+  OykFormField,
+  OykFormMessage,
+  Link,
+} from "@/components/common";
 
 export default function Login() {
   const { n } = useRouter();
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [generalError, setGeneralError] = useState("");
+  const [hasError, setHasError] = useState(null);
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Fields validation
+    const usernameError = validateUsername(formData.username);
+    const passwordError = validatePassword(formData.password);
+
+    usernameError && (newErrors.username = usernameError);
+    passwordError && (newErrors.password = passwordError);
+
+    setHasError({ fields: newErrors });
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,50 +45,29 @@ export default function Login() {
     }));
 
     // Clear field-specific error when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({
+    if (hasError?.fields?.[name]) {
+      setHasError((prev) => ({
         ...prev,
-        [name]: "",
+        fields: {
+          ...prev.fields,
+          [name]: "",
+        },
       }));
     }
-
-    // Clear general error when user makes changes
-    if (generalError) {
-      setGeneralError("");
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.username.trim()) {
-      newErrors.username = "Username is required";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
+    setIsLoading(true);
+    setHasError(null);
     if (!validateForm()) {
+      setIsLoading(false);
       return;
     }
-
-    setIsLoading(true);
-    setGeneralError("");
-
     try {
       await api.login(formData);
-      n("home"); // Redirect to home page after successful login
+      n("home");
     } catch (e) {
-      console.log(e.error);
-      setGeneralError(e.error.message || "Login failed. Please try again.");
+      setHasError(e.error || t("An error occurred"));
     } finally {
       setIsLoading(false);
     }
@@ -78,75 +80,43 @@ export default function Login() {
           <h1 className="oyk-auth-header-title">Sign in to your account</h1>
           <p className="oyk-auth-header-subtitle">
             Or{" "}
-            <Link
-              routeName="register"
-              className="oyk-auth-header-subtitle"
-            >
+            <Link routeName="register" className="oyk-auth-header-subtitle">
               create a new account
             </Link>
           </p>
         </div>
 
-        <form className="oyk-auth-form" onSubmit={handleSubmit}>
-          {generalError && (
-            <div className="oyk-auth-error">
-              <div className="oyk-auth-error-message">{generalError}</div>
-            </div>
-          )}
-
-          <div className="oyk-auth-field">
-            <label htmlFor="username" className="oyk-auth-field-label">
-              Username
-            </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              autoComplete="username"
-              required
-              value={formData.username}
-              onChange={handleChange}
-              className={`oyk-auth-field-input ${
-                errors.username ? "oyk-auth-field-input--error" : ""
-              }`}
-              placeholder="Enter your username"
-            />
-            {errors.username && (
-              <p className="oyk-auth-field-error">{errors.username}</p>
-            )}
-          </div>
-
-          <div className="oyk-auth-field">
-            <label htmlFor="password" className="oyk-auth-field-label">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              className={`oyk-auth-field-input ${
-                errors.password ? "oyk-auth-field-input--error" : ""
-              }`}
-              placeholder="Enter your password"
-            />
-            {errors.password && (
-              <p className="oyk-auth-field-error">{errors.password}</p>
-            )}
-          </div>
-
-          <OykButton
-            type="submit"
-            color="primary"
-            disabled={isLoading}
+        <OykForm
+          className="oyk-auth-form"
+          onSubmit={handleSubmit}
+          isLoading={isLoading}
+        >
+          <OykFormField
+            label={t("Username")}
+            name="username"
+            defaultValue={formData.username}
+            onChange={handleChange}
+            hasError={hasError?.fields?.username}
+            required
             block
-          >
-            {isLoading ? "Signing in..." : "Sign in"}
-          </OykButton>
-        </form>
+          />
+          <OykFormField
+            label={t("Password")}
+            name="password"
+            type="password"
+            defaultValue={formData.password}
+            onChange={handleChange}
+            hasError={hasError?.fields?.password}
+            required
+            block
+          />
+          {hasError?.message && <OykFormMessage hasError={hasError?.message} />}
+          <div className="oyk-form-actions">
+            <OykButton type="submit" color="primary" disabled={isLoading} block>
+              {isLoading ? "Signing in..." : "Sign in"}
+            </OykButton>
+          </div>
+        </OykForm>
       </div>
     </section>
   );
