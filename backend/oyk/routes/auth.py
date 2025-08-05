@@ -3,7 +3,8 @@ import bcrypt
 from datetime import datetime, timedelta
 from flask import request, jsonify, current_app, g
 
-from oyk.decorators import require_auth
+from oyk.decorators import require_auth, require_dev
+from oyk.extensions import db
 from oyk.models.user import User
 from oyk.routes import auth_bp
 
@@ -283,6 +284,24 @@ def verify_token():
                     "user": user.to_dict(),
                 }
             ),
+            200,
+        )
+    except Exception:
+        return (
+            jsonify({"success": False, "message": "Internal server error"}),
+            500,
+        )
+
+
+@auth_bp.route("/clean", methods=["GET"])
+@require_dev
+def auth_clean():
+    """Clean up the auth database for development purposes."""
+    try:
+        User.query.delete()
+        db.session.commit()
+        return (
+            jsonify({"success": True, "message": "Auth database cleaned"}),
             200,
         )
     except Exception:
