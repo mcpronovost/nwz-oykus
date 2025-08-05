@@ -2,7 +2,6 @@ import jwt
 import bcrypt
 from datetime import datetime, timedelta
 from flask import request, jsonify, current_app, g
-from werkzeug.exceptions import BadRequest, Unauthorized
 
 from oyk.decorators import require_auth
 from oyk.models.user import User
@@ -29,9 +28,9 @@ def verify_jwt_token(token):
         payload = jwt.decode(token, secret_key, algorithms=["HS256"])
         return payload
     except jwt.ExpiredSignatureError:
-        raise Unauthorized("Token has expired")
+        return jsonify({"success": False, "message": "Token has expired"}), 401
     except jwt.InvalidTokenError:
-        raise Unauthorized("Invalid token")
+        return jsonify({"success": False, "message": "Invalid token"}), 401
 
 
 @auth_bp.route("/register", methods=["POST"])
@@ -41,7 +40,7 @@ def register():
         data = request.get_json()
 
         if not data:
-            raise BadRequest("No data provided")
+            return jsonify({"success": False, "message": "No data provided"}), 400
 
         email = data.get("email")
         username = data.get("username")
@@ -49,8 +48,11 @@ def register():
         playername = data.get("playername")
 
         if not all([email, username, password, playername]):
-            raise BadRequest(
-                "Email, username, password, and playername are required"
+            return (
+                jsonify(
+                    {"success": False, "message": "Email, username, password, and playername are required"}
+                ),
+                400,
             )
 
         # Check if user already exists
@@ -61,8 +63,11 @@ def register():
         ).first()
 
         if existing_user:
-            raise BadRequest(
-                "User with this email, username, or playername already exists"
+            return (
+                jsonify(
+                    {"success": False, "message": "User with this email, username, or playername already exists"}
+                ),
+                400,
             )
 
         # Hash password
@@ -96,11 +101,7 @@ def register():
             ),
             201,
         )
-
-    except BadRequest as e:
-        return jsonify({"success": False, "message": str(e)}), 400
-    except Exception as e:
-        print(e)
+    except Exception:
         return (
             jsonify({"success": False, "message": "Internal server error"}),
             500,
@@ -114,29 +115,29 @@ def login():
         data = request.get_json()
 
         if not data:
-            raise BadRequest("No data provided")
+            return jsonify({"success": False, "message": "No data provided"}), 400
 
         username = data.get("username")
         password = data.get("password")
 
         if not username or not password:
-            raise BadRequest("Username and password are required")
+            return jsonify({"success": False, "message": "Username and password are required"}), 400
 
         # Find user by username
         user = User.query.filter_by(username=username).first()
 
         if not user:
-            raise Unauthorized("Invalid username or password")
+            return jsonify({"success": False, "message": "Invalid username or password"}), 401
 
         # Check if user is active
         if not user.is_active:
-            raise Unauthorized("Account is deactivated")
+            return jsonify({"success": False, "message": "Account is deactivated"}), 401
 
         # Verify password
         if not bcrypt.checkpw(
             password.encode("utf-8"), user.password.encode("utf-8")
         ):
-            raise Unauthorized("Invalid username or password")
+            return jsonify({"success": False, "message": "Invalid username or password"}), 401
 
         # Generate JWT token
         token = generate_jwt_token(user.id)
@@ -152,13 +153,7 @@ def login():
             ),
             200,
         )
-
-    except BadRequest as e:
-        return jsonify({"success": False, "message": str(e)}), 400
-    except Unauthorized as e:
-        return jsonify({"success": False, "message": str(e)}), 401
-    except Exception as e:
-        print(e)
+    except Exception:
         return (
             jsonify({"success": False, "message": "Internal server error"}),
             500,
@@ -186,12 +181,12 @@ def verify_token():
         data = request.get_json()
 
         if not data:
-            raise BadRequest("No data provided")
+            return jsonify({"success": False, "message": "No data provided"}), 400
 
         token = data.get("token")
 
         if not token:
-            raise BadRequest("Token is required")
+            return jsonify({"success": False, "message": "Token is required"}), 400
 
         # Verify token
         payload = verify_jwt_token(token)
@@ -201,7 +196,7 @@ def verify_token():
         user = User.query.get(user_id)
 
         if not user or not user.is_active:
-            raise Unauthorized("Invalid or inactive user")
+            return jsonify({"success": False, "message": "Invalid or inactive user"}), 401
 
         return (
             jsonify(
@@ -213,11 +208,6 @@ def verify_token():
             ),
             200,
         )
-
-    except BadRequest as e:
-        return jsonify({"success": False, "message": str(e)}), 400
-    except Unauthorized as e:
-        return jsonify({"success": False, "message": str(e)}), 401
     except Exception:
         return (
             jsonify({"success": False, "message": "Internal server error"}),
