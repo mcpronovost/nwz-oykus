@@ -72,6 +72,7 @@ export default function OykFormField({
             defaultValue={defaultValue}
             onChange={onChange}
             required={required}
+            autoComplete="off"
           />
         )}
         {hasError && <p className="oyk-form-field-error">{hasError}</p>}
