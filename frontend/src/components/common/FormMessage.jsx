@@ -8,7 +8,11 @@ export default function OykFormMessage({ hasError }) {
   return (
     <div className="oyk-form-message">
       {hasError && (
-        <OykAlert title="Error" message={hasError.message || hasError.error || t("An error occurred")} variant="danger" />
+        <OykAlert
+          title="Error"
+          message={hasError || t("An error occurred")}
+          variant="danger"
+        />
       )}
     </div>
   );
