@@ -24,15 +24,8 @@ export default function AppBarUser() {
       <OykDropdown
         toggle={
           <button className="oyk-app-bar-user-button">
-            <span className="oyk-app-bar-user-button-name">
-              {currentUser.playername}
-            </span>
-            <OykAvatar
-              size={36}
-              src={currentUser.avatar}
-              name={currentUser.playername}
-              abbr={currentUser.abbr}
-            />
+            <span className="oyk-app-bar-user-button-name">{currentUser.playername}</span>
+            <OykAvatar size={36} src={currentUser.avatar} name={currentUser.playername} abbr={currentUser.abbr} />
           </button>
         }
         menu={[

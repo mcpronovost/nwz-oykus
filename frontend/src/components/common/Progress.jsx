@@ -28,7 +28,7 @@ export default function OykProgress({
 
   // Convert CSS variables to actual colours
   const getComputedColours = () => {
-    return colours.map(colour => {
+    return colours.map((colour) => {
       return getComputedColour(colour);
     });
   };
@@ -60,7 +60,7 @@ export default function OykProgress({
       // Single colour - use the value prop
       const startAngle = -Math.PI / 2; // Start from top (12 o'clock)
       const endAngle = startAngle + (percentage / 100) * 2 * Math.PI;
-      
+
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, startAngle, endAngle);
       ctx.strokeStyle = computedColours[0];
@@ -71,34 +71,34 @@ export default function OykProgress({
       if (values && values.length === computedColours.length) {
         // Use provided values array - each value represents its percentage of the circle
         let currentAngle = -Math.PI / 2; // Start from top (12 o'clock)
-        
+
         computedColours.forEach((colour, index) => {
           const segmentPercentage = values[index];
-          
+
           if (segmentPercentage > 0) {
             const startAngle = currentAngle;
             const endAngle = startAngle + (segmentPercentage / 100) * 2 * Math.PI;
-            
+
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
             ctx.strokeStyle = colour;
             ctx.lineWidth = borderSize;
             ctx.stroke();
-            
+
             currentAngle = endAngle;
           }
         });
       } else {
         // Fallback to original logic - distribute evenly based on single value
         const segmentSize = 100 / computedColours.length;
-        
+
         computedColours.forEach((colour, index) => {
           const segmentStart = index * segmentSize;
           const segmentEnd = (index + 1) * segmentSize;
-          
+
           // Calculate how much of this segment should be filled
           let segmentPercentage = 0;
-          
+
           if (percentage > segmentStart) {
             if (percentage >= segmentEnd) {
               // This segment is completely filled
@@ -108,11 +108,11 @@ export default function OykProgress({
               segmentPercentage = percentage - segmentStart;
             }
           }
-          
+
           if (segmentPercentage > 0) {
             const startAngle = -Math.PI / 2 + (segmentStart / 100) * 2 * Math.PI;
             const endAngle = startAngle + (segmentPercentage / 100) * 2 * Math.PI;
-            
+
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
             ctx.strokeStyle = colour;
@@ -125,26 +125,17 @@ export default function OykProgress({
   }, [value, max, size, borderSize, colours, values, percentage]);
 
   return (
-    <div 
+    <div
       className={`oyk-progress ${className}`}
       style={{
         width: size,
         height: size,
       }}
     >
-      <canvas
-        ref={canvasRef}
-        width={size}
-        height={size}
-        className="oyk-progress-canvas"
-      />
-      
+      <canvas ref={canvasRef} width={size} height={size} className="oyk-progress-canvas" />
+
       {/* Children content */}
-      {children && (
-        <div className="oyk-progress-content">
-          {children}
-        </div>
-      )}
+      {children && <div className="oyk-progress-content">{children}</div>}
     </div>
   );
 }

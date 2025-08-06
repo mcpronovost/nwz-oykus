@@ -1,13 +1,7 @@
-export default function OykChip({
-  children,
-  color = "default",
-  outline = false,
-}) {
+export default function OykChip({ children, color = "default", outline = false }) {
   return (
     <span
-      className={`oyk-chip ${
-        !color?.startsWith("#") ? `oyk-chip-${color}` : ""
-      } ${outline ? "oyk-chip-outline" : ""}`}
+      className={`oyk-chip ${!color?.startsWith("#") ? `oyk-chip-${color}` : ""} ${outline ? "oyk-chip-outline" : ""}`}
       style={
         color?.startsWith("#")
           ? {
@@ -17,10 +11,7 @@ export default function OykChip({
           : {}
       }
     >
-      <span
-        className="oyk-chip-content"
-        style={color?.startsWith("#") ? { color: color } : {}}
-      >
+      <span className="oyk-chip-content" style={color?.startsWith("#") ? { color: color } : {}}>
         {children}
       </span>
     </span>

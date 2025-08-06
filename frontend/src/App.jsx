@@ -10,17 +10,15 @@ import AppNotFound from "@/components/core/AppNotFound";
 
 function MainLayout() {
   const { route } = useRouter();
-  
+
   return (
-      <main id="oyk-app-main">
-        {(route && route.component) ? (
-          <React.Suspense fallback={<AppLoading />}>
-            {React.createElement(route.component)}
-          </React.Suspense>
-        ) : (
-          <AppNotFound />
-        )}
-      </main>
+    <main id="oyk-app-main">
+      {route && route.component ? (
+        <React.Suspense fallback={<AppLoading />}>{React.createElement(route.component)}</React.Suspense>
+      ) : (
+        <AppNotFound />
+      )}
+    </main>
   );
 }
 
@@ -46,4 +44,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;

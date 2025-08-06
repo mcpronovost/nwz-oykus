@@ -2,15 +2,7 @@ import "@/styles/page/_components.scss";
 import { Orbit } from "lucide-react";
 
 import { useTranslation } from "@/services/translation";
-import {
-  OykAlert,
-  OykAvatar,
-  OykButton,
-  OykChip,
-  OykFeedback,
-  OykGrid,
-  OykHeading,
-} from "@/components/common";
+import { OykAlert, OykAvatar, OykButton, OykChip, OykFeedback, OykGrid, OykHeading } from "@/components/common";
 import ComponentApiTable from "./ComponentApiTable";
 
 export default function Components() {
@@ -37,9 +29,7 @@ export default function Components() {
                 padding: "16px",
               }}
             >
-              <span style={{ color: "var(--oyk-card-fg)" }}>
-                Card default text
-              </span>
+              <span style={{ color: "var(--oyk-card-fg)" }}>Card default text</span>
               <span style={{ color: "var(--oyk-c-primary)" }}>Primary</span>
               <span style={{ color: "var(--oyk-c-danger)" }}>Danger</span>
               <span style={{ color: "var(--oyk-c-success)" }}>Success</span>
@@ -52,27 +42,13 @@ export default function Components() {
           <div className="oyk-components-list-item-example column">
             <OykAlert title="Default Alert" message="Message here" />
             <br />
-            <OykAlert
-              title="Primary Alert"
-              message="Message here"
-              variant="primary"
-            />
+            <OykAlert title="Primary Alert" message="Message here" variant="primary" />
             <br />
-            <OykAlert
-              title="Danger Alert"
-              message="Message here"
-              variant="danger"
-            />
+            <OykAlert title="Danger Alert" message="Message here" variant="danger" />
             <br />
-            <OykAlert
-              title="Success Alert"
-              message="Message here"
-              variant="success"
-            />
+            <OykAlert title="Success Alert" message="Message here" variant="success" />
           </div>
-          <code className="full">
-            {`<OykAlert title="Title Here" message="Message here" variant="danger" />`}
-          </code>
+          <code className="full">{`<OykAlert title="Title Here" message="Message here" variant="danger" />`}</code>
           <ComponentApiTable
             items={[
               {
@@ -92,13 +68,7 @@ export default function Components() {
                 description: "Variant",
                 type: "string",
                 defaultValue: "default",
-                enumValue: [
-                  "default",
-                  "primary",
-                  "danger",
-                  "warning",
-                  "success",
-                ],
+                enumValue: ["default", "primary", "danger", "warning", "success"],
               },
               {
                 name: "showIcon",
@@ -125,25 +95,12 @@ export default function Components() {
         <article id="avatar" className="oyk-components-list-item">
           <OykHeading title={t("Avatar")} ph={0} />
           <div className="oyk-components-list-item-example">
-            <OykAvatar /> <OykAvatar size={24} />{" "}
-            <OykAvatar name="John Johnson" /> <OykAvatar abbr="JJ" />{" "}
+            <OykAvatar /> <OykAvatar size={24} /> <OykAvatar name="John Johnson" /> <OykAvatar abbr="JJ" />{" "}
             <OykAvatar abbr="JJ" size={32} />{" "}
             <OykAvatar src="https://testingbot.com/free-online-tools/random-avatar/140" />{" "}
-            <OykAvatar
-              src="https://testingbot.com/free-online-tools/random-avatar/64"
-              name="John Johnson"
-              size={48}
-            />{" "}
-            <OykAvatar
-              src="https://testingbot.com/free-online-tools/random-avatar/32"
-              abbr="JD"
-              size={24}
-            />{" "}
-            <OykAvatar
-              src="https://testingbot.com/free-online-tools/random-avatar/92"
-              name="John Doe"
-              abbr="JD"
-            />{" "}
+            <OykAvatar src="https://testingbot.com/free-online-tools/random-avatar/64" name="John Johnson" size={48} />{" "}
+            <OykAvatar src="https://testingbot.com/free-online-tools/random-avatar/32" abbr="JD" size={24} />{" "}
+            <OykAvatar src="https://testingbot.com/free-online-tools/random-avatar/92" name="John Doe" abbr="JD" />{" "}
           </div>
           <code className="full">{`<OykAvatar name="Name Here" src={url} size={24} />`}</code>
           <ComponentApiTable
@@ -156,8 +113,7 @@ export default function Components() {
               },
               {
                 name: "abbr",
-                description:
-                  "Abbreviation to display if no src and no icon is provided",
+                description: "Abbreviation to display if no src and no icon is provided",
                 type: "string",
                 defaultValue: '""',
               },
@@ -205,10 +161,8 @@ export default function Components() {
           <OykHeading title={t("Button")} ph={0} />
           <div className="oyk-components-list-item-example">
             <div>
-              <OykButton>Default Button</OykButton>{" "}
-              <OykButton color="primary">Primary Button</OykButton>{" "}
-              <OykButton color="danger">Danger Button</OykButton>{" "}
-              <OykButton color="success">Success Button</OykButton>
+              <OykButton>Default Button</OykButton> <OykButton color="primary">Primary Button</OykButton>{" "}
+              <OykButton color="danger">Danger Button</OykButton> <OykButton color="success">Success Button</OykButton>
             </div>
             <div>
               <OykButton outline>Default Button</OykButton>{" "}
@@ -273,14 +227,7 @@ export default function Components() {
                 description: "Colour",
                 type: "string",
                 defaultValue: "default",
-                enumValue: [
-                  "default",
-                  "primary",
-                  "danger",
-                  "warning",
-                  "success",
-                  "#(hex)",
-                ],
+                enumValue: ["default", "primary", "danger", "warning", "success", "#(hex)"],
               },
               {
                 name: "outline",
@@ -301,10 +248,8 @@ export default function Components() {
         <article id="chip" className="oyk-components-list-item">
           <OykHeading title={t("Chip")} ph={0} />
           <div className="oyk-components-list-item-example column">
-            <OykChip>Default Chip</OykChip>{" "}
-            <OykChip color="primary">Primary Chip</OykChip>{" "}
-            <OykChip color="danger">Danger Chip</OykChip>{" "}
-            <OykChip color="success">Success Chip</OykChip>
+            <OykChip>Default Chip</OykChip> <OykChip color="primary">Primary Chip</OykChip>{" "}
+            <OykChip color="danger">Danger Chip</OykChip> <OykChip color="success">Success Chip</OykChip>
             <br />
             <OykChip outline>Default Chip</OykChip>{" "}
             <OykChip outline color="primary">
@@ -325,14 +270,7 @@ export default function Components() {
                 description: "Colour",
                 type: "string",
                 defaultValue: "default",
-                enumValue: [
-                  "default",
-                  "primary",
-                  "danger",
-                  "warning",
-                  "success",
-                  "#(hex)",
-                ],
+                enumValue: ["default", "primary", "danger", "warning", "success", "#(hex)"],
               },
               {
                 name: "outline",
@@ -346,46 +284,18 @@ export default function Components() {
 
         <article id="feedback" className="oyk-components-list-item">
           <OykHeading title={t("Feedback")} ph={0} />
-          <div className="oyk-components-list-item-example" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+          <div
+            className="oyk-components-list-item-example"
+            style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}
+          >
             <OykFeedback title="Default Feedback" message="Message here" />
-            <OykFeedback
-              title="Default Feedback"
-              message="Ghost variant"
-              ghost
-            />
-            <OykFeedback
-              title="Primary Feedback"
-              message="Message here"
-              variant="primary"
-            />
-            <OykFeedback
-              title="Primary Feedback"
-              message="Ghost variant"
-              variant="primary"
-              ghost
-            />
-            <OykFeedback
-              title="Danger Feedback"
-              message="Message here"
-              variant="danger"
-            />
-            <OykFeedback
-              title="Danger Feedback"
-              message="Ghost variant"
-              variant="danger"
-              ghost
-            />
-            <OykFeedback
-              title="Success Feedback"
-              message="Message here"
-              variant="success"
-            />
-            <OykFeedback
-              title="Success Feedback"
-              message="Ghost variant"
-              variant="success"
-              ghost
-            />
+            <OykFeedback title="Default Feedback" message="Ghost variant" ghost />
+            <OykFeedback title="Primary Feedback" message="Message here" variant="primary" />
+            <OykFeedback title="Primary Feedback" message="Ghost variant" variant="primary" ghost />
+            <OykFeedback title="Danger Feedback" message="Message here" variant="danger" />
+            <OykFeedback title="Danger Feedback" message="Ghost variant" variant="danger" ghost />
+            <OykFeedback title="Success Feedback" message="Message here" variant="success" />
+            <OykFeedback title="Success Feedback" message="Ghost variant" variant="success" ghost />
           </div>
           <code className="full">
             {`<OykFeedback title="Title Here" message="Message here" variant="primary" ghost />`}
@@ -409,13 +319,7 @@ export default function Components() {
                 description: "Variant",
                 type: "string",
                 defaultValue: "default",
-                enumValue: [
-                  "default",
-                  "primary",
-                  "danger",
-                  "warning",
-                  "success",
-                ],
+                enumValue: ["default", "primary", "danger", "warning", "success"],
               },
               {
                 name: "showIcon",

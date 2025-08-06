@@ -1,10 +1,4 @@
-export default function ComponentApiTableItem({
-  name,
-  description,
-  type,
-  defaultValue,
-  enumValue,
-}) {
+export default function ComponentApiTableItem({ name, description, type, defaultValue, enumValue }) {
   return (
     <tr className="oyk-components-api-table-item">
       <td>{name}</td>

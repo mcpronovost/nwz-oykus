@@ -11,10 +11,7 @@ export default function OykFormField({
   ...props
 }) {
   return (
-    <div
-      className={`oyk-form-field ${block ? "oyk-form-field--block" : ""}`}
-      {...props}
-    >
+    <div className={`oyk-form-field ${block ? "oyk-form-field--block" : ""}`} {...props}>
       <label className="oyk-form-field-label" htmlFor={`field-${name}`}>
         {label}
         {required && <span className="oyk-form-field-required">*</span>}
@@ -30,13 +27,7 @@ export default function OykFormField({
             required={required}
           />
         ) : type === "select" ? (
-          <select
-            id={`field-${name}`}
-            name={name}
-            defaultValue={defaultValue}
-            onChange={onChange}
-            required={required}
-          >
+          <select id={`field-${name}`} name={name} defaultValue={defaultValue} onChange={onChange} required={required}>
             {options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -46,10 +37,7 @@ export default function OykFormField({
         ) : type === "radio" ? (
           <div className="oyk-form-field-input-radio">
             {options.map((option) => (
-              <label
-                key={option.value}
-                className="oyk-form-field-input-radio-label"
-              >
+              <label key={option.value} className="oyk-form-field-input-radio-label">
                 <input
                   type="radio"
                   name={name}
@@ -58,9 +46,7 @@ export default function OykFormField({
                   required={required}
                   checked={defaultValue === option.value}
                 />
-                <span className="oyk-form-field-input-radio-label-btn">
-                  {option.label}
-                </span>
+                <span className="oyk-form-field-input-radio-label-btn">{option.label}</span>
               </label>
             ))}
           </div>

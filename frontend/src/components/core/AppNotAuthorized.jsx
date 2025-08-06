@@ -11,10 +11,7 @@ export default function AppNotAuthorized() {
         <p>You are not authorized to access this page.</p>
       </div>
       <div className="oyk-app-not-authorized-actions">
-        <button
-          className="oyk-app-not-authorized-actions-button"
-          onClick={() => n("home")}
-        >
+        <button className="oyk-app-not-authorized-actions-button" onClick={() => n("home")}>
           Go to home
         </button>
       </div>

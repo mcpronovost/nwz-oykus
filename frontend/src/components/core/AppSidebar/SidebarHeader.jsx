@@ -25,34 +25,30 @@ export default function SidebarHeader() {
           {
             label: "Oykus",
             element: (
-              <button
-                className="oyk-app-sidebar-header-button-dropdown-item"
-                onClick={() => handleWorldClick()}
-              >
-                <span className="oyk-app-sidebar-header-button-dropdown-item-logo" style={{ backgroundColor: "var(--oyk-default-primary)" }}>
+              <button className="oyk-app-sidebar-header-button-dropdown-item" onClick={() => handleWorldClick()}>
+                <span
+                  className="oyk-app-sidebar-header-button-dropdown-item-logo"
+                  style={{ backgroundColor: "var(--oyk-default-primary)" }}
+                >
                   <SquircleDashed size={18} color="var(--oyk-default-primary-fg)" />
                 </span>
-                <span className="oyk-app-sidebar-header-button-dropdown-item-brand">
-                  Oykus
-                </span>
+                <span className="oyk-app-sidebar-header-button-dropdown-item-brand">Oykus</span>
               </button>
             ),
           },
           ...currentUser.worldsStaff.map((world) => ({
             label: world.name,
             element: (
-              <button
-                className="oyk-app-sidebar-header-button-dropdown-item"
-                onClick={() => handleWorldClick(world)}
-              >
-                <span className="oyk-app-sidebar-header-button-dropdown-item-logo" style={{ backgroundColor: world.themes[0]?.primary || "var(--oyk-default-primary)" }}>
+              <button className="oyk-app-sidebar-header-button-dropdown-item" onClick={() => handleWorldClick(world)}>
+                <span
+                  className="oyk-app-sidebar-header-button-dropdown-item-logo"
+                  style={{ backgroundColor: world.themes[0]?.primary || "var(--oyk-default-primary)" }}
+                >
                   <span style={{ color: world.themes[0]?.primaryFg || "var(--oyk-default-primary-fg)" }}>
                     {world.abbr}
                   </span>
                 </span>
-                <span className="oyk-app-sidebar-header-button-dropdown-item-brand">
-                  {world.name}
-                </span>
+                <span className="oyk-app-sidebar-header-button-dropdown-item-brand">{world.name}</span>
               </button>
             ),
           })),
@@ -68,23 +64,22 @@ export default function SidebarHeader() {
           <button className="oyk-app-sidebar-header-button" disabled={!currentUser}>
             {currentUser && currentWorld ? (
               <>
-                <span className="oyk-app-sidebar-header-button-logo" style={{ backgroundColor: currentWorld.themes[0]?.primary || "var(--oyk-c-primary)" }}>
+                <span
+                  className="oyk-app-sidebar-header-button-logo"
+                  style={{ backgroundColor: currentWorld.themes[0]?.primary || "var(--oyk-c-primary)" }}
+                >
                   <span style={{ color: currentWorld.themes[0]?.primaryFg || "var(--oyk-c-primary-fg)" }}>
                     {currentWorld.abbr}
                   </span>
                 </span>
-                <span className="oyk-app-sidebar-header-button-brand">
-                  {currentWorld.name}
-                </span>
+                <span className="oyk-app-sidebar-header-button-brand">{currentWorld.name}</span>
               </>
             ) : (
               <>
                 <span className="oyk-app-sidebar-header-button-logo">
                   <SquircleDashed size={18} color="var(--oyk-c-primary-fg)" />
                 </span>
-                <span className="oyk-app-sidebar-header-button-brand">
-                  Oykus
-                </span>
+                <span className="oyk-app-sidebar-header-button-brand">Oykus</span>
               </>
             )}
           </button>

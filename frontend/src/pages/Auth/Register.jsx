@@ -3,19 +3,8 @@ import { useState } from "react";
 import { api } from "@/services/api";
 import { useRouter } from "@/services/router";
 import { useTranslation } from "@/services/translation";
-import {
-  validateUsername,
-  validatePassword,
-  validateEmail,
-  validatePlayername,
-} from "@/utils";
-import {
-  OykButton,
-  OykForm,
-  OykFormField,
-  OykFormMessage,
-  OykLink,
-} from "@/components/common";
+import { validateUsername, validatePassword, validateEmail, validatePlayername } from "@/utils";
+import { OykButton, OykForm, OykFormField, OykFormMessage, OykLink } from "@/components/common";
 
 export default function Register() {
   const { n } = useRouter();
@@ -106,11 +95,7 @@ export default function Register() {
           </p>
         </div>
 
-        <OykForm
-          className="oyk-auth-form"
-          onSubmit={handleSubmit}
-          isLoading={isLoading}
-        >
+        <OykForm className="oyk-auth-form" onSubmit={handleSubmit} isLoading={isLoading}>
           <OykFormField
             label={t("Username")}
             name="username"

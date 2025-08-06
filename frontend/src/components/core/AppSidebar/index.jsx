@@ -27,21 +27,13 @@ export default function AppSidebar() {
         <nav className="oyk-app-sidebar-nav">
           {!currentWorld && (
             <ul className="oyk-app-sidebar-nav-list">
-              <OykNavItem
-                icon={LayoutDashboard}
-                text={t("Dashboard")}
-                href="home"
-              />
+              <OykNavItem icon={LayoutDashboard} text={t("Dashboard")} href="home" />
               <OykNavItem icon={Compass} text={t("Discover")} href="discover" />
             </ul>
           )}
           {currentUser && currentWorld && (
             <ul className="oyk-app-sidebar-nav-list">
-              <OykNavItem
-                icon={LayoutDashboard}
-                text={t("Dashboard")}
-                href="home"
-              />
+              <OykNavItem icon={LayoutDashboard} text={t("Dashboard")} href="home" />
               <OykNavItem icon={ListTodo} text={t("Tasks")} href="tasks" />
             </ul>
           )}

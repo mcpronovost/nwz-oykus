@@ -4,13 +4,7 @@ import { api } from "@/services/api";
 import { useRouter } from "@/services/router";
 import { useTranslation } from "@/services/translation";
 import { validateUsername, validatePassword } from "@/utils";
-import {
-  OykButton,
-  OykForm,
-  OykFormField,
-  OykFormMessage,
-  OykLink,
-} from "@/components/common";
+import { OykButton, OykForm, OykFormField, OykFormMessage, OykLink } from "@/components/common";
 
 export default function Login() {
   const { n } = useRouter();
@@ -86,11 +80,7 @@ export default function Login() {
           </p>
         </div>
 
-        <OykForm
-          className="oyk-auth-form"
-          onSubmit={handleSubmit}
-          isLoading={isLoading}
-        >
+        <OykForm className="oyk-auth-form" onSubmit={handleSubmit} isLoading={isLoading}>
           <OykFormField
             label={t("Username")}
             name="username"
