@@ -9,7 +9,7 @@ import {
   OykForm,
   OykFormField,
   OykFormMessage,
-  Link,
+  OykLink,
 } from "@/components/common";
 
 export default function Login() {
@@ -80,9 +80,9 @@ export default function Login() {
           <h1 className="oyk-auth-header-title">Sign in to your account</h1>
           <p className="oyk-auth-header-subtitle">
             Or{" "}
-            <Link routeName="register" className="oyk-auth-header-subtitle">
+            <OykLink routeName="register" className="oyk-auth-header-subtitle">
               create a new account
-            </Link>
+            </OykLink>
           </p>
         </div>
 

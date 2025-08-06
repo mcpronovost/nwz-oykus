@@ -14,7 +14,7 @@ import {
   OykForm,
   OykFormField,
   OykFormMessage,
-  Link,
+  OykLink,
 } from "@/components/common";
 
 export default function Register() {
@@ -100,9 +100,9 @@ export default function Register() {
           <h1 className="oyk-auth-header-title">Create an account</h1>
           <p className="oyk-auth-header-subtitle">
             Or{" "}
-            <Link routeName="login" className="oyk-auth-header-subtitle">
+            <OykLink routeName="login" className="oyk-auth-header-subtitle">
               sign in to an existing account
-            </Link>
+            </OykLink>
           </p>
         </div>
 

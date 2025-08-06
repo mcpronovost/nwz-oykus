@@ -145,24 +145,24 @@ const { route, lang, history } = useRouter();
 A reusable navigation component that integrates with the router service:
 
 ```javascript
-import { Link } from "@/components/common";
+import { OykLink } from "@/components/common";
 
 // Basic usage
-<Link routeName="login">Login</Link>
+<OykLink routeName="login">Login</OykLink>
 
 // With parameters
-<Link routeName="world-rulebook" params={{ worldSlug: "fantasy" }}>
+<OykLink routeName="world-rulebook" params={{ worldSlug: "fantasy" }}>
   View Rulebook
-</Link>
+</OykLink>
 
 // With custom props
-<Link 
+<OykLink 
   routeName="about" 
   className="custom-link"
   disabled={false}
 >
   About Us
-</Link>
+</OykLink>
 ```
 
 **Features:**
@@ -184,18 +184,18 @@ import { Link } from "@/components/common";
 **Navigation Items:**
 ```javascript
 // In AppSidebar/NavItem.jsx
-<Link routeName={href} params={params} className="nav-link" disabled={disabled}>
+<OykLink routeName={href} params={params} className="nav-link" disabled={disabled}>
   <IconComponent size={18} />
   <span>{text}</span>
-</Link>
+</OykLink>
 ```
 
 **Menu Links:**
 ```javascript
 // In AppBar/Menu.jsx
-<Link routeName="about" className="menu-link">
+<OykLink routeName="about" className="menu-link">
   {t("About")}
-</Link>
+</OykLink>
 ```
 
 ## Route Structure

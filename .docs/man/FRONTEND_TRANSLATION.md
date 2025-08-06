@@ -420,9 +420,9 @@ function NavigationMenu() {
   
   return (
     <nav>
-      <Link routeName="home">{t("Home")}</Link>
-      <Link routeName="about">{t("About")}</Link>
-      <Link routeName="contact">{t("Contact")}</Link>
+      <OykLink routeName="home">{t("Home")}</OykLink>
+      <OykLink routeName="about">{t("About")}</OykLink>
+      <OykLink routeName="contact">{t("Contact")}</OykLink>
     </nav>
   );
 }

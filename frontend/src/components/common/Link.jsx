@@ -1,7 +1,7 @@
 import { useRouter } from "@/services/router";
 import { buildRoutePath } from "@/services/router/utils";
 
-export default function Link({ children, routeName, params = {}, disabled = false, ...props }) {
+export default function OykLink({ children, routeName, params = {}, disabled = false, ...props }) {
   const { n, lang } = useRouter();
 
   const href = !disabled ? `/${lang}/${buildRoutePath(routeName, lang, params) || ""}` : "/";
