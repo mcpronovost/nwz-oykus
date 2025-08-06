@@ -1,10 +1,10 @@
-import { User, LogOut, ListTodo, Orbit, Users } from "lucide-react";
+import { LogOut, ListTodo, Orbit, Users } from "lucide-react";
 
 import { api } from "@/services/api";
 import { useRouter } from "@/services/router";
 import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
-import { OykDropdown } from "@/components/common";
+import { OykAvatar, OykDropdown } from "@/components/common";
 
 export default function AppBarUser() {
   const { n } = useRouter();
@@ -27,9 +27,12 @@ export default function AppBarUser() {
             <span className="oyk-app-bar-user-button-name">
               {currentUser.playername}
             </span>
-            <span className="oyk-app-bar-user-button-avatar">
-              <User size={18} color="var(--oyk-c-primary-fg)" />
-            </span>
+            <OykAvatar
+              size={36}
+              src={currentUser.avatar}
+              name={currentUser.playername}
+              abbr={currentUser.abbr}
+            />
           </button>
         }
         menu={[
