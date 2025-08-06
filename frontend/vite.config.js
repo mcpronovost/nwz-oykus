@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     server: {
-      port: 5173,
+      port: 3000,
       host: true,
       watch: { usePolling: watchUsePolling },
       proxy: {
