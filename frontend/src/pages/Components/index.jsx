@@ -1,8 +1,16 @@
 import "@/styles/page/_components.scss";
-import { Orbit } from "lucide-react";
 
 import { useTranslation } from "@/services/translation";
-import { OykAlert, OykAvatar, OykButton, OykChip, OykFeedback, OykGrid, OykHeading } from "@/components/common";
+import {
+  OykAlert,
+  OykAvatar,
+  OykButton,
+  OykCard,
+  OykChip,
+  OykFeedback,
+  OykGrid,
+  OykHeading,
+} from "@/components/common";
 import ComponentApiTable from "./ComponentApiTable";
 
 export default function Components() {
@@ -18,22 +26,19 @@ export default function Components() {
             <span style={{ color: "var(--oyk-c-primary)" }}>Primary</span>
             <span style={{ color: "var(--oyk-c-danger)" }}>Danger</span>
             <span style={{ color: "var(--oyk-c-success)" }}>Success</span>
-            <div
+            <OykCard
               style={{
-                backgroundColor: "var(--oyk-card-bg)",
-                borderRadius: "var(--oyk-radius)",
                 display: "flex",
                 flexDirection: "row",
                 gap: "16px",
                 width: "100%",
-                padding: "16px",
               }}
             >
               <span style={{ color: "var(--oyk-card-fg)" }}>Card default text</span>
               <span style={{ color: "var(--oyk-c-primary)" }}>Primary</span>
               <span style={{ color: "var(--oyk-c-danger)" }}>Danger</span>
               <span style={{ color: "var(--oyk-c-success)" }}>Success</span>
-            </div>
+            </OykCard>
           </div>
         </article>
 

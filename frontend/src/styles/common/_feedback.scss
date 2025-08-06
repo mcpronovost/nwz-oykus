@@ -19,7 +19,7 @@
     color: var(--oyk-core-fg);
 
     &.oyk-feedback-ghost {
-      background-color: color-mix(in srgb, var(--oyk-core-bg) 10%, transparent);
+      background-color: color-mix(in srgb, var(--oyk-core-fg) 3%, transparent);
     }
   }
 

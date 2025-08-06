@@ -4,7 +4,7 @@ import { api } from "@/services/api";
 import { useRouter } from "@/services/router";
 import { useTranslation } from "@/services/translation";
 import { validateUsername, validatePassword, validateEmail, validatePlayername } from "@/utils";
-import { OykButton, OykForm, OykFormField, OykFormMessage, OykLink } from "@/components/common";
+import { OykButton, OykCard, OykForm, OykFormField, OykFormMessage, OykLink } from "@/components/common";
 
 export default function Register() {
   const { n } = useRouter();
@@ -94,63 +94,64 @@ export default function Register() {
             </OykLink>
           </p>
         </div>
-
-        <OykForm className="oyk-auth-form" onSubmit={handleSubmit} isLoading={isLoading}>
-          <OykFormField
-            label={t("Username")}
-            name="username"
-            defaultValue={formData.username}
-            onChange={handleChange}
-            hasError={hasError?.fields?.username}
-            required
-            block
-          />
-          <OykFormField
-            label={t("Password")}
-            name="password"
-            type="password"
-            defaultValue={formData.password}
-            onChange={handleChange}
-            hasError={hasError?.fields?.password}
-            required
-            block
-          />
-          <OykFormField
-            label={t("Confirm Password")}
-            name="confirmPassword"
-            type="password"
-            defaultValue={formData.confirmPassword}
-            onChange={handleChange}
-            hasError={hasError?.fields?.confirmPassword}
-            required
-            block
-          />
-          <OykFormField
-            label={t("Email")}
-            name="email"
-            type="email"
-            defaultValue={formData.email}
-            onChange={handleChange}
-            hasError={hasError?.fields?.email}
-            required
-            block
-          />
-          <OykFormField
-            label={t("Playername")}
-            name="playername"
-            defaultValue={formData.playername}
-            onChange={handleChange}
-            hasError={hasError?.fields?.playername}
-            required
-            block
-          />
-          {hasError?.message && <OykFormMessage hasError={hasError?.message} />}
-          <div className="oyk-form-actions">
-            <OykButton type="submit" color="primary" disabled={isLoading} block>
-              {isLoading ? "Creating account..." : "Create account"}
-            </OykButton>
-          </div>
-        </OykForm>
+        <OykCard>
+          <OykForm className="oyk-auth-form" onSubmit={handleSubmit} isLoading={isLoading}>
+            <OykFormField
+              label={t("Username")}
+              name="username"
+              defaultValue={formData.username}
+              onChange={handleChange}
+              hasError={hasError?.fields?.username}
+              required
+              block
+            />
+            <OykFormField
+              label={t("Password")}
+              name="password"
+              type="password"
+              defaultValue={formData.password}
+              onChange={handleChange}
+              hasError={hasError?.fields?.password}
+              required
+              block
+            />
+            <OykFormField
+              label={t("Confirm Password")}
+              name="confirmPassword"
+              type="password"
+              defaultValue={formData.confirmPassword}
+              onChange={handleChange}
+              hasError={hasError?.fields?.confirmPassword}
+              required
+              block
+            />
+            <OykFormField
+              label={t("Email")}
+              name="email"
+              type="email"
+              defaultValue={formData.email}
+              onChange={handleChange}
+              hasError={hasError?.fields?.email}
+              required
+              block
+            />
+            <OykFormField
+              label={t("Playername")}
+              name="playername"
+              defaultValue={formData.playername}
+              onChange={handleChange}
+              hasError={hasError?.fields?.playername}
+              required
+              block
+            />
+            {hasError?.message && <OykFormMessage hasError={hasError?.message} />}
+            <div className="oyk-form-actions">
+              <OykButton type="submit" color="primary" disabled={isLoading} block>
+                {isLoading ? "Creating account..." : "Create account"}
+              </OykButton>
+            </div>
+          </OykForm>
+        </OykCard>
       </div>
     </section>
   );
