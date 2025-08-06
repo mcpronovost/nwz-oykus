@@ -88,7 +88,8 @@ class User(db.Model):
         }
         if include_characters:
             data["characters"] = [
-                character.to_dict(include_user=False) for character in self.characters
+                character.to_dict(include_user=False)
+                for character in self.characters
             ]
         return data
 

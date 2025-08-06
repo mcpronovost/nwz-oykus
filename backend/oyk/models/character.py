@@ -37,7 +37,9 @@ class Character(db.Model):
     # Stats
     resistance_physical = db.Column(db.SmallInteger, default=0, nullable=False)
     resistance_mental = db.Column(db.SmallInteger, default=0, nullable=False)
-    resistance_spiritual = db.Column(db.SmallInteger, default=0, nullable=False)
+    resistance_spiritual = db.Column(
+        db.SmallInteger, default=0, nullable=False
+    )
 
     attribute_strength = db.Column(db.Integer, default=0, nullable=False)
     attribute_constitution = db.Column(db.Integer, default=0, nullable=False)
@@ -105,13 +107,17 @@ class Character(db.Model):
                 raise ValueError("Abbreviation must be uppercase letters")
         # Resistances
         self.resistance_physical = (
-            0 if self.resistance_physical is None else self.resistance_physical
+            0 if self.resistance_physical is None
+            else self.resistance_physical
         )
         self.resistance_mental = (
-            0 if self.resistance_mental is None else self.resistance_mental
+            0 if self.resistance_mental is None
+            else self.resistance_mental
         )
         self.resistance_spiritual = (
-            0 if self.resistance_spiritual is None else self.resistance_spiritual
+            0
+            if self.resistance_spiritual is None
+            else self.resistance_spiritual
         )
         if self.resistance_physical < 0 or self.resistance_physical > 10:
             raise ValueError("Physical Resistance must be between 0 and 10")
@@ -119,23 +125,35 @@ class Character(db.Model):
             raise ValueError("Mental Resistance must be between 0 and 10")
         if self.resistance_spiritual < 0 or self.resistance_spiritual > 10:
             raise ValueError("Spiritual Resistance must be between 0 and 10")
-        if (self.resistance_physical + self.resistance_mental + self.resistance_spiritual) > 10:
-            raise ValueError("The sum of resistances must be less than or equal to 10")
+        if (
+            self.resistance_physical
+            + self.resistance_mental
+            + self.resistance_spiritual
+        ) > 10:
+            raise ValueError(
+                "The sum of resistances must be less than or equal to 10"
+            )
         # Attributes
         self.attribute_strength = (
             0 if self.attribute_strength is None else self.attribute_strength
         )
         self.attribute_constitution = (
-            0 if self.attribute_constitution is None else self.attribute_constitution
+            0
+            if self.attribute_constitution is None
+            else self.attribute_constitution
         )
         self.attribute_dexterity = (
             0 if self.attribute_dexterity is None else self.attribute_dexterity
         )
         self.attribute_perception = (
-            0 if self.attribute_perception is None else self.attribute_perception
+            0
+            if self.attribute_perception is None
+            else self.attribute_perception
         )
         self.attribute_intelligence = (
-            0 if self.attribute_intelligence is None else self.attribute_intelligence
+            0
+            if self.attribute_intelligence is None
+            else self.attribute_intelligence
         )
         self.attribute_willpower = (
             0 if self.attribute_willpower is None else self.attribute_willpower
