@@ -24,7 +24,7 @@ export default function OykAvatar({
       {src ? (
         <img src={src} alt={name} className="oyk-avatar-img" />
       ) : abbr || name ? (
-        <span className="oyk-avatar-abbr" style={{ fontSize: size * 0.25 }}>
+        <span className="oyk-avatar-abbr" style={{ fontSize: size * 0.35 }}>
           {abbr || name.charAt(0).toUpperCase()}
         </span>
       ) : (
