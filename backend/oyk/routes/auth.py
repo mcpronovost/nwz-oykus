@@ -99,7 +99,23 @@ def register():
                 jsonify(
                     {
                         "success": False,
-                        "message": "User with this email, username, or playername already exists",
+                        "fields": {
+                            "username": (
+                                "User with this username already exists"
+                                if existing_user.username == username
+                                else None
+                            ),
+                            "email": (
+                                "User with this email already exists"
+                                if existing_user.email == email
+                                else None
+                            ),
+                            "playername": (
+                                "User with this playername already exists"
+                                if existing_user.playername == playername
+                                else None
+                            ),
+                        },
                     }
                 ),
                 400,
@@ -163,7 +179,18 @@ def login():
                 jsonify(
                     {
                         "success": False,
-                        "message": "Username and password are required",
+                        "fields": {
+                            "username": (
+                                "Username is required"
+                                if not username
+                                else None
+                            ),
+                            "password": (
+                                "Password is required"
+                                if not password
+                                else None
+                            ),
+                        },
                     }
                 ),
                 400,
@@ -177,7 +204,10 @@ def login():
                 jsonify(
                     {
                         "success": False,
-                        "message": "Invalid username or password",
+                        "fields": {
+                            "username": "Invalid username or password",
+                            "password": "Invalid username or password",
+                        },
                     }
                 ),
                 401,
@@ -200,7 +230,10 @@ def login():
                 jsonify(
                     {
                         "success": False,
-                        "message": "Invalid username or password",
+                        "fields": {
+                            "username": "Invalid username or password",
+                            "password": "Invalid username or password",
+                        },
                     }
                 ),
                 401,
@@ -293,7 +326,7 @@ def verify_token():
         )
 
 
-@auth_bp.route("/clean", methods=["GET"])
+@auth_bp.route("/dev-clean", methods=["GET"])
 @require_dev
 def auth_clean():
     """Clean up the auth database for development purposes."""
