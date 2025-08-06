@@ -12,7 +12,7 @@ def require_debug(f):
 
     Usage:
         @app.route('/debug-endpoint')
-        @debug_only
+        @require_debug
         def debug_function():
             return "This is only available in debug mode"
     """
@@ -32,7 +32,7 @@ def require_dev(f):
 
     Usage:
         @app.route('/dev-endpoint')
-        @dev_only
+        @require_dev
         def dev_function():
             return "This is only available in development"
     """

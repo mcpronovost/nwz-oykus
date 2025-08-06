@@ -5,7 +5,7 @@ from flask_cors import CORS
 from config import config
 from oyk.extensions import db, migrate
 
-from oyk.routes import health_bp, auth_bp
+from oyk.routes import auth_bp, character_bp, health_bp
 
 
 def create_app(config_name="default"):
@@ -33,8 +33,9 @@ def create_app(config_name="default"):
     migrate.init_app(app, db)
 
     # Register blueprints
-    app.register_blueprint(health_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(character_bp)
+    app.register_blueprint(health_bp)
 
     return app
 
@@ -42,9 +43,7 @@ def create_app(config_name="default"):
 app = create_app()
 
 # Configure static folder for the built frontend
-frontend_dist_path = os.path.join(
-    os.path.dirname(__file__), "frontend", "dist"
-)
+frontend_dist_path = os.path.join(os.path.dirname(__file__), "frontend", "dist")
 if os.path.exists(frontend_dist_path):
     app.static_folder = frontend_dist_path
     app.static_url_path = ""

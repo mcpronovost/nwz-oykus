@@ -54,6 +54,14 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True, index=True)
     is_admin = db.Column(db.Boolean, default=False)
 
+    # Relationships
+    characters = db.relationship(
+        "Character",
+        back_populates="user",
+        lazy="select",
+        cascade="all, delete-orphan",
+    )
+
     # Important Dates
     created_at = db.Column(
         db.DateTime,
@@ -72,12 +80,17 @@ class User(db.Model):
     def __str__(self):
         return self.playername
 
-    def to_dict(self):
-        return {
+    def to_dict(self, include_characters=True):
+        data = {
             "id": self.id,
             "playername": self.playername,
             "abbr": self.abbr,
         }
+        if include_characters:
+            data["characters"] = [
+                character.to_dict(include_user=False) for character in self.characters
+            ]
+        return data
 
     def validate(self):
         if self.is_abbr_auto:
