@@ -100,6 +100,15 @@ class ApiService {
     }
   }
 
+  async get(url, options = {}) {
+    try {
+      const response = await this.request(url, options);
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   // Check if user is authenticated
   isAuthenticated() {
     return authStore.isAuthenticated();
