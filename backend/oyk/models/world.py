@@ -52,6 +52,18 @@ class World(db.Model):
         lazy="dynamic",
         cascade="all, delete-orphan",
     )
+    tasks = db.relationship(
+        "Task",
+        back_populates="world",
+        lazy="dynamic",
+        cascade="all, delete-orphan",
+    )
+    task_status = db.relationship(
+        "TaskStatus",
+        back_populates="world",
+        lazy="dynamic",
+        cascade="all, delete-orphan",
+    )
 
     # Important Dates
     created_at = db.Column(
