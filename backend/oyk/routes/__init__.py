@@ -4,10 +4,12 @@ from flask import Blueprint
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 player_bp = Blueprint("player", __name__, url_prefix="/api/player")
 character_bp = Blueprint("character", __name__, url_prefix="/api/character")
+world_bp = Blueprint("world", __name__, url_prefix="/api/world")
 health_bp = Blueprint("health", __name__, url_prefix="/api/health")
 
 # Import route modules
 from . import auth
 from . import player
 from . import character
+from . import world
 from . import health

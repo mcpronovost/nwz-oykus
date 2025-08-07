@@ -69,6 +69,12 @@ class User(db.Model):
         lazy="select",
         cascade="all, delete-orphan",
     )
+    worlds = db.relationship(
+        "World",
+        back_populates="owner",
+        lazy="select",
+        cascade="all, delete-orphan",
+    )
 
     # Important Dates
     created_at = db.Column(
@@ -88,7 +94,7 @@ class User(db.Model):
     def __str__(self):
         return self.playername
 
-    def to_dict(self, include_characters=True):
+    def to_dict(self, include_characters=True, include_worlds=True):
         data = {
             "id": self.id,
             "playername": self.playername,
@@ -97,7 +103,13 @@ class User(db.Model):
         }
         if include_characters:
             data["characters"] = [
-                character.to_dict(include_user=False) for character in self.characters
+                character.to_dict(include_user=False)
+                for character in self.characters
+            ]
+        if include_worlds:
+            data["worlds"] = [
+                world.to_dict(include_owner=False)
+                for world in self.worlds
             ]
         return data
 

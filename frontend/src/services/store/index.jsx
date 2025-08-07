@@ -101,15 +101,15 @@ export function StoreProvider({ children }) {
     const styleSheet = document.createElement("style");
     styleSheet.id = "oyk-world-theme";
 
-    if (currentWorld?.themes?.[0]) {
-      const theme = currentWorld.themes[0];
+    if (currentWorld?.theme) {
+      const theme = currentWorld.theme;
       styleSheet.textContent = `
         :root {
           ${theme.coreBg ? `--oyk-core-bg: ${theme.coreBg};` : ""}
           ${theme.coreFg ? `--oyk-core-fg: ${theme.coreFg};` : ""}
           ${theme.coreDivider ? `--oyk-core-divider: ${theme.coreDivider};` : ""}
-          ${theme.primary ? `--oyk-c-primary: ${theme.primary};` : ""}
-          ${theme.primaryFg ? `--oyk-c-primary-fg: ${theme.primaryFg};` : ""}
+          ${theme.c_primary ? `--oyk-c-primary: ${theme.c_primary};` : ""}
+          ${theme.c_primary_fg ? `--oyk-c-primary-fg: ${theme.c_primary_fg};` : ""}
           ${theme.cDanger ? `--oyk-danger: ${theme.cDanger};` : ""}
           ${theme.cWarning ? `--oyk-warning: ${theme.cWarning};` : ""}
           ${theme.cSuccess ? `--oyk-success: ${theme.cSuccess};` : ""}
