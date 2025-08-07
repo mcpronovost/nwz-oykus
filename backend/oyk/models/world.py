@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from oyk.extensions import db
+from oyk.utils import get_abbr, get_slug
 
 
 class World(db.Model):
@@ -23,7 +24,7 @@ class World(db.Model):
         lazy="joined",
     )
 
-    # Character Identity
+    # World Identity
     name = db.Column(
         db.String(120),
         nullable=False,
@@ -33,6 +34,12 @@ class World(db.Model):
         nullable=False,
     )
     is_abbr_auto = db.Column(db.Boolean, default=True)
+    slug = db.Column(
+        db.String(120),
+        nullable=False,
+        unique=True,
+    )
+    is_slug_auto = db.Column(db.Boolean, default=True)
 
     # Status
     is_active = db.Column(db.Boolean, default=True, index=True)
@@ -69,6 +76,7 @@ class World(db.Model):
             "id": self.id,
             "name": self.name,
             "abbr": self.abbr,
+            "slug": self.slug,
         }
         if include_owner:
             data["owner"] = self.owner.to_dict(include_worlds=False)
@@ -79,7 +87,7 @@ class World(db.Model):
 
     def validate(self):
         if self.is_abbr_auto:
-            self.abbr = self.name[0].upper()
+            self.abbr = get_abbr(self.name)
         else:
             if not self.abbr:
                 raise ValueError("Abbreviation is required")
@@ -87,6 +95,11 @@ class World(db.Model):
                 raise ValueError("Abbreviation must be 3 characters or less")
             if not self.abbr.isalpha() or not self.abbr.isupper():
                 raise ValueError("Abbreviation must be uppercase letters")
+        if self.is_slug_auto:
+            self.slug = get_slug(self.name, self, World)
+        else:
+            if not self.slug:
+                raise ValueError("Slug is required")
 
     def save(self):
         self.validate()
