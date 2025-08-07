@@ -2,6 +2,7 @@ import React from "react";
 
 import { PLAYER_ROUTES } from "./player";
 import { WORLD_ROUTES } from "./world";
+import { SETTINGS_ROUTES } from "./settings";
 
 export const ROUTES = [
   {
@@ -54,6 +55,7 @@ export const ROUTES = [
   },
   ...PLAYER_ROUTES,
   ...WORLD_ROUTES,
+  ...SETTINGS_ROUTES,
   {
     name: "components",
     component: React.lazy(() => import("../../../pages/Components")),

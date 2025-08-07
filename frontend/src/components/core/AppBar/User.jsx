@@ -39,8 +39,7 @@ export default function AppBarUser() {
           {
             label: t("Your worlds"),
             icon: <Orbit size={18} />,
-            disabled: true,
-            onClick: () => {},
+            onClick: () => n("settings-worlds"),
           },
           {
             label: t("Your characters"),
