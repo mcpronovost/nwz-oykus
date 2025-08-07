@@ -144,6 +144,32 @@ def worlds_dev_create():
         )
 
 
+@world_bp.route("/dev-update", methods=["GET"])
+@require_dev
+def worlds_dev_update():
+    """Update a test world for development purposes."""
+    try:
+        world = World.query.first()
+        worldTheme = WorldTheme.query.filter_by(world_id=world.id).first()
+        worldTheme.c_primary = "#227990"
+        worldTheme.c_primary_fg = "#ffffff"
+        worldTheme.is_active = True
+        worldTheme.validate()
+        worldTheme.save()
+        world.validate()
+        world.save()
+        return (
+            jsonify({"success": True, "message": "Test world updated"}),
+            200,
+        )
+    except Exception as e:
+        print(e)
+        return (
+            jsonify({"success": False, "message": f"{e}"}),
+            500,
+        )
+
+
 @world_bp.route("/dev-clean", methods=["GET"])
 @require_dev
 def worlds_clean():

@@ -8,12 +8,9 @@
     gap: 8px;
 
     &-item {
-      background-color: var(--oyk-card-bg);
-      border-radius: var(--oyk-radius);
       flex: 1;
       min-height: 25vh;
       min-width: 250px;
-      padding: 0;
 
       &-header {
         color: var(--oyk-card-fg);

@@ -9,7 +9,7 @@ import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
 import AppNotAuthorized from "@/components/core/AppNotAuthorized";
 import AppNotFound from "@/components/core/AppNotFound";
-import { OykButton, OykDropdown, OykFeedback, OykGrid, OykHeading, OykLoading } from "@/components/common";
+import { OykButton, OykCard, OykDropdown, OykFeedback, OykGrid, OykHeading, OykLoading } from "@/components/common";
 
 import ModalStatusCreate from "./modals/ModalStatusCreate";
 import ModalTaskCreate from "./modals/ModalTaskCreate";
@@ -126,7 +126,7 @@ function Tasks() {
         <DndProvider backend={HTML5Backend}>
           <OykGrid className="oyk-tasks-status">
             {tasks.map((status) => (
-              <article key={status.name} className="oyk-tasks-status-item">
+              <OykCard key={status.name} className="oyk-tasks-status-item" nop>
                 <TaskStatus status={status} statusOptions={statusOptions} onDrop={handleDrop} onTasksUpdate={getTasks}>
                   <section
                     className={`oyk-tasks-status-item-content ${
@@ -145,7 +145,7 @@ function Tasks() {
                     ))}
                   </section>
                 </TaskStatus>
-              </article>
+              </OykCard>
             ))}
           </OykGrid>
         </DndProvider>
