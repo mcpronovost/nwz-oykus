@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { api } from "@/services/api";
 import { useStore } from "@/services/store";
@@ -20,11 +20,7 @@ export default function ModalStatusCreate({
 
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    color: "",
-    sortOrder: "",
-  });
+  const [formData, setFormData] = useState({});
 
   const handleSubmit = async () => {
     if (isLoading) return;
@@ -50,6 +46,14 @@ export default function ModalStatusCreate({
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    setFormData({
+      name: "",
+      color: "",
+      sortOrder: "",
+    });
+  }, [isOpen]);
 
   return (
     <Modal title={t("Create a new status")} isOpen={isOpen} onClose={onClose}>
