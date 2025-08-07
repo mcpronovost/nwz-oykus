@@ -56,7 +56,7 @@ class ApiService {
       }
 
       if (response.status === 401) {
-        authStore.logout();
+        // authStore.logout();
         throw response;
       }
 

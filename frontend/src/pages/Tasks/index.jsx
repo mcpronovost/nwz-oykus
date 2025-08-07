@@ -31,15 +31,20 @@ function Tasks() {
     setIsLoading(true);
     setHasError(null);
     try {
-      const data = await api.getTasks(currentWorld.id);
-      setTasks(data);
-      setStatusOptions(data.map((s) => ({
-        label: s.name,
-        value: s.id,
-      })));
-    } catch (error) {
-      if ([401, 403].includes(error?.status)) {
-        setHasError(error?.status);
+      const data = await api.getTasks(currentWorld.slug);
+      if (!data.success) {
+        throw new Error(data.message || t("An error occurred while fetching tasks"));
+      }
+      setTasks(data.tasks);
+      setStatusOptions(
+        data.status.map((s) => ({
+          label: s.name,
+          value: s.id,
+        }))
+      );
+    } catch (e) {
+      if ([401, 403].includes(e?.status)) {
+        setHasError(e?.status);
       } else {
         setHasError(t("An error occurred while fetching tasks"));
       }
@@ -48,20 +53,9 @@ function Tasks() {
     }
   };
 
-  const updateTaskStatus = async (
-    taskId,
-    newStatusId,
-    oldStatusName,
-    newStatusName
-  ) => {
+  const updateTaskStatus = async (taskId, newStatusId, oldStatusName, newStatusName) => {
     try {
-      await api.updateTaskStatus(
-        currentWorld.id,
-        taskId,
-        newStatusId,
-        oldStatusName,
-        newStatusName
-      );
+      await api.updateTaskStatus(currentWorld.id, taskId, newStatusId, oldStatusName, newStatusName);
       await getTasks();
     } catch (error) {
       console.error("Error updating task status:", error);
@@ -108,10 +102,7 @@ function Tasks() {
 
   return (
     <section className="oyk-page oyk-tasks">
-      <ModalStatusCreate
-        isOpen={isModalStatusCreateOpen}
-        onClose={handleCloseModalStatusCreate}
-      />
+      <ModalStatusCreate isOpen={isModalStatusCreateOpen} onClose={handleCloseModalStatusCreate} />
       <ModalTaskCreate
         isOpen={isModalTaskCreateOpen}
         onClose={handleCloseModalTaskCreate}
@@ -122,52 +113,45 @@ function Tasks() {
         description={t("Tasks description")}
         actions={
           <>
-            {tasks.length > 0 && (<OykButton
-              color="primary"
-              icon={Plus}
-              action={handleTaskCreateClick}
-            >
-              {t("Create a new task")}
-            </OykButton>)}
+            {tasks.length > 0 && (
+              <OykButton color="primary" icon={Plus} action={handleTaskCreateClick}>
+                {t("Create a new task")}
+              </OykButton>
+            )}
             <OykButton icon={Settings} outline />
           </>
         }
       />
-      {tasks.length > 0 ? (<DndProvider backend={HTML5Backend}>
-        <OykGrid className="oyk-tasks-status">
-          {tasks.map((status) => (
-            <article key={status.name} className="oyk-tasks-status-item">
-              <TaskStatus
-                status={status}
-                statusOptions={statusOptions}
-                onDrop={handleDrop}
-                onTasksUpdate={getTasks}
-              >
-                <section
-                  className={`oyk-tasks-status-item-content ${
-                    status.isCompleted
-                      ? "oyk-tasks-status-item-content-completed"
-                      : ""
-                  }`}
-                >
-                  {status.tasks.map((task) => (
-                    <TaskCard
-                      key={task.id}
-                      task={task}
-                      isCompleted={status.isCompleted}
-                      statusId={status.id}
-                      statusName={status.name}
-                      onCloseRefresh={getTasks}
-                    />
-                  ))}
-                </section>
-              </TaskStatus>
-            </article>
-          ))}
-        </OykGrid>
-      </DndProvider>) : isLoading ? (
+      {tasks.length > 0 ? (
+        <DndProvider backend={HTML5Backend}>
+          <OykGrid className="oyk-tasks-status">
+            {tasks.map((status) => (
+              <article key={status.name} className="oyk-tasks-status-item">
+                <TaskStatus status={status} statusOptions={statusOptions} onDrop={handleDrop} onTasksUpdate={getTasks}>
+                  <section
+                    className={`oyk-tasks-status-item-content ${
+                      status.isCompleted ? "oyk-tasks-status-item-content-completed" : ""
+                    }`}
+                  >
+                    {status.tasks.map((task) => (
+                      <TaskCard
+                        key={task.id}
+                        task={task}
+                        isCompleted={status.isCompleted}
+                        statusId={status.id}
+                        statusName={status.name}
+                        onCloseRefresh={getTasks}
+                      />
+                    ))}
+                  </section>
+                </TaskStatus>
+              </article>
+            ))}
+          </OykGrid>
+        </DndProvider>
+      ) : isLoading ? (
         <OykLoading />
-      ) : (
+      ) : !hasError ? (
         <OykGrid className="oyk-tasks-empty">
           <OykFeedback
             title={t("No tasks found")}
@@ -175,13 +159,19 @@ function Tasks() {
             icon={Frown}
             ghost
           >
-            <OykButton
-              color="primary"
-              action={handleStatusCreateClick}
-            >
+            <OykButton color="primary" action={handleStatusCreateClick}>
               {t("Create a new status")}
             </OykButton>
           </OykFeedback>
+        </OykGrid>
+      ) : (
+        <OykGrid>
+          <OykFeedback
+            title={hasError || t("An error occurred")}
+            message={t("Please try again later")}
+            variant="danger"
+            ghost
+          />
         </OykGrid>
       )}
     </section>

@@ -1,10 +1,30 @@
 from flask import jsonify
 
-from oyk.decorators import require_dev
+from oyk.decorators import require_auth, require_dev
 from oyk.extensions import db
+from oyk.routes import world_bp
 from oyk.models.user import User
 from oyk.models.world import World, WorldTheme
-from oyk.routes import world_bp
+
+
+@world_bp.route("/<world_slug>/tasks", methods=["GET"])
+@require_auth
+def world_tasks_get(world_slug):
+    """Get all tasks for a world."""
+    world = World.query.filter_by(slug=world_slug).first()
+    if not world:
+        return jsonify({"success": False, "message": "World not found"}), 404
+    tasks = []
+    return (
+        jsonify(
+            {
+                "success": True,
+                "tasks": [task.to_dict() for task in tasks],
+                "status": [],
+            }
+        ),
+        200,
+    )
 
 
 @world_bp.route("/dev-create", methods=["GET"])
@@ -18,6 +38,8 @@ def worlds_dev_create():
             name="Qalatlán",
             abbr="Q",
             is_abbr_auto=True,
+            slug="qalatan",
+            is_slug_auto=True,
         )
         world.validate()
         world.save()
