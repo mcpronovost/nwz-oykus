@@ -5,7 +5,7 @@ export const SETTINGS_ROUTES = [
     name: "settings",
     component: React.lazy(() => import("../../../pages/Error404")),
     paths: {
-      fr: "paramètres",
+      fr: "parametres",
       en: "settings",
     },
     children: [
