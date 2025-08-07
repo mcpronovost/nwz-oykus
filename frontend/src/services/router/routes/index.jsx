@@ -3,6 +3,7 @@ import React from "react";
 import { PLAYER_ROUTES } from "./player";
 import { WORLD_ROUTES } from "./world";
 import { SETTINGS_ROUTES } from "./settings";
+import { DEV_ROUTES } from "./dev";
 
 export const ROUTES = [
   {
@@ -56,14 +57,7 @@ export const ROUTES = [
   ...PLAYER_ROUTES,
   ...WORLD_ROUTES,
   ...SETTINGS_ROUTES,
-  {
-    name: "components",
-    component: React.lazy(() => import("../../../pages/Components")),
-    paths: {
-      fr: "composants",
-      en: "components",
-    },
-  },
+  ...DEV_ROUTES,
   {
     name: "404",
     component: React.lazy(() => import("../../../pages/Error404")),

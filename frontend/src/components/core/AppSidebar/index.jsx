@@ -8,6 +8,7 @@ import {
   ShieldAlert,
   Users,
   LifeBuoy,
+  Pickaxe,
 } from "lucide-react";
 
 import { useStore } from "@/services/store";
@@ -73,7 +74,8 @@ export default function AppSidebar() {
         <nav className="oyk-app-sidebar-nav">
           <ul className="oyk-app-sidebar-nav-list">
             <OykNavItem icon={Settings} text={t("Settings")} href="settings" />
-            <OykNavItem icon={Blocks} text={t("Components")} href="components" />
+            <OykNavItem icon={Blocks} text={t("Components")} href="dev-components" />
+            <OykNavItem icon={Pickaxe} text={t("Quests")} href="dev-quests" />
           </ul>
         </nav>
       </footer>
