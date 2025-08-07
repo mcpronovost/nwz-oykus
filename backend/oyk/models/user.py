@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 
 from oyk.extensions import db
+from oyk.utils import get_abbr, get_slug
 
 
 class User(db.Model):
@@ -43,6 +44,13 @@ class User(db.Model):
         nullable=False,
     )
     is_abbr_auto = db.Column(db.Boolean, default=True)
+    slug = db.Column(
+        db.String(120),
+        unique=True,
+        nullable=False,
+        index=True,
+    )
+    is_slug_auto = db.Column(db.Boolean, default=True)
 
     # Limits
     limit_worlds = db.Column(db.Integer, default=2)
@@ -85,24 +93,29 @@ class User(db.Model):
             "id": self.id,
             "playername": self.playername,
             "abbr": self.abbr,
+            "slug": self.slug,
         }
         if include_characters:
             data["characters"] = [
-                character.to_dict(include_user=False)
-                for character in self.characters
+                character.to_dict(include_user=False) for character in self.characters
             ]
         return data
 
     def validate(self):
         if self.is_abbr_auto:
-            self.abbr = self.playername[0].upper()
+            self.abbr = get_abbr(self.playername)
         else:
             if not self.abbr:
-                raise ValueError("abbr is required")
+                raise ValueError("Abbreviation is required")
             if len(self.abbr) > 3:
-                raise ValueError("abbr must be 3 characters or less")
+                raise ValueError("Abbreviation must be 3 characters or less")
             if not self.abbr.isalpha() or not self.abbr.isupper():
-                raise ValueError("abbr must be uppercase letters")
+                raise ValueError("Abbreviation must be uppercase letters")
+        if self.is_slug_auto:
+            self.slug = get_slug(self.playername, self, User)
+        else:
+            if not self.slug:
+                raise ValueError("Slug is required")
 
     def save(self):
         self.validate()

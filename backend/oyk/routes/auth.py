@@ -6,7 +6,9 @@ from flask import request, jsonify, current_app, g
 from oyk.decorators import require_auth, require_dev
 from oyk.extensions import db
 from oyk.models.user import User
+from oyk.models.character import Character
 from oyk.routes import auth_bp
+from oyk.utils import get_abbr, get_slug
 
 
 def get_jwt_secret_key():
@@ -63,24 +65,10 @@ def register():
                         "success": False,
                         "message": "Please fill in all fields",
                         "fields": {
-                            "username": (
-                                "Username is required"
-                                if not username
-                                else None
-                            ),
-                            "password": (
-                                "Password is required"
-                                if not password
-                                else None
-                            ),
-                            "email": (
-                                "Email is required" if not email else None
-                            ),
-                            "playername": (
-                                "Playername is required"
-                                if not playername
-                                else None
-                            ),
+                            "username": ("Username is required" if not username else None),
+                            "password": ("Password is required" if not password else None),
+                            "email": ("Email is required" if not email else None),
+                            "playername": ("Playername is required" if not playername else None),
                         },
                     }
                 ),
@@ -89,9 +77,7 @@ def register():
 
         # Check if user already exists
         existing_user = User.query.filter(
-            (User.email == email)
-            | (User.username == username)
-            | (User.playername == playername)
+            (User.email == email) | (User.username == username) | (User.playername == playername)
         ).first()
 
         if existing_user:
@@ -122,9 +108,7 @@ def register():
             )
 
         # Hash password
-        hashed_password = bcrypt.hashpw(
-            password.encode("utf-8"), bcrypt.gensalt()
-        )
+        hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
         # Create new user
         user = User(
@@ -132,7 +116,10 @@ def register():
             username=username,
             password=hashed_password.decode("utf-8"),
             playername=playername,
+            abbr=get_abbr(playername),
             is_abbr_auto=True,
+            slug=get_slug(playername, None, User),
+            is_slug_auto=True,
         )
 
         # Save user to database
@@ -152,7 +139,8 @@ def register():
             ),
             201,
         )
-    except Exception:
+    except Exception as e:
+        print(e)
         return (
             jsonify({"success": False, "message": "Internal server error"}),
             500,
@@ -180,16 +168,8 @@ def login():
                     {
                         "success": False,
                         "fields": {
-                            "username": (
-                                "Username is required"
-                                if not username
-                                else None
-                            ),
-                            "password": (
-                                "Password is required"
-                                if not password
-                                else None
-                            ),
+                            "username": ("Username is required" if not username else None),
+                            "password": ("Password is required" if not password else None),
                         },
                     }
                 ),
@@ -216,16 +196,12 @@ def login():
         # Check if user is active
         if not user.is_active:
             return (
-                jsonify(
-                    {"success": False, "message": "Account is deactivated"}
-                ),
+                jsonify({"success": False, "message": "Account is deactivated"}),
                 401,
             )
 
         # Verify password
-        if not bcrypt.checkpw(
-            password.encode("utf-8"), user.password.encode("utf-8")
-        ):
+        if not bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
             return (
                 jsonify(
                     {
@@ -303,9 +279,7 @@ def verify_token():
 
         if not user or not user.is_active:
             return (
-                jsonify(
-                    {"success": False, "message": "Invalid or inactive user"}
-                ),
+                jsonify({"success": False, "message": "Invalid or inactive user"}),
                 401,
             )
 
@@ -331,14 +305,20 @@ def verify_token():
 def auth_clean():
     """Clean up the auth database for development purposes."""
     try:
+        # Delete all characters first to avoid foreign key constraint issues
+        Character.query.delete()
+        db.session.commit()
+
+        # Then delete all users
         User.query.delete()
         db.session.commit()
+
         return (
             jsonify({"success": True, "message": "Auth database cleaned"}),
             200,
         )
-    except Exception:
+    except Exception as e:
         return (
-            jsonify({"success": False, "message": "Internal server error"}),
+            jsonify({"success": False, "message": f"{e}"}),
             500,
         )
