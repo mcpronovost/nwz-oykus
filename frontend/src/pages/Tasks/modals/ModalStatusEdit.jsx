@@ -12,8 +12,8 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
   const [hasError, setHasError] = useState(null);
   const [formData, setFormData] = useState({
     name: status.name,
-    color: status.color,
-    sortOrder: status.sortOrder,
+    colour: status.colour,
+    sort_order: status.sort_order,
   });
 
   const handleSubmit = async () => {
@@ -21,8 +21,8 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
     setIsLoading(true);
     setHasError(null);
     try {
-      const data = await api.updateTasksStatus(currentWorld.id, status.id, formData);
-      if (!data.id) {
+      const data = await api.updateTasksStatus(currentWorld.slug, status.id, formData);
+      if (!data.success) {
         throw new Error(
           data.message || data.error || t("Failed to edit status")
         );
@@ -58,16 +58,16 @@ export default function ModalStatusEdit({ isOpen, onClose, status }) {
         />
         <OykFormField
           label={t("Colour")}
-          name="color"
+          name="colour"
           type="color"
-          defaultValue={formData.color}
+          defaultValue={formData.colour}
           onChange={handleChange}
         />
         <OykFormField
           label={t("Sort Order")}
-          name="sortOrder"
+          name="sort_order"
           type="number"
-          defaultValue={formData.sortOrder}
+          defaultValue={formData.sort_order}
           onChange={handleChange}
         />
         <OykFormMessage hasError={hasError} />

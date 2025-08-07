@@ -9,7 +9,7 @@ import { useStore } from "@/services/store";
 import { useTranslation } from "@/services/translation";
 import AppNotAuthorized from "@/components/core/AppNotAuthorized";
 import AppNotFound from "@/components/core/AppNotFound";
-import { OykButton, OykFeedback, OykGrid, OykHeading, OykLoading } from "@/components/common";
+import { OykButton, OykDropdown, OykFeedback, OykGrid, OykHeading, OykLoading } from "@/components/common";
 
 import ModalStatusCreate from "./modals/ModalStatusCreate";
 import ModalTaskCreate from "./modals/ModalTaskCreate";
@@ -36,12 +36,7 @@ function Tasks() {
         throw new Error(data.message || t("An error occurred while fetching tasks"));
       }
       setTasks(data.tasks);
-      setStatusOptions(
-        data.status.map((s) => ({
-          label: s.name,
-          value: s.id,
-        }))
-      );
+      setStatusOptions(data.status);
     } catch (e) {
       if ([401, 403].includes(e?.status)) {
         setHasError(e?.status);
@@ -118,7 +113,12 @@ function Tasks() {
                 {t("Create a new task")}
               </OykButton>
             )}
-            <OykButton icon={Settings} outline />
+            <OykDropdown
+              toggle={<OykButton icon={Settings} outline />}
+              menu={[
+                { label: t("New status"), onClick: handleStatusCreateClick },
+              ]}
+            />
           </>
         }
       />

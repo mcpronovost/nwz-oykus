@@ -1,9 +1,9 @@
 const tasks = {
-  getTasks: async (api, worldId) => {
-    if (!worldId) {
-      throw new Error("World ID is required");
+  getTasks: async (api, worldSlug) => {
+    if (!worldSlug) {
+      throw new Error("World slug is required");
     }
-    return await api.request(`/world/${worldId}/tasks`);
+    return await api.request(`/world/${worldSlug}/tasks`);
   },
 
   createTask: async (api, worldId, data) => {
@@ -45,21 +45,21 @@ const tasks = {
     });
   },
 
-  createTasksStatus: async (api, worldId, data) => {
-    if (!worldId || !data) {
-      throw new Error("World ID and data are required");
+  createTasksStatus: async (api, worldSlug, data) => {
+    if (!worldSlug || !data) {
+      throw new Error("World slug and data are required");
     }
-    return await api.request(`/world/${worldId}/tasks/status/create`, {
+    return await api.request(`/world/${worldSlug}/task-status/create`, {
       method: "POST",
       body: JSON.stringify(data),
     });
   },
 
-  updateTasksStatus: async (api, worldId, statusId, data) => {
-    if (!worldId || !statusId || !data) {
-      throw new Error("World ID, Status ID, and data are required");
+  updateTasksStatus: async (api, worldSlug, statusId, data) => {
+    if (!worldSlug || !statusId || !data) {
+      throw new Error("World slug, Status ID, and data are required");
     }
-    return await api.request(`/world/${worldId}/tasks/status/${statusId}/edit`, {
+    return await api.request(`/world/${worldSlug}/task-status/${statusId}/edit`, {
       method: "PATCH",
       body: JSON.stringify(data),
     });

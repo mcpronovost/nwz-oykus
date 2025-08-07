@@ -78,7 +78,7 @@ export default function TaskStatusHeader({
           <span
             className="oyk-tasks-status-item-header-icon-dot"
             style={{
-              backgroundColor: status.color || "var(--oyk-c-primary)",
+              backgroundColor: status.colour || "var(--oyk-c-primary)",
             }}
           />
         </div>
@@ -102,7 +102,7 @@ export default function TaskStatusHeader({
               </button>
             }
             menu={[
-              ...(["OWNER", "ADMINISTRATOR"].includes(currentWorld.staff.role)
+              ...(true
                 ? [
                     {
                       label: t("Edit"),

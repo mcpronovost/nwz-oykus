@@ -27,8 +27,8 @@ export default function ModalStatusCreate({
     setIsLoading(true);
     setHasError(null);
     try {
-      const data = await api.createTasksStatus(currentWorld.id, formData);
-      if (!data.id) {
+      const data = await api.createTasksStatus(currentWorld.slug, formData);
+      if (!data.success) {
         throw new Error(
           data.message || data.error || t("Failed to create status")
         );
@@ -50,8 +50,8 @@ export default function ModalStatusCreate({
   useEffect(() => {
     setFormData({
       name: "",
-      color: "",
-      sortOrder: "",
+      colour: "",
+      sort_order: "",
     });
   }, [isOpen]);
 
@@ -67,16 +67,16 @@ export default function ModalStatusCreate({
         />
         <OykFormField
           label={t("Color")}
-          name="color"
+          name="colour"
           type="color"
-          defaultValue={formData.color}
+          defaultValue={formData.colour}
           onChange={handleChange}
         />
         <OykFormField
           label={t("Sort order")}
-          name="sortOrder"
+          name="sort_order"
           type="number"
-          defaultValue={formData.sortOrder}
+          defaultValue={formData.sort_order}
           onChange={handleChange}
         />
         <OykFormMessage hasError={hasError} />
