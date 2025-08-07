@@ -31,7 +31,7 @@ export default function AppBarUser() {
         menu={[
           {
             label: t("Your profile"),
-            onClick: () => {},
+            onClick: () => n("player-profile", { playerSlug: currentUser.slug }),
           },
           {
             divider: true,

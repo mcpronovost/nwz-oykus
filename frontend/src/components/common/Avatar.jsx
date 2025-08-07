@@ -9,6 +9,7 @@ export default function OykAvatar({
   bgColor = "var(--oyk-c-primary)",
   fgColor = "var(--oyk-c-primary-fg)",
   borderColor = "var(--oyk-card-bg)",
+  borderSize = 2,
 }) {
   return (
     <div
@@ -16,6 +17,7 @@ export default function OykAvatar({
       style={{
         backgroundColor: src ? borderColor : bgColor,
         borderColor: borderColor,
+        borderWidth: borderSize ? `${borderSize}px` : "2px",
         color: fgColor,
         width: size,
         height: size,

@@ -22,7 +22,7 @@ export default function OykButton({
       e.preventDefault();
     }
     if (!disabled && routeName) {
-      n(routeName, lang, params);
+      n(routeName, params, lang);
     } else if (!disabled && action) {
       action();
     }

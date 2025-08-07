@@ -43,7 +43,7 @@ const findRouteRecursive = (routes, pathSegments, pathlang) => {
     // Handle empty path (root route)
     if (routePath === "") {
       if (pathSegments.length === 0) {
-        return route;
+        return { route, params: {} };
       }
       continue;
     }
@@ -57,12 +57,17 @@ const findRouteRecursive = (routes, pathSegments, pathlang) => {
       
       // Check if the route segments match (including dynamic segments)
       let matches = true;
+      const params = {};
+      
       for (let i = 0; i < routeSegments.length; i++) {
         const routeSegment = routeSegments[i];
         const actualSegment = matchingSegments[i];
         
         // If it's a dynamic segment (wrapped in {})
         if (routeSegment.startsWith("{") && routeSegment.endsWith("}")) {
+          // Extract parameter name and value
+          const paramName = routeSegment.slice(1, -1); // Remove { and }
+          params[paramName] = actualSegment;
           continue; // Dynamic segment matches anything
         }
         
@@ -76,12 +81,18 @@ const findRouteRecursive = (routes, pathSegments, pathlang) => {
       if (matches) {
         // If we have children and more path segments, search in children
         if (route.children && remainingSegments.length > 0) {
-          const childRoute = findRouteRecursive(route.children, remainingSegments, pathlang);
-          if (childRoute) return childRoute;
+          const childResult = findRouteRecursive(route.children, remainingSegments, pathlang);
+          if (childResult) {
+            // Merge parent and child parameters
+            return {
+              route: childResult.route,
+              params: { ...params, ...childResult.params }
+            };
+          }
         }
         
-        // If no children or no more segments, return this route
-        return route;
+        // If no children or no more segments, return this route with params
+        return { route, params };
       }
     }
   }
@@ -96,14 +107,14 @@ export const findRoute = (pathname, pathlang) => {
   // Special case: if path is empty (root route), check for routes with empty paths first
   if (pathSegments.length === 0) {
     const rootRoute = ROUTES.find(route => route.paths[pathlang] === "");
-    if (rootRoute) return rootRoute;
+    if (rootRoute) return { route: rootRoute, params: {} };
   }
   
   return findRouteRecursive(ROUTES, pathSegments, pathlang);
 };
 
 // Helper function to build full path for a route including parent routes
-export const buildRoutePath = (routeName, pathlang, params = {}) => {
+export const buildRoutePath = (routeName, params = {}, pathlang) => {
   const findRoutePath = (routes, name, currentPath = "") => {
     for (const route of routes) {
       const routePath = route.paths[pathlang];

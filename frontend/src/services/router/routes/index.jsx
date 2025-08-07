@@ -1,5 +1,6 @@
 import React from "react";
 
+import { PLAYER_ROUTES } from "./player";
 import { WORLD_ROUTES } from "./world";
 
 export const ROUTES = [
@@ -51,6 +52,7 @@ export const ROUTES = [
       en: "tasks",
     },
   },
+  ...PLAYER_ROUTES,
   ...WORLD_ROUTES,
   {
     name: "components",

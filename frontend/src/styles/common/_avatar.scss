@@ -2,6 +2,7 @@
   background-color: var(--oyk-c-primary);
   border: 2px solid var(--oyk-card-bg);
   border-radius: 50%;
+  box-sizing: content-box;
   color: var(--oyk-c-primary-fg);
   overflow: hidden;
   display: inline-flex;

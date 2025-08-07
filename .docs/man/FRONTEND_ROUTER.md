@@ -46,7 +46,7 @@ Core utility functions for route management:
 
 - **`getLangFromPath(pathname)`**: Extracts language from URL path
 - **`findRoute(pathname, language)`**: Matches URL to route configuration
-- **`buildRoutePath(name, language, params)`**: Builds URL paths with parameters
+- **`buildRoutePath(name, params, language)`**: Builds URL paths with parameters
 - **Dynamic Segment Matching**: Handles parameterized routes like `{worldSlug}`
 
 ## Key Features
@@ -73,7 +73,7 @@ Supports parameterized routes with dynamic segments:
 }
 
 // Usage
-n("world-rulebook", "en", { worldSlug: "fantasy" });
+n("world-rulebook", { worldSlug: "fantasy" }, "en");
 // Results in: /en/w/fantasy/rulebook
 ```
 
@@ -120,7 +120,7 @@ function MyComponent() {
   n("login", "fr");
   
   // Navigate with parameters
-  n("world-rulebook", "en", { worldSlug: "fantasy" });
+  n("world-rulebook", { worldSlug: "fantasy" }, "en");
   
   // Access current route info
   console.log(route.name, lang, history);
