@@ -5,7 +5,7 @@ from flask_cors import CORS
 from config import config
 from oyk.extensions import db, migrate
 
-from oyk.routes import auth_bp, character_bp, health_bp
+from oyk.routes import auth_bp, player_bp, character_bp, health_bp
 
 
 def create_app(config_name="default"):
@@ -34,6 +34,7 @@ def create_app(config_name="default"):
 
     # Register blueprints
     app.register_blueprint(auth_bp)
+    app.register_blueprint(player_bp)
     app.register_blueprint(character_bp)
     app.register_blueprint(health_bp)
 
