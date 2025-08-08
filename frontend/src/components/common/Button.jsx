@@ -1,4 +1,7 @@
+import { Loader } from "lucide-react";
+
 import { useRouter } from "@/services/router";
+import { useTranslation } from "@/services/translation";
 
 export default function OykButton({
   children,
@@ -8,6 +11,7 @@ export default function OykButton({
   icon: IconComponent,
   type = "button",
   disabled = false,
+  isLoading = false,
   color = "default",
   plain = false,
   outline = false,
@@ -16,6 +20,7 @@ export default function OykButton({
   style = {},
 }) {
   const { n, lang } = useRouter();
+  const { t } = useTranslation();
 
   const handleClick = (e) => {
     if (type !== "submit") {
@@ -44,7 +49,15 @@ export default function OykButton({
         }),
       }}
     >
-      <span className="oyk-button-content" style={color?.startsWith("#") ? { color: color } : {}}>
+      {isLoading && (
+        <span className="oyk-button-loading">
+          <Loader size={16} className="oyk-button-loading-icon" />
+        </span>
+      )}
+      <span
+        className={`oyk-button-content ${isLoading ? "oyk-button-content-loading" : ""}`}
+        style={color?.startsWith("#") ? { color: color } : {}}
+      >
         {IconComponent && <IconComponent size={16} />}
         {children && children}
       </span>
