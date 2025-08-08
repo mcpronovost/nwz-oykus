@@ -6,6 +6,7 @@ import { OykButton, OykCard, OykGrid, OykHeading } from "@/components/common";
 export default function DevQuests() {
   const { t } = useTranslation();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [character, setCharacter] = useState({});
 
   const getLevel = (xp) => {
@@ -16,8 +17,9 @@ export default function DevQuests() {
 
   const handleQuest1 = () => {
     console.log("Starting Quest 1");
+    setIsLoading(true);
     const QuestLevel = 1;
-    const QuestXP = 500;
+    const QuestXP = 10;
     const SkillLevel = getLevel(character?.skills?.woodcutting || 0);
     const LD = (QuestLevel - SkillLevel);
     const Malus = LD * 0.25;
@@ -54,6 +56,9 @@ export default function DevQuests() {
         woodcutting: (character.skills.woodcutting || 0) + SkillXP,
       },
     });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 4000);
   }
 
   useEffect(() => {
@@ -120,7 +125,7 @@ export default function DevQuests() {
           <h3>Quêtes</h3>
           <br />
           <ul>
-            <li><OykButton color="primary" action={() => handleQuest1()}>Commencer</OykButton> Quête 1: Lvl 1 (strength) [woodcutting] : 1 - {getLevel(character?.skills?.woodcutting || 0)} = {1 - getLevel(character?.skills?.woodcutting || 0)} x 0.25 = <u>{(1 - getLevel(character?.skills?.woodcutting || 0)) * 0.25}</u> : {getLevel(character?.attributes?.strength || 0)} / 12 = <u>{Number((getLevel(character?.attributes?.strength || 0) / 12).toFixed(2))}</u> : {(1 - getLevel(character?.skills?.woodcutting || 0)) * 0.25} - {Number((getLevel(character?.attributes?.strength || 0) / 12).toFixed(2))} = <u>{Number(((1 - getLevel(character?.skills?.woodcutting || 0)) * 0.25) - (getLevel(character?.attributes?.strength || 0) / 12)).toFixed(2)}</u> - 0,05 = <u>{Number(((1 - getLevel(character?.skills?.woodcutting || 0)) * 0.25) - (getLevel(character?.attributes?.strength || 0) / 12) - 0.05).toFixed(2)}</u></li>
+            <li><OykButton color="primary" isLoading={isLoading} action={() => handleQuest1()}>Commencer</OykButton> Quête 1: Lvl 1 (strength) [woodcutting] : 1 - {getLevel(character?.skills?.woodcutting || 0)} = {1 - getLevel(character?.skills?.woodcutting || 0)} x 0.25 = <u>{(1 - getLevel(character?.skills?.woodcutting || 0)) * 0.25}</u> : {getLevel(character?.attributes?.strength || 0)} / 12 = <u>{Number((getLevel(character?.attributes?.strength || 0) / 12).toFixed(2))}</u> : {(1 - getLevel(character?.skills?.woodcutting || 0)) * 0.25} - {Number((getLevel(character?.attributes?.strength || 0) / 12).toFixed(2))} = <u>{Number(((1 - getLevel(character?.skills?.woodcutting || 0)) * 0.25) - (getLevel(character?.attributes?.strength || 0) / 12)).toFixed(2)}</u> - 0,05 = <u>{Number(((1 - getLevel(character?.skills?.woodcutting || 0)) * 0.25) - (getLevel(character?.attributes?.strength || 0) / 12) - 0.05).toFixed(2)}</u></li>
             <li>Quête 2: Lvl 1 (constitution)</li>
             <li>Quête 3: Lvl 1 (dexterity)</li>
             <li>Quête 4: Lvl 1 (perception)</li>
