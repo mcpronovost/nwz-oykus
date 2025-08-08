@@ -1,7 +1,6 @@
 import { Loader } from "lucide-react";
 
 import { useRouter } from "@/services/router";
-import { useTranslation } from "@/services/translation";
 
 export default function OykButton({
   children,
@@ -20,7 +19,6 @@ export default function OykButton({
   style = {},
 }) {
   const { n, lang } = useRouter();
-  const { t } = useTranslation();
 
   const handleClick = (e) => {
     if (type !== "submit") {
